@@ -1,0 +1,28 @@
+الصفحة الرئيسية  => Pagina iniziale
+البحث بالتاريخ =>  Cerca per data
+اختر تاريخ البداية و النهاية=>  Scegli la data di inizio e di fine
+بحث =>  Ricerca
+المشرفين =>  Supervisori
+الطلاب =>  Gli studenti
+المدارس =>  scuole
+الطلبات =>  Ordini
+الوجبات و الاضافات =>  Pasti ed extra
+الطلبات المنتهية=>  Ordini scaduti
+جديد=>  nuovo
+جارى التحضير=>  Preparazione
+منتهى =>  Finito
+ملغى =>  annullato
+البروفايل=>  profilo
+ تسجيل الخروج=>  disconnessione
+ اضافة جديد=>  nuova aggiunta
+ حذف المحدد=>  elimina selezionato
+الاسم =>  Il nome
+البريد الالكترونى =>  E-mail
+تحكم=>  controllo
+حفظ =>  Salva
+غلق =>  chiudere
+كلمة المرور=>  parola d'ordine
+llllllllll  =>  lllllllllllllllll
+llllllllll  =>  lllllllllllllllll
+
+

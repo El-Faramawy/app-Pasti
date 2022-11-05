@@ -26,16 +26,16 @@
                     previous: "<i class='simple-icon-arrow-left'></i>",
                     next: "<i class='simple-icon-arrow-right'></i>"
                 },
-                "sProcessing": "جاري التحميل ..",
-                "sLengthMenu": "اظهار _MENU_ سجل",
-                "sZeroRecords": "لا يوجد نتائج",
-                "sInfo": "اظهار _START_ الى  _END_ من _TOTAL_ سجل",
-                "sInfoEmpty": "لا نتائج",
-                "sInfoFiltered": "للبحث",
-                "sSearch": "بحث :    ",
+                "sProcessing": "Caricamento in corso ..",
+                "sLengthMenu": "mostrare _MENU_ Registrati",
+                "sZeroRecords": "Nessun risultato",
+                "sInfo": "mostrare _START_ per me  _END_ Da _TOTAL_ Registrati",
+                "sInfoEmpty": "nessun risultato",
+                "sInfoFiltered": "Ricerca",
+                "sSearch": "Ricerca :    ",
                 "oPaginate": {
-                    "sPrevious": "السابق",
-                    "sNext": "التالي",
+                    "sPrevious": "Precedente",
+                    "sNext": "prossimo",
                 }
             },
             dom: 'lBfrtip',
@@ -110,11 +110,11 @@
             error: function (data) {
                 $('#global-loader').hide()
                 $('#form-load > .linear-background').hide(loader)
-                $('#submit').html('حفظ').attr('disabled', false);
+                $('#submit').html('Salva').attr('disabled', false);
                 $('#form').show()
                 console.log(data)
                 if (data.status === 500) {
-                    my_toaster('هناك خطأ ما','error')
+                    my_toaster('Là errore','error')
                 }
 
                 if (data.status === 422) {
@@ -145,14 +145,14 @@
     $(document).on('click', '.delete', function () {
         var id = $(this).data('id');
         swal.fire({
-            title: "هل أنت متأكد من الحذف؟",
-            text: "لا يمكنك التراجع بعد ذلك؟",
+            title: "Sei sicuro di eliminare؟",
+            text: "Non puoi tirarti indietro allora?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "موافق",
-            cancelButtonText: "الغاء",
-            okButtonText: "موافق",
+            confirmButtonText: "OK",
+            cancelButtonText: "Cancellazione",
+            okButtonText: "OK",
             closeOnConfirm: false
         }).then((result) => {
             if (!result.isConfirmed){
@@ -177,7 +177,7 @@
                             my_toaster(data.message , 'info')
                             $('#exportexample').DataTable().ajax.reload(null, false);
                         }else {
-                            my_toaster("هناك خطأ",'error')
+                            my_toaster("Là errore",'error')
                         }
 
                     }, 500);
@@ -185,7 +185,7 @@
                     $('#global-loader').hide()
 
                     if (data.status === 500) {
-                        my_toaster("هناك خطأ",'error')
+                        my_toaster("Là errore",'error')
                     }
 
 
@@ -217,18 +217,18 @@
         });
         if(allVals.length <=0)
         {
-            my_toaster("يجب تحديد المراد حذفه",'warning')
+            my_toaster("Devi specificare cosa eliminare",'warning')
         }
         else {
             swal.fire({
-                title: "هل أنت متأكد من الحذف؟",
-                text: "لا يمكنك التراجع بعد ذلك؟",
+                title: "Sei sicuro di eliminare ؟",
+                text: "Non puoi tirarti indietro allora?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "موافق",
-                cancelButtonText: "الغاء",
-                okButtonText: "موافق",
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancellazione",
+                okButtonText: "OK",
                 closeOnConfirm: false
             }).then((result) => {
                 if (!result.isConfirmed){
@@ -252,7 +252,7 @@
                                 my_toaster(data.message, 'info')
                                 $('#exportexample').DataTable().ajax.reload(null, false);
                             } else {
-                                my_toaster("هناك خطأ", 'error')
+                                my_toaster("Là errore", 'error')
                             }
 
                         }, 100);
@@ -260,7 +260,7 @@
                         $('#global-loader').hide()
 
                         if (data.status === 500) {
-                            my_toaster("هناك خطأ", 'error')
+                            my_toaster("Là errore", 'error')
                         }
 
 

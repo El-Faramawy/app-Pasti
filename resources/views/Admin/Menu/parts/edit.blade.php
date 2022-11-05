@@ -1,40 +1,51 @@
 <!--begin::Form-->
-<link href="{{url('admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
+<link href="{{url('Admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
 
 <form id="form" enctype="multipart/form-data" method="POST" action="{{route('menus.update',$menu->id)}}">
     @csrf
     @method('PUT')
     <div class="row mt-0">
         <!--begin::Input group-->
-        <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">
+        <div class=" mb-2 fv-row col-sm-6 mt-0">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">الإسم </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="الإسم"></i>
+                <span class="required">Il nome </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Il nome"></i>
             </label>
             <!--end::Label-->
-            <input type="text" class="form-control form-control-solid" placeholder="الإسم" name="name" value="{{$menu->name}}"/>
+            <input type="text" class="form-control form-control-solid" placeholder="Il nome" name="name" value="{{$menu->name}}"/>
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class=" mb-2 fv-row col-sm-6 mt-0">
+            <!--begin::Label-->
+            <label class="d-flex align-items-center fs-6 fw-bold form-label ">
+                <span class="required">Data </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Data"></i>
+            </label>
+            <!--end::Label-->
+            <input type="date" class="form-control form-control-solid" placeholder="Data" name="date" value="{{$menu->date}}"/>
         </div>
         <!--end::Input group-->
         <!--begin::Input group-->
         <div class="d-flex flex-column mb-2 fv-row col-sm-6 mt-0 ">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">النوع </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title=" النوع "></i>
+                <span class="required">Tipo </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title=" Tipo "></i>
             </label>
             <!--end::Label-->
             <div class="d-flex align-items-center mb-3">
                 <div class="form-check m-0 ">
                     <input class="form-check-input type price_change" type="radio" name="type" value="menu" {{$menu->type=='menu' ? 'checked' : ''}} >
                     <label class="form-check-label ms-5" style="margin-right: 20px;">
-                        وجبة
+                        un pasto
                     </label>
                 </div>
                 <div class="form-check m-0  ms-3" style="margin-right: 30px!important">
                     <input class="form-check-input type price_change" type="radio" name="type" value="addition" {{$menu->type=='addition' ? 'checked' : ''}} >
                     <label class="form-check-label ms-5" style="margin-right: 20px;">
-                        اضافة
+                        aggiunta
                     </label>
                 </div>
             </div>
@@ -42,8 +53,8 @@
         <!--begin::Input group-->
         <div class=" mb-2 fv-row col-sm-12 mt-0" id="details_div" style=" {{$menu->type=='addition' ? 'display:none' : ''}}">
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">تفاصيل الوجبة  </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="تفاصيل الوجبة "></i>
+                <span class="required">Dettagli del pasto  </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Dettagli del pasto "></i>
             </label>
 
             <div class="table-responsive-md">
@@ -51,7 +62,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>التفاصيل</th>
+                        <th>i dettagli</th>
                         <th>
                             <a class="btn btn-info add_record " data-added="0"><i class="fa fa-plus"></i></a>
                         </th>
@@ -78,8 +89,8 @@
         <div class="d-flex flex-column mb-2 fv-row col-sm-12">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required"> الصورة </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="الصورة"></i>
+                <span class="required"> Immagine </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="Immagine"></i>
             </label>
             <!--end::Label-->
             <input accept="image/*" type='file' id="imgInp" name="image"  class="form-control form-control-solid" />
@@ -91,11 +102,11 @@
         <div class="d-flex flex-column mb-2 fv-row col-sm-12">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required"> المدارس </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="المدارس"></i>
+                <span class="required"> scuole </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="scuole"></i>
             </label>
             <!--end::Label-->
-            <select class="form-control select2" name="schools[]" data-placeholder="اختر المدارس " multiple>
+            <select class="form-control select2" name="schools[]" data-placeholder="Scegli le scuole " multiple>
                 @foreach($schools as $school)
                     <option value="{{$school->id}}" {{in_array($school->id,$school_ids)?'selected':''}}> {{$school->name}} </option>
                 @endforeach
@@ -157,6 +168,6 @@
 </script>
 
 
-<script src="{{url('admin')}}/assets/plugins/select2/select2.full.min.js"></script>
-<script src="{{url('admin')}}/assets/js/select2.js"></script>
+<script src="{{url('Admin')}}/assets/plugins/select2/select2.full.min.js"></script>
+<script src="{{url('Admin')}}/assets/js/select2.js"></script>
 

@@ -59,10 +59,10 @@ class AdminController extends Controller
             'password' => 'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-                'email.unique' => 'هذا البريد الالكترونى موجود مسبقا',
-                'email.required' => ' البريد الالكترونى مطلوب',
-                'password.required' => ' كلمة المرور مطلوبة',
+                'name.required' => 'Il nome è obbligatorio',
+                'email.unique' => 'questa email esiste già',
+                'email.required' => ' e-mail è richiesta',
+                'password.required' => ' richiesta la password',
             ]
         );
         if ($valedator->fails())
@@ -84,7 +84,7 @@ class AdminController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم الاضافة بنجاح '
+                'message' => 'Aggiunto con successo '
             ]);
     }
     ###############################################
@@ -108,10 +108,10 @@ class AdminController extends Controller
 //            'password'=>  'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-                'email.unique' => 'هذا البريد الالكترونى موجود مسبقا',
-                'email.required' => ' البريد الالكترونى مطلوب',
-//                'password.required'=> ' كلمة المرور مطلوبة',
+                'name.required' => 'Il nome è obbligatorio',
+                'email.unique' => 'questa email esiste già',
+                'email.required' => ' e-mail è richiesta',
+//                'password.required'=> ' richiesta la password',
             ]
         );
         if ($valedator->fails())
@@ -137,7 +137,7 @@ class AdminController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم التعديل بنجاح '
+                'message' => 'Modificato con successo '
             ]);
     }
     ###############################################
@@ -149,7 +149,7 @@ class AdminController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
     ################ Delete Admin #################
@@ -161,7 +161,7 @@ class AdminController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
 
@@ -175,11 +175,11 @@ class AdminController extends Controller
             'name' => 'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-                'email.exists' => 'هذا البريد الالكترونى غير موجود',
-                'email.unique' => 'هذا البريد الالكترونى موجود مسبقا',
-                'email.required' => ' البريد الالكترونى مطلوب',
-//                'password.required'=> ' كلمة المرور مطلوبة',
+                'name.required' => 'Il nome è obbligatorio',
+                'email.exists' => 'Questa e-mail non esiste',
+                'email.unique' => 'questa email esiste già',
+                'email.required' => ' e-mail è richiesta',
+//                'password.required'=> ' richiesta la password',
             ]
         );
         if ($valedator->fails())
@@ -191,9 +191,9 @@ class AdminController extends Controller
                 'confirm_password' => 'required'
             ],
                 [
-                    'password.required_with'=> ' كلمة المرور مطلوبة',
-                    'password.same'=> 'كلمة المرور و تاكيد كلمة المرور غير متطابقين ',
-                    'confirm_password.required'=> 'تاكيد كلمة المرور مطلوب',
+                    'password.required_with'=> ' richiesta la password',
+                    'password.same'=> 'Password e conferma password non corrispondono',
+                    'confirm_password.required'=> 'Conferma password richiesta',
                 ]
             );
             if ($valedator->fails())
@@ -207,7 +207,7 @@ class AdminController extends Controller
             $update->password = Hash::make($request->password);
         }
         $update->save();
-        return response()->json(['messages' => ['تم تعديل البيانات بنجاح'], 'success' => 'true']);
+        return response()->json(['messages' => ['I dati sono stati modificati correttamente'], 'success' => 'true']);
     }//end fun
 
     public function profile()

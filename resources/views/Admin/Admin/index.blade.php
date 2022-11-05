@@ -1,24 +1,24 @@
 @extends('layouts.admin.app')
-@section('page_title') المشرفين @endsection
+@section('page_title') Supervisori @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">مشرفين البريمو</h3>
-                    <div class="mr-auto pageheader-btn">
+                    <h3 class="card-title">Supervisori </h3>
+                    <div class="ml-auto pageheader-btn">
                         @if(in_array(4,admin()->user()->permission_ids))
                             <a href="#" id="addBtn" class="btn btn-primary btn-icon text-white">
                                             <span>
                                                 <i class="fe fe-plus"></i>
-                                            </span> اضافة جديد
+                                            </span>nuova aggiunta
                             </a>
                         @endif
                         @if(in_array(3,admin()->user()->permission_ids))
                             <a href="#" id="multiDeleteBtn" class="btn btn-danger btn-icon text-white">
                                             <span>
                                                 <i class="fa fa-trash-o"></i>
-                                            </span> حذف المحدد
+                                            </span>elimina selezionato
                             </a>
                         @endif
                     </div>
@@ -30,9 +30,9 @@
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
-                                <th class="text-white">الاسم</th>
-                                <th class="text-white">البريد الالكترونى</th>
-                                <th class="text-white">تحكم</th>
+                                <th class="text-white">Il nome</th>
+                                <th class="text-white">E-mail</th>
+                                <th class="text-white">controllo</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -55,7 +55,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2>المشرفين</h2>
+                    <h2>Supervisori</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">
@@ -78,12 +78,12 @@
                 <!--end::Modal body-->
                 <div class="modal-footer">
                     <div class=" ">
-                        <input  form="form" value="حفظ" type="submit" id="submit" class="btn btn-primary " style="width: 100px">
+                        <input  form="form" value="Salva" type="submit" id="submit" class="btn btn-primary " style="width: 100px">
 {{--                            <span class="indicator-label ">حفظ</span>--}}
 
                     </div>
                     <div class=" ">
-                        <button class="btn btn-light me-3 close_model" style="width: 100px">غلق</button>
+                        <button class="btn btn-light me-3 close_model" style="width: 100px">chiudere</button>
                     </div>
                 </div>
             </div>

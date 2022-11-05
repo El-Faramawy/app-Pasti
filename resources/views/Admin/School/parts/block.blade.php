@@ -5,14 +5,14 @@
         var id = $(this).data('id');
         var text = $(this).data('text');
         swal.fire({
-            title: "هل أنت متأكد من "+ text +" المدرسة؟",
-            text: "سيتم "+text+" المدرسة",
+            title: "Sei sicuro "+ text +" La scuola ؟",
+            text: "sarà "+text+" La scuola ",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "موافق",
-            cancelButtonText: "الغاء",
-            okButtonText: "موافق",
+            confirmButtonText: "OK",
+            cancelButtonText: "Cancellazione",
+            okButtonText: "OK",
             closeOnConfirm: false
         }).then((result) => {
             if (!result.isConfirmed) {
@@ -37,7 +37,7 @@
                             my_toaster(data.message, 'info')
                             $('#exportexample').DataTable().ajax.reload(null, false);
                         } else {
-                            my_toaster("هناك خطأ", 'error')
+                            my_toaster("Là errore", 'error')
                         }
 
                     }, 1000);
@@ -45,7 +45,7 @@
                     $('#global-loader').hide()
 
                     if (data.status === 500) {
-                        my_toaster("هناك خطأ", 'error')
+                        my_toaster("Là errore", 'error')
                     }
 
 

@@ -1,43 +1,43 @@
 @extends('layouts.admin.app')
-@section('page_title') المدارس @endsection
+@section('page_title') scuole @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">المدارس </h3>
-                    <div class="mr-auto pageheader-btn">
+                    <h3 class="card-title">scuole </h3>
+                    <div class="ml-auto pageheader-btn">
                         @if(in_array(14,admin()->user()->permission_ids))
                             <a href="#"  id="addBtn" class="btn btn-primary btn-icon text-white">
                                             <span>
                                                 <i class="fe fe-plus"></i>
-                                            </span> اضافة جديد
+                                            </span> nuova aggiunta
                             </a>
                         @endif
                         @if(in_array(13,admin()->user()->permission_ids))
                             <a href="#"  id="multiDeleteBtn" class="btn btn-danger btn-icon text-white">
                                             <span>
                                                 <i class="fa fa-trash-o"></i>
-                                            </span> حذف المحدد
+                                            </span> elimina selezionato
                             </a>
                         @endif
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="{{--table-responsive--}}">
+                    <div class="table-responsive">
                         <table id="exportexample" class="table table-striped table-responsive-lg  card-table table-vcenter text-nowrap mb-0 table-primary align-items-center mb-0">
                             <thead class="bg-primary text-white">
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
-                                <th class="text-white">الصورة</th>
-                                <th class="text-white">الاسم</th>
-                                <th class="text-white">رقم الهاتف</th>
-                                <th class="text-white">الكود</th>
-                                <th class="text-white">العنوان</th>
-                                <th class="text-white">الحالة</th>
-                                <th class="text-white">حظر</th>
-                                <th class="text-white">تحكم</th>
+                                <th class="text-white">Immagine</th>
+                                <th class="text-white">Il nome</th>
+                                <th class="text-white">Numero di telefono</th>
+                                <th class="text-white">Codice</th>
+                                <th class="text-white">l'indirizzo</th>
+                                <th class="text-white">la condizione</th>
+                                <th class="text-white">bandire</th>
+                                <th class="text-white">controllo</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,7 +60,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2>المدارس</h2>
+                    <h2>scuole</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">
@@ -83,12 +83,12 @@
                 <!--end::Modal body-->
                 <div class="modal-footer">
                     <div class=" ">
-                        <input  form="form" value="حفظ" type="submit" id="submit" class="btn btn-primary " style="width: 100px">
+                        <input  form="form" value="Salva" type="submit" id="submit" class="btn btn-primary " style="width: 100px">
 {{--                            <span class="indicator-label ">حفظ</span>--}}
 
                     </div>
                     <div class=" ">
-                        <button class="btn btn-light me-3 close_model" style="width: 100px">غلق</button>
+                        <button class="btn btn-light me-3 close_model" style="width: 100px">chiudere</button>
                     </div>
                 </div>
             </div>

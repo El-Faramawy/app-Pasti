@@ -1,5 +1,5 @@
 @extends('layouts.admin.app')
-@section('page_title') الاعدادات @endsection
+@section('page_title') Impostazioni @endsection
 <!-- INTERNAL  WYSIWYG EDITOR CSS -->
 <link href="{{url('Admin')}}/assets/plugins/wysiwyag/richtext.css"
       rel="stylesheet"/>
@@ -9,7 +9,7 @@
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">الاعدادات</h3>
+                    <h3 class="card-title">Impostazioni</h3>
                 </div>
                 <div class="card-body">
                     <form  action="{{route('settings.update',$setting->id)}}" id="Form" method="post" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <label >اخر وقت للطلب</label>
+                                    <label >Ultima volta per ordinare</label>
                                     <input name="order_time" min="00:00" max="24:00" type="time" value="{{$setting->order_time}}"  class="form-control" placeholder="وقت الطلب ...">
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title">الشروط و الاحكام</div>
+                                        <div class="card-title">Termini e Condizioni</div>
                                     </div>
                                     <div class="card-body">
                                         <textarea class="content" name="terms">{!! $setting->terms !!}</textarea>
@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label >صورة اللوجو</label>
+                                    <label >immagine del logo</label>
 
                                         <input accept="image/*" type='file' id="imgInp1" name="logo"  class="form-control form-control-solid" />
                                         <img width="100" height="100" id="blah1" src="{{get_file($setting->logo)}}" alt="your image" />
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label >الصورة فى المتصفح</label>
+                                    <label >immagine nel browser</label>
 
                                         <input accept="image/*" type='file' id="imgInp2" name="fav_icon"  class="form-control form-control-solid" />
                                         <img width="100" height="100" id="blah2" src="{{get_file($setting->fav_icon)}}" alt="your image" />
@@ -102,8 +102,8 @@
                         </div>
                         <!-- ROW-2 CLOSED -->
                         <div class="card-footer ">
-                            <input type="submit" class="btn btn-success mt-1" value="حفظ">
-                            <input type="reset" class="btn btn-danger mt-1" value="الغاء">
+                            <input type="submit" class="btn btn-success mt-1" value="Salva">
+                            <input type="reset" class="btn btn-danger mt-1" value="Cancellazione">
                         </div>
                     </form>
 

@@ -7,11 +7,11 @@
         <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">الرد على الرسالة </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="الرد على الرسالة"></i>
+                <span class="required">Rispondi al messaggio </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Rispondi al messaggio"></i>
             </label>
             <!--end::Label-->
-                <textarea placeholder="اكتب الرد هنا ..." class="form-control "  name="message"  ></textarea>
+                <textarea placeholder="Scrivi qui la tua risposta ..." class="form-control "  name="message"  ></textarea>
 
         </div>
 

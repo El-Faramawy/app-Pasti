@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
-@section('page_title') البروفايل @endsection
+@section('page_title') profilo @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">تعديل البروفايل</h3>
+                    <h3 class="card-title">Modifica Profilo</h3>
                 </div>
                 <div class="card-body">
                     <form  action="{{route('profile.update')}}" id="Form" method="post" enctype="multipart/form-data">
@@ -13,27 +13,27 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
-                                <label for="exampleInputname">الاسم</label>
-                                <input name="name" type="text" value="{{admin()->user()->name}}"  class="form-control" id="exampleInputname" placeholder="الاسم">
+                                <label for="exampleInputname">Il nome</label>
+                                <input name="name" type="text" value="{{admin()->user()->name}}"  class="form-control" id="exampleInputname" placeholder="Il nome">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">البريد الالكترونى</label>
-                        <input name="email" type="email" value="{{admin()->user()->email}}" class="form-control" id="exampleInputEmail1" placeholder="البريد الالكترونى">
+                        <label for="exampleInputEmail1">E-mail</label>
+                        <input name="email" type="email" value="{{admin()->user()->email}}" class="form-control" id="exampleInputEmail1" placeholder="E-mail">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">كلمة المرور</label>
+                        <label class="form-label">parola d'ordine</label>
                         <input type="password" name="password" class="form-control" placeholder="*******">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">تأكيد كلمة المرور</label>
+                        <label class="form-label">Conferma password </label>
                         <input type="password" name="confirm_password" class="form-control" placeholder="*******">
                     </div>
                         <div class="card-footer ">
-                            <input type="submit" class="btn btn-success mt-1" value="حفظ">
-                            <input type="reset" class="btn btn-danger mt-1" value="الغاء">
+                            <input type="submit" class="btn btn-success mt-1" value="Salva">
+                            <input type="reset" class="btn btn-danger mt-1" value="chiudere">
                         </div>
                     </form>
 

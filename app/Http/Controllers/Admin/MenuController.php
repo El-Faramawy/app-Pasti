@@ -40,7 +40,7 @@ class MenuController extends Controller
                     return '<img alt="image" class="img list-thumbnail border-0" style="width:100px" onclick="window.open(this.src)" src="'.$menu->image.'">';
                 })
                 ->editColumn('type',function ($menu){
-                    return $menu->type == 'menu' ? 'وجبة' : 'اضافة';
+                    return $menu->type == 'menu' ? 'un pasto' : 'aggiunta';
                 })->addColumn('checkbox' , function ($menu){
                     return '<input type="checkbox" class="sub_chk" data-id="'.$menu->id.'">';
                 })
@@ -67,8 +67,8 @@ class MenuController extends Controller
             'image' => 'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-                'image.required' => ' الصورة مطلوبة',
+                'name.required' => 'Il nome è obbligatorio',
+                'image.required' => ' La foto è richiesta',
             ]
         );
         if ($valedator->fails())
@@ -78,7 +78,7 @@ class MenuController extends Controller
         $data['image']    = 'uploads/menu/'.$this->saveImage($request->image,'uploads/menu');
         $menu = Menu::create($data);
 
-        if (count($request->schools) > 0){
+        if ($request->schools){
             foreach ($request['schools'] as $school){
                 SchoolMenu::create([
                     'menu_id'   => $menu->id,
@@ -88,7 +88,7 @@ class MenuController extends Controller
             }
         }
 
-        if (count($request->meal_name) > 0){
+        if ($request->meal_name){
             foreach ($request['meal_name'] as $meal_name){
                 MenuDetails::create([
                     'menu_id'   => $menu->id,
@@ -100,7 +100,7 @@ class MenuController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم الاضافة بنجاح '
+                'message' => 'Aggiunto con successo '
             ]);
     }
     ###############################################
@@ -123,8 +123,8 @@ class MenuController extends Controller
 //            'image' => 'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-//                'image.required' => ' الصورة مطلوبة',
+                'name.required' => 'Il nome è obbligatorio',
+//                'image.required' => ' La foto è richiesta',
             ]
         );
         if ($valedator->fails())
@@ -142,7 +142,7 @@ class MenuController extends Controller
         $menu->update($data);
 
         SchoolMenu::where('menu_id', $menu->id)->delete();
-        if (count($request->schools) > 0){
+        if ($request->schools){
             foreach ($request['schools'] as $school){
                 SchoolMenu::create([
                     'menu_id'   => $menu->id,
@@ -153,7 +153,7 @@ class MenuController extends Controller
         }
 
         MenuDetails::where('menu_id', $menu->id)->delete();
-        if (count($request->meal_name) > 0){
+        if ($request->meal_name){
             foreach ($request['meal_name'] as $meal_name){
                 if ($meal_name != null){
                     MenuDetails::create([
@@ -166,7 +166,7 @@ class MenuController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم التعديل بنجاح '
+                'message' => 'Modificato con successo '
             ]);
     }
 
@@ -179,7 +179,7 @@ class MenuController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
 
@@ -191,7 +191,7 @@ class MenuController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
 

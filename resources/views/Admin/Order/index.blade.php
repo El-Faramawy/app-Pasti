@@ -1,5 +1,5 @@
 @extends('layouts.admin.app')
-@section('page_title') الطلبات @endsection
+@section('page_title') Ordini @endsection
 <!-- INTERNAL SELECT2 CSS -->
 <link href="{{url('admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
 
@@ -8,13 +8,13 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">الطلبات</h3>
-                    <div class="mr-auto pageheader-btn">
+                    <h3 class="card-title">Ordini</h3>
+                    <div class="ml-auto pageheader-btn">
                         @if(in_array(40,admin()->user()->permission_ids))
                             <a href="#"  id="multiDeleteBtn" class="btn btn-danger btn-icon text-white">
                                             <span>
                                                 <i class="fa fa-trash-o"></i>
-                                            </span> حذف المحدد
+                                            </span>elimina selezionato
                             </a>
                         @endif
                     </div>
@@ -96,11 +96,11 @@
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
-                                <th class="text-white">المستخدم</th>
-                                <th class="text-white">تاريخ الطلب</th>
-                                <th class="text-white w-15">الحالة</th>
-                                <th class="text-white">التفاصيل</th>
-                                <th class="text-white">حذف</th>
+                                <th class="text-white">Gli studenti</th>
+                                <th class="text-white">La data di Ordini</th>
+                                <th class="text-white w-15">la condizione</th>
+                                <th class="text-white">i dettagli</th>
+                                <th class="text-white">Elimina</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -124,7 +124,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2>الطلبات</h2>
+                    <h2>Ordini</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">
@@ -220,7 +220,7 @@
                     $('#global-loader').hide()
                     console.log(data)
                     if (data.status === 500) {
-                        my_toaster('هناك خطأ ما','error')
+                        my_toaster('qualcosa è sbagliato','error')
                     }
 
                     if (data.status === 422) {

@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
-@section('page_title') الاشعارات @endsection
+@section('page_title') notifiche @endsection
 @section('content')
     <div class="row" xmlns="http://www.w3.org/1999/html">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">الاشعارات</h3>
+                    <h3 class="card-title">notifiche</h3>
                 </div>
                 <div class="card-body">
                     <form  action="{{route('notifications.store')}}" id="Form" method="post" enctype="multipart/form-data">
@@ -13,20 +13,20 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <label >عنوان الرسالة</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="عنوان الرسالة" name="title" value=""/>
+                                    <label >Titolo</label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="Titolo" name="title" value=""/>
                                 </div>
                                 <div class="form-group">
-                                    <label >الرسالة</label>
+                                    <label >il messaggio</label>
                                     <textarea  class="form-control form-control-solid"  name="message" /></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label >المستخدمين</label>
+                                    <label >Utenti</label>
                                     <div class="form-group form-elements m-0 my-2">
                                         <div class="custom-controls-stacked ">
                                             <label class="custom-control custom-checkbox ">
                                                 <input type="checkbox" class="custom-control-input"  id="checkAll" >
-                                                <span class="custom-control-label " style="font-weight: bold"> تحديد الكل </span>
+                                                <span class="custom-control-label " style="font-weight: bold"> seleziona tutto </span>
                                             </label>
                                         </div>
                                     </div>
@@ -35,7 +35,7 @@
                                             @foreach($users as $user)
                                                 <label class="custom-control custom-checkbox " style="width: 25%">
                                                     <input type="checkbox" class="custom-control-input user_check" name="users[]" value="{{$user->id}}" >
-                                                    <span class="custom-control-label">{{$user->name ?? 'ضيف رقم '.$user->id}}</span>
+                                                    <span class="custom-control-label">{{$user->name ?? 'numero ospite '.$user->id}}</span>
                                                 </label>
                                             @endforeach
                                         </div>
@@ -43,12 +43,12 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <label >المدارس</label>
+                                    <label >scuole</label>
                                     <div class="form-group form-elements m-0 my-2">
                                         <div class="custom-controls-stacked ">
                                             <label class="custom-control custom-checkbox ">
                                                 <input type="checkbox" class="custom-control-input"  id="checkAllSchools" >
-                                                <span class="custom-control-label " style="font-weight: bold"> تحديد الكل </span>
+                                                <span class="custom-control-label " style="font-weight: bold"> seleziona tutto </span>
                                             </label>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                             @foreach($schools as $school)
                                                 <label class="custom-control custom-checkbox " style="width: 25%">
                                                     <input type="checkbox" class="custom-control-input school_check" name="schools[]" value="{{$school->id}}" >
-                                                    <span class="custom-control-label">{{$school->name ?? 'مدرسة رقم '.$school->id}}</span>
+                                                    <span class="custom-control-label">{{$school->name ?? 'numero di scuola '.$school->id}}</span>
                                                 </label>
                                             @endforeach
                                         </div>
@@ -68,8 +68,8 @@
                         </div>
 
                         <div class="card-footer ">
-                            <input type="submit" class="btn btn-success mt-1" value="ارسال">
-                            <input type="reset" class="btn btn-danger mt-1" value="الغاء">
+                            <input type="submit" class="btn btn-success mt-1" value="inviare">
+                            <input type="reset" class="btn btn-danger mt-1" value="Cancellazione">
                         </div>
                     </form>
 

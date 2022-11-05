@@ -43,13 +43,13 @@
 <!--INTERNAL  INDEX JS -->
 <script src="{{url('Admin')}}/assets/js/index1.js"></script>
 <!-- SIDEBAR JS -->
-<script src="{{url('Admin')}}/assets/plugins/sidebar/sidebar-rtl.js"></script>
+<script src="{{url('Admin')}}/assets/plugins/sidebar/sidebar.js"></script>
 
 <!-- CUSTOM JS -->
 <script src="{{url('Admin')}}/assets/js/custom.js"></script>
 
 <!-- Swicther JS -->
-<script src="{{url('Admin')}}/assets/switcher/js/switcher-rtl.js"></script>
+<script src="{{url('Admin')}}/assets/switcher/js/switcher.js"></script>
 
 
 {{--=================  dropfy  ================--}}

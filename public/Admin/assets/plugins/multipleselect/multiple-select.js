@@ -742,10 +742,10 @@
         filterAcceptOnEnter: false,
         hideOptgroupCheckboxes: false,
 
-        selectAllText: 'تحديد الكل',
-        allSelected: 'تم تحديد الكل',
-        countSelected: '# من % محدد ',
-        noMatchesFound: 'لا يوجد بيانات مطابقة',
+        selectAllText: 'seleziona tutto',
+        allSelected: 'Tutti selezionati',
+        countSelected: '# Da % selezionati ',
+        noMatchesFound: 'Non ci sono dati corrispondenti',
 
         styler: function () {
             return false;

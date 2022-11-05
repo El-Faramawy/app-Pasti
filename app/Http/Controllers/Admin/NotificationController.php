@@ -31,8 +31,8 @@ class NotificationController extends Controller
             'title' => 'required',
         ],
             [
-                'title.required' => 'عنوان الرسالة مطلوب',
-                'message.required' => ' الرسالة مطلوبة',
+                'title.required' => 'Il titolo del messaggio è obbligatorio',
+                'message.required' => ' Il messaggio è obbligatorio',
             ]
         );
         if ($valedator->fails())
@@ -51,7 +51,7 @@ class NotificationController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم الاضافة بنجاح '
+                'message' => 'Aggiunto con successo'
             ]);
     }
     ###############################################

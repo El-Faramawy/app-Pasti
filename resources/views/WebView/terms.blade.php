@@ -6,9 +6,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>البريمو</title>
+    <title>App Pasti</title>
     <!-- icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{get_file('admin/imgs/logo.jpeg')}}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{get_file(setting()->logo)}}" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- fonts  -->
@@ -97,11 +97,11 @@
     </style>
 </head>
 
-<body dir="rtl">
+<body dir="ltr">
 
 <div class="logo">
     <div class="image py-5">
-        <img src="{{get_file('admin/imgs/logo.jpeg')}}">
+        <img src="{{get_file(setting()->logo)}}">
     </div>
 
 </div>

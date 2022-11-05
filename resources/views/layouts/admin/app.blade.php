@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
 
@@ -32,7 +32,7 @@
                     <div>
                         <h1 class="page-title">@yield('page_title')</h1>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('home')}}">الرئيسية</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">Pagina iniziale</a></li>
                             <li class="breadcrumb-item active" aria-current="page">@yield('page_title')</li>
                         </ol>
                     </div>

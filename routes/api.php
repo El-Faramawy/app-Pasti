@@ -26,6 +26,7 @@ Route::post('login','AuthController@login');
 Route::post('contact_us','ContactController@contact_us');
 /* ---------------------- setting -------------------*/
 Route::get('setting','SettingController@setting');
+Route::get('time','SettingController@time');
 
 Route::post('logout','AuthController@logout');
 

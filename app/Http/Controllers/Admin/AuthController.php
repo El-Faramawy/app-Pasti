@@ -24,9 +24,9 @@ class AuthController extends Controller
             'password'=>  'required',
         ],
             [
-                'email.exists'=> 'هذا البريد الالكترونى غير موجود',
-                'email.required'=> ' البريد الالكترونى مطلوب',
-                'password.required'=> ' كلمة المرور مطلوبة',
+                'email.exists'=> 'Questa e-mail non esiste',
+                'email.required'=> " L'e-mail è richiesta",
+                'password.required'=> "E 'richiesta la password",
             ]
         );
         if ($valedator->fails())
@@ -34,14 +34,14 @@ class AuthController extends Controller
 
         $rememberme = request('rememberme') == 1?true:false;
         if (admin()->attempt(['email' => request('email'), 'password' => request('password')], $rememberme)) {
-            return response()->json(['messages'=>['تم تسجيل الدخول بنجاح'],'success'=>'true']);
+            return response()->json(['messages'=>["Hai effettuato l'accesso con successo"],'success'=>'true']);
         } else {
-            return response()->json(['messages'=>['يوجد خطأ فى كلمة المرور'],'success'=>'false']);
+            return response()->json(['messages'=>["C'è un errore nella password"],'success'=>'false']);
         }
     }//end fun
     public function logout(){
         admin()->logout();
-        my_toaster('تم تسجيل الخروج بنجاح','warning');
+        my_toaster("Disconnessione riuscita",'warning');
         return redirect('admin/login');
     }
 }

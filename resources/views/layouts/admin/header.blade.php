@@ -14,7 +14,7 @@
                     <path d="M21 11.01L3 11v2h18zM3 16h12v2H3zM21 6H3v2.01L21 8z" /></svg>
             </a><!-- sidebar-toggle-->
 
-            <div class="d-flex mr-auto header-right-icons header-search-icon">
+            <div class="d-flex ml-auto header-right-icons header-search-icon">
 {{--                <button class="navbar-toggler navresponsive-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">--}}
 {{--                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="navbar-toggler-icon">--}}
 {{--                        <path d="M0 0h24v24H0V0z" fill="none" />--}}
@@ -40,10 +40,10 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
                         <a class="dropdown-item" href="{{route('profile')}}">
-                            <i class="dropdown-icon zmdi zmdi-edit"></i> البروفايل
+                            <i class="dropdown-icon zmdi zmdi-edit"></i> profilo
                         </a>
                         <a class="dropdown-item" href="{{route('logout')}}">
-                            <i class="dropdown-icon mdi  mdi-logout-variant"></i> تسجيل الخروج
+                            <i class="dropdown-icon mdi  mdi-logout-variant"></i>disconnessione
                         </a>
                     </div>
                 </div>

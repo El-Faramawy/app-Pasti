@@ -12,18 +12,18 @@
 <link rel="shortcut icon" type="image/x-icon" href="{{get_file($setting->fav_icon)}}" />
 
 <!-- TITLE -->
-<title>البريمو</title>
+<title>App Pasti</title>
 
 <!-- BOOTSTRAP CSS -->
 <link href="{{url('Admin')}}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- STYLE CSS -->
-<link href="{{url('Admin')}}/assets/css-rtl/style.css" rel="stylesheet"/>
-<link href="{{url('Admin')}}/assets/css-rtl/skin-modes.css" rel="stylesheet"/>
-<link href="{{url('Admin')}}/assets/css-rtl/dark-style.css" rel="stylesheet"/>
+<link href="{{url('Admin')}}/assets/css/style.css" rel="stylesheet"/>
+<link href="{{url('Admin')}}/assets/css/skin-modes.css" rel="stylesheet"/>
+<link href="{{url('Admin')}}/assets/css/dark-style.css" rel="stylesheet"/>
 
 <!-- SIDE-MENU CSS -->
-<link href="{{url('Admin')}}/assets/css-rtl/sidemenu.css" rel="stylesheet">
+<link href="{{url('Admin')}}/assets/css/sidemenu.css" rel="stylesheet">
 
 <!--PERFECT SCROLL CSS-->
 <link href="{{url('Admin')}}/assets/plugins/p-scroll/perfect-scrollbar.css" rel="stylesheet"/>
@@ -41,7 +41,7 @@
 <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{url('Admin')}}/assets/colors/color1.css" />
 
 <!-- Switcher CSS -->
-<link href="{{url('Admin')}}/assets/switcher/css/switcher-rtl.css" rel="stylesheet">
+<link href="{{url('Admin')}}/assets/switcher/css/switcher.css" rel="stylesheet">
 <link href="{{url('Admin')}}/assets/switcher/demo.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
@@ -84,13 +84,13 @@
     }
     div#exportexample_filter {
         display: inline-block;
-        float: left;
+        float: right;
     }
     /*button.btn.btn-light.buttons-collection.dropdown-toggle.buttons-colvis {*/
     /*    width: 220px;*/
     /*}*/
     .dt-button span {
-        padding-right: 38px;
+        padding-left: 38px;
     }
 
     #widgetChart1{

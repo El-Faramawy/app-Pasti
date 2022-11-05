@@ -44,12 +44,12 @@ class SchoolController extends Controller
                 })
                 ->editColumn('block',function ($school){
                     $color = $school->block == "yes" ? "danger" :"dark";
-                    $text = $school->block == "yes" ? "الغاء حظر" :"حظر";
+                    $text = $school->block == "yes" ? "sbloccare" :"bandire";
                     $block =in_array(16,admin()->user()->permission_ids)? "block" : " ";
                     return '<a class="'. $block .' text-center fw-3  text-' . $color . '" data-id="' . $school->id . '" data-text="' . $text . '" style="cursor: pointer"><i class="py-2 fw-3  fa fa-ban text-' . $color . '" ></i></a>';
                 })
                 ->editColumn('is_active',function ($school){
-                    $status = $school->is_active=='yes' ? 'فعال' :'غير فعال' ;
+                    $status = $school->is_active=='yes' ? 'attiva' :'non attivo' ;
                     $color = $school->is_active=='yes' ? 'badge-success' :'badge-danger' ;
                     $url = in_array(15,admin()->user()->permission_ids) ? url("admin/change_school_active", $school->id) :"";
                     return '<a href="' . $url . '" class="badge ' . $color . ' change_active" >' . $status . '</a>';
@@ -83,9 +83,9 @@ class SchoolController extends Controller
             'phone' => 'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-                'image.required' => ' الصورة مطلوبة',
-                'phone.required' => 'رقم الهاتف مطلوب',
+                'name.required' => 'Il nome è obbligatorio',
+                'image.required' => ' La foto è richiesta',
+                'phone.required' => 'Il numero di telefono è richiesto',
             ]
         );
         if ($valedator->fails())
@@ -100,7 +100,7 @@ class SchoolController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم الاضافة بنجاح '
+                'message' => 'Aggiunto con successo'
             ]);
     }
     ################ Edit offer #################
@@ -114,13 +114,13 @@ class SchoolController extends Controller
     {
         $valedator = Validator::make($request->all(), [
             'name' => 'required',
-            'image' => 'required',
+//            'image' => 'required',
             'phone' => 'required',
         ],
             [
-                'name.required' => 'الاسم مطلوب',
-                'image.required' => ' الصورة مطلوبة',
-                'phone.required' => 'رقم الهاتف مطلوب',
+                'name.required' => 'Il nome è obbligatorio',
+//                'image.required' => ' La foto è richiesta',
+                'phone.required' => 'Il numero di telefono è richiesto',
             ]
         );
         if ($valedator->fails())
@@ -140,7 +140,7 @@ class SchoolController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم التعديل بنجاح '
+                'message' => 'Modificato con successo '
             ]);
     }
     ################ multiple Delete  #################
@@ -152,7 +152,7 @@ class SchoolController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
     ################ Delete user #################
@@ -162,14 +162,14 @@ class SchoolController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
     ################ block user #################
     public function block($id)
     {
         $school = School::where('id',$id)->first();
-        $text = $school->block == "yes" ? "تم الغاء الحظر بنجاح" :"تم الحظر بنجاح";
+        $text = $school->block == "yes" ? "Il divieto è stato rimosso con successo" :"Bannato con successo";
         $school->update(['block'=>$school->block=='yes'?'no':'yes']);
         return response()->json(
             [
@@ -181,7 +181,7 @@ class SchoolController extends Controller
     public function change_active($id)
     {
         $school = School::where('id',$id)->first();
-        $text = $school->is_active == "yes" ? "تم الغاء التفعيل بنجاح" :"تم التفعيل بنجاح";
+        $text = $school->is_active == "yes" ? "Disattivato con successo" :"Attivato con successo";
         $school->update(['is_active'=>$school->is_active=='yes'?'no':'yes']);
 
         if ($school->is_active == 'yes' ){

@@ -1,5 +1,5 @@
 @extends('layouts.admin.app')
-@section('page_title') الطلبات @endsection
+@section('page_title') Ordini @endsection
 <!-- INTERNAL SELECT2 CSS -->
 <link href="{{url('admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
 
@@ -8,7 +8,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">الطلبات</h3>
+                    <h3 class="card-title">Ordini</h3>
                     <div class="mr-auto pageheader-btn">
 
                     </div>
@@ -90,11 +90,11 @@
                             <tr>
 {{--                                <th class="text-white"><input type="checkbox" id="master"></th>--}}
 {{--                                <th class="text-white">#</th>--}}
-                                <th class="text-white">المدرسة</th>
-                                <th class="text-white">تاريخ الطلب</th>
-                                <th class="text-white w-15">عدد الطلبات</th>
-                                <th class="text-white w-15">الحالة</th>
-                                <th class="text-white">التفاصيل</th>
+                                <th class="text-white">La scuola</th>
+                                <th class="text-white">La data di Ordini</th>
+                                <th class="text-white w-15">numero di ordini</th>
+                                <th class="text-white w-15">la condizione</th>
+                                <th class="text-white">i dettagli</th>
 {{--                                <th class="text-white">حذف</th>--}}
                             </tr>
                             </thead>
@@ -119,7 +119,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2>  الطلبات  </h2>
+                    <h2>  Ordini  </h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">

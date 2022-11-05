@@ -63,7 +63,7 @@ class ContactController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
 
@@ -74,7 +74,7 @@ class ContactController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
 
@@ -100,7 +100,7 @@ class ContactController extends Controller
             return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم الاضافة بنجاح '
+                'message' => 'Risposto con successo '
             ]);
     }
 

@@ -20,16 +20,16 @@ class SchoolOrderController extends Controller
     public function orderStatus($order_status)
     {
         if ($order_status == 'on_going') {
-            $status = 'جارى التحضير';
+            $status = 'Preparazione';
             $color = 'primary';
         } elseif ($order_status === 'ended') {
-            $status = 'منتهى';
+            $status = 'Finito';
             $color = 'success';
         } elseif ($order_status === 'canceled') {
-            $status = 'تم الالغاء';
+            $status = 'annullato';
             $color = 'warning';
         } else {
-            $status = 'جديد';
+            $status = 'nuovo';
             $color = 'info';
         }
 
@@ -123,7 +123,7 @@ class SchoolOrderController extends Controller
         return response()->json(
             [
                 'success' => 'true',
-                'message' => 'تم تغيير الحالة بنجاح '
+                'message' => 'Lo stato è cambiato correttamente '
             ]);
     }
 

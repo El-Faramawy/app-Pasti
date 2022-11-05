@@ -35,6 +35,6 @@ class SettingController extends Controller
         }
 
         $setting->update($data);
-        return response()->json(['messages' => ['تم تعديل الاعدادات بنجاح'], 'success' => 'true']);
+        return response()->json(['messages' => ['Le impostazioni sono state modificate correttamente'], 'success' => 'true']);
     }
 }

@@ -15,4 +15,13 @@ class SettingController extends Controller
         $setting->terms_link = url('terms');
         return apiResponse($setting);
     }
+    //============================================================
+    public function time(){
+        $setting['time'] = date('H:i:s');
+        $setting['date'] = date('Y-m-d');
+        $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
+        $current_day = date('D') ;
+        $setting['current_day'] = $days[$current_day];
+        return apiResponse($setting);
+    }
 }

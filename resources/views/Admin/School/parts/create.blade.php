@@ -6,33 +6,33 @@
         <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">الإسم </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="الإسم"></i>
+                <span class="required">Il nome </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Il nome"></i>
             </label>
             <!--end::Label-->
-            <input type="text" class="form-control form-control-solid" placeholder="الإسم" name="name" value=""/>
+            <input type="text" class="form-control form-control-solid" placeholder="Il nome" name="name" value=""/>
         </div>
         <!--end::Input group-->
         <!--begin::Input group-->
         <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">العنوان </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="العنوان"></i>
+                <span class="required">l'indirizzo </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="l'indirizzo"></i>
             </label>
             <!--end::Label-->
-            <input type="text" class="form-control form-control-solid" placeholder="العنوان" name="address" value=""/>
+            <input type="text" class="form-control form-control-solid" placeholder="l'indirizzo" name="address" value=""/>
         </div>
         <!--end::Input group-->
         <!--begin::Input group-->
         <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">رقم الهاتف </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="رقم الهاتف"></i>
+                <span class="required">Numero di telefono </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Numero di telefono"></i>
             </label>
             <!--end::Label-->
-            <input type="text" class="form-control form-control-solid" placeholder="رقم الهاتف" name="phone" value=""/>
+            <input type="text" class="form-control form-control-solid" placeholder="Numero di telefono" name="phone" value=""/>
         </div>
         <!--end::Input group-->
 
@@ -40,8 +40,8 @@
         <div class="d-flex flex-column mb-2 fv-row col-sm-12">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required"> الصورة </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="الصورة"></i>
+                <span class="required"> Immagine </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="Immagine"></i>
             </label>
             <!--end::Label-->
             <input accept="image/*" type='file' id="imgInp" name="image"  class="form-control form-control-solid" />

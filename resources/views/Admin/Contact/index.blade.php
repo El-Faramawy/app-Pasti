@@ -1,17 +1,17 @@
 @extends('layouts.admin.app')
-@section('page_title') تواصل معنا @endsection
+@section('page_title') Messaggi di comunicazione @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">تواصل معنا</h3>
-                    <div class="mr-auto pageheader-btn">
+                    <h3 class="card-title">Messaggi di comunicazione</h3>
+                    <div class="ml-auto pageheader-btn">
                         @if(in_array(21,admin()->user()->permission_ids))
                             <a href="#"  id="multiDeleteBtn" class="btn btn-danger btn-icon text-white">
                                             <span>
                                                 <i class="fa fa-trash-o"></i>
-                                            </span> حذف المحدد
+                                            </span> elimina selezionato
                             </a>
                         @endif
                     </div>
@@ -24,14 +24,14 @@
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
-                                <th class="text-white">اسم العميل</th>
-                                <th class="text-white">اسم المدرسة</th>
+                                <th class="text-white">nome dello studente</th>
+                                <th class="text-white">Nome della scuola</th>
 {{--                                <th class="text-white">الهاتف</th>--}}
-                                <th class="text-white">البريد الالكترونى</th>
-                                <th class="text-white">الموضوع</th>
-                                <th class="text-white">الرسالة</th>
-                                <th class="text-white">رد</th>
-                                <th class="text-white">حذف</th>
+                                <th class="text-white">E-mail</th>
+                                <th class="text-white">il tema</th>
+                                <th class="text-white">il messaggio</th>
+                                <th class="text-white">rispondere</th>
+                                <th class="text-white">Elimina</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -54,7 +54,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2>تواصل معنا</h2>
+                    <h2>Messaggi di comunicazione</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">
@@ -76,12 +76,12 @@
                 </div>
                 <div class="modal-footer">
                     <div class=" ">
-                        <input  form="form" value="ارسال" type="submit" id="submit" class="btn btn-primary " style="width: 100px">
+                        <input  form="form" value="inviare" type="submit" id="submit" class="btn btn-primary " style="width: 100px">
 {{--                            <span class="indicator-label ">ارسال</span>--}}
 
                     </div>
                     <div class=" ">
-                        <button class="btn btn-light me-3 close_model" style="width: 100px">غلق</button>
+                        <button class="btn btn-light me-3 close_model" style="width: 100px">chiudere</button>
                     </div>
                 </div>
             </div>

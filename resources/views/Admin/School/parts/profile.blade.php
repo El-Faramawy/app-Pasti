@@ -1,5 +1,5 @@
 @extends('layouts.admin.app')
-@section('page_title') البروفايل @endsection
+@section('page_title') profilo @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-4">
@@ -12,12 +12,12 @@
                             <div class="user-wrap"><h4
                                     class="mb-1">{{$school->name}}</h4> <h6
                                     class="text-muted mb-4">
-                                    رقم الهاتف : {{$school->phone_code.$school->phone}}</h6>
+                                    Numero di telefono : {{$school->phone_code.$school->phone}}</h6>
                                 <a href="tel:{{$school->phone_code.$school->phone}}"
                                    class="btn btn-primary mt-2 mb-1"><i
-                                        class="fa fa-phone"></i> اتصال </a>
+                                        class="fa fa-phone"></i> Contatto </a>
                                 <span href="" class="btn btn-secondary mt-2 mb-1"><i
-                                        class="fa fa-thumbs-{{$school->is_active == 'yes'?'up':'down'}}"></i> {{$school->is_active == 'yes'?'مفعل':'غير مفعل'}} </span>
+                                        class="fa fa-thumbs-{{$school->is_active == 'yes'?'up':'down'}}"></i> {{$school->is_active == 'yes'?'attiva':'non attivo'}} </span>
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <div class="float-left"><h3 class="card-title">بيانات شخصية</h3></div>
+                    <div class="float-left"><h3 class="card-title">Dati personali</h3></div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="card-body wideget-user-contact">
@@ -33,7 +33,7 @@
                     <div class="media mb-5 mt-0">
                         <div class="d-flex ml-3"><span class="user-contact-icon bg-primary"><i
                                     class="fa fa-building-o text-white"></i></span></div>
-                        <div class="media-body"><a href="#" class="text-dark">الكود</a>
+                        <div class="media-body"><a href="#" class="text-dark">Codice</a>
                             <div class="text-muted fs-14">{{$school->code}}</div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="media mb-5 mt-0">
                         <div class="d-flex ml-3"><span class="user-contact-icon bg-success"><i
                                     class="fa fa-flag text-white"></i></span></div>
-                        <div class="media-body"><a href="#" class="text-dark">العنوان</a>
+                        <div class="media-body"><a href="#" class="text-dark">l'indirizzo</a>
                             <div class="text-muted fs-14">{{$school->address }}</div>
                         </div>
                     </div>
@@ -55,12 +55,12 @@
                     <div class="tab-menu-heading">
                         <div class="tabs-menu1">
                             <ul class="nav">
-                                <li class=""><a href="#tab-51" class="show active" data-toggle="tab">طلبات الوجبات اليوم <i
+                                <li class=""><a href="#tab-51" class="show active" data-toggle="tab">Gli ordini dei pasti di oggi <i
                                             class="fa fa-bread-slice"></i>
                                         <span class="badgetext badge badge-danger badge-pill">{{$all_meals_count}}</span>
                                     </a>
                                 </li>
-                                <li><a href="#tab-61" data-toggle="tab" class="">طلبات الاضافات اليوم  <i class="fa fa-water mr-1"></i>
+                                <li><a href="#tab-61" data-toggle="tab" class="">Richieste di aggiunta oggi <i class="fa fa-water mr-1"></i>
                                         <span class="badgetext badge badge-danger badge-pill">{{$all_additions_count}}</span>
                                     </a>
                                 </li>

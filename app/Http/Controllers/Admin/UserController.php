@@ -38,12 +38,12 @@ class UserController extends Controller
                 })
                 ->editColumn('block',function ($user){
                     $color = $user->block == "yes" ? "danger" :"dark";
-                    $text = $user->block == "yes" ? "الغاء حظر" :"حظر";
+                    $text = $user->block == "yes" ? "sbloccare" :"bandire";
                     $block =in_array(10,admin()->user()->permission_ids)? "block" : " ";
                         return '<a class="'. $block .' text-center fw-3  text-' . $color . '" data-id="' . $user->id . '" data-text="' . $text . '" style="cursor: pointer"><i class="py-2 fw-3  fa fa-ban text-' . $color . '" ></i></a>';
                 })
                 ->editColumn('is_active',function ($user){
-                    $status = $user->is_active=='yes' ? 'فعال' :'غير فعال' ;
+                    $status = $user->is_active=='yes' ? 'attiva' :'non attivo' ;
                     $color = $user->is_active=='yes' ? 'badge-success' :'badge-danger' ;
                     $url = in_array(9,admin()->user()->permission_ids) ? url("admin/change_user_active", $user->id) :"";
                         return '<a href="' . $url . '" class="badge ' . $color . ' change_active" >' . $status . '</a>';
@@ -72,7 +72,7 @@ class UserController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
     ################ Delete user #################
@@ -82,14 +82,14 @@ class UserController extends Controller
         return response()->json(
             [
                 'code' => 200,
-                'message' => 'تم الحذف بنجاح'
+                'message' => 'Eliminato con successo'
             ]);
     }
     ################ block user #################
     public function block($id)
     {
         $user = User::where('id',$id)->first();
-        $text = $user->block == "yes" ? "تم الغاء الحظر بنجاح" :"تم الحظر بنجاح";
+        $text = $user->block == "yes" ? "Il divieto è stato rimosso con successo" :"Bannato con successo";
         $user->update(['block'=>$user->block=='yes'?'no':'yes']);
 
         return response()->json(
@@ -102,7 +102,7 @@ class UserController extends Controller
     public function change_active($id)
     {
         $user = User::where('id',$id)->first();
-        $text = $user->is_active == "yes" ? "تم الغاء التفعيل بنجاح" :"تم التفعيل بنجاح";
+        $text = $user->is_active == "yes" ? "Disattivato con successo" :"Attivato con successo";
         $user->update(['is_active'=>$user->is_active=='yes'?'no':'yes']);
 
         if ($user->is_active == 'yes' ){
