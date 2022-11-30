@@ -11,8 +11,8 @@
 
 
 <!-- GLOBAL-LOADER -->
-<div id="global-loader">
-    <img src="{{url('Admin')}}/assets/images/loader.svg" class="loader-img" alt="Loader">
+<div id="global-loader" style="background-color: transparent!important;">
+    <img src="{{url('Admin')}}/assets/images/loader.svg" class="loader-img" alt="Loader" >
 </div>
 <!-- /GLOBAL-LOADER -->
 

@@ -11,6 +11,7 @@ use App\Models\OrderDetails;
 use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -79,21 +80,28 @@ class SchoolController extends Controller
 //        return count($request->brands) > 0;
         $valedator = Validator::make($request->all(), [
             'name' => 'required',
-            'image' => 'required',
-            'phone' => 'required',
+//            'image' => 'required',
+//            'phone' => 'required',
+            'user_name'=>'required|unique:users,user_name|unique:schools,user_name',
+            'password' => 'required',
         ],
             [
                 'name.required' => 'Il nome è obbligatorio',
-                'image.required' => ' La foto è richiesta',
-                'phone.required' => 'Il numero di telefono è richiesto',
+                'user_name.required' => ' è richiesto il nome utente',
+                'user_name.unique' => ' il nome utente è già stato token ',
+                'password.required' => "E 'richiesta la password",
             ]
         );
         if ($valedator->fails())
             return response()->json(['messages' => $valedator->errors()->getMessages(), 'success' => 'false']);
 
         $data = $request->all();
-        $data['image'] = 'uploads/school/' . $this->saveImage($request->image, 'uploads/school');
+//        $data['image'] = 'uploads/school/' . $this->saveImage($request->image, 'uploads/school');
         $data['code'] = $this->generateRandomString(6);
+        $data['phone_code'] = '+41' ;
+        if ($request->image && $request->image != null)
+            $data['image']    = 'uploads/school/'.$this->saveImage($request->image,'uploads/school');
+        $data['password'] = Hash::make($request->password);
         $data['is_active'] = 'yes';
         School::create($data);
 
@@ -115,18 +123,21 @@ class SchoolController extends Controller
         $valedator = Validator::make($request->all(), [
             'name' => 'required',
 //            'image' => 'required',
-            'phone' => 'required',
+//            'phone' => 'required',
+            'user_name'=>'required|unique:users,user_name|unique:schools,user_name,'.$school->id ,
         ],
             [
                 'name.required' => 'Il nome è obbligatorio',
 //                'image.required' => ' La foto è richiesta',
-                'phone.required' => 'Il numero di telefono è richiesto',
+//                'phone.required' => 'Il numero di telefono è richiesto',
+                'user_name.required' => ' è richiesto il nome utente',
+                'user_name.unique' => ' il nome utente è già stato token ',
             ]
         );
         if ($valedator->fails())
             return response()->json(['messages' => $valedator->errors()->getMessages(), 'success' => 'false']);
 
-        $data = $request->all();
+        $data = $request->except('password');
 
         if ($request->image && $request->image != null) {
             if (file_exists($school->getAttributes()['image'])) {
@@ -135,6 +146,10 @@ class SchoolController extends Controller
             $data['image'] = 'uploads/school/' . $this->saveImage($request->image, 'uploads/school');
 
         }
+        if (isset($request->password) && $request->password != null){
+            $data['password'] = Hash::make($request->password);
+        }
+
         $school->update($data);
 
         return response()->json(
@@ -198,42 +213,83 @@ class SchoolController extends Controller
 
     //*********************************************************
 
-    public function school_profile($id){
+    public function school_profile(Request $request , $id){
         $school = School::where('id',$id)->first();
         $user_ids = User::where('school_id', $id)->pluck('id')->toArray();
-        $all_meals_count = 0;
-        $meals = Menu::where(['type' => 'menu'])->with('menu_details')
-            ->whereHas('meal_menus.order', function ($query) use ($user_ids) {
-                $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
-            })
-            ->get();
+        $all_meals_count = $all_additions_count = 0;
 
-        foreach ($meals as $meal) {
-            $meal->meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
-                $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
-            })->where('menu_id', $meal->id)
-                ->count();
+        $from_date = $request->created_from ? date('Y-m-d', strtotime($request->created_from)) : date('Y-m-d');
+        $to_date = $request->created_to ? date('Y-m-d', strtotime($request->created_to)) : date('Y-m-d');
 
-            $all_meals_count += $meal->meal_count;
+        if ($request->created_from || $request->created_to) {
+            //*************** meeeeeeeeeeeeeals /***************
+            $meals = Menu::where(['type' => 'menu'])->with('menu_details')
+                ->whereHas('meal_menus.order', function ($query) use ($user_ids, $from_date, $to_date) {
+                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+                })
+                ->get();
+
+            foreach ($meals as $meal) {
+                $meal->meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids, $from_date, $to_date) {
+                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+                })->where('menu_id', $meal->id)
+                    ->count();
+
+                $all_meals_count += $meal->meal_count;
+            }
+
+            //*************** additions /***************
+            $additions = Menu::where(['type' => 'addition'])->with('menu_details')
+                ->whereHas('addition_menus.order', function ($query) use ($user_ids, $from_date, $to_date) {
+                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+                })
+                ->get();
+
+            foreach ($additions as $addition) {
+                $addition->addition_count = OrderDetails::whereHas('order', function ($query) use ($user_ids, $from_date, $to_date) {
+                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+                })->where('menu_id', $addition->id)
+                    ->count();
+
+                $all_additions_count += $addition->addition_count;
+            }
+
+        } else {
+            //*************** meeeeeeeeeeeeeals /***************
+            $meals = Menu::where(['type' => 'menu'])->with('menu_details')
+                ->whereHas('meal_menus.order', function ($query) use ($user_ids) {
+                    $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+                })
+                ->get();
+
+            foreach ($meals as $meal) {
+                $meal->meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
+                    $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+                })->where('menu_id', $meal->id)
+                    ->count();
+
+                $all_meals_count += $meal->meal_count;
+            }
+
+            //*************** additions /***************
+            $additions = Menu::where(['type' => 'addition'])->with('menu_details')
+                ->whereHas('addition_menus.order', function ($query) use ($user_ids) {
+                    $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+                })
+                ->get();
+
+            foreach ($additions as $addition) {
+                $addition->addition_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
+                    $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+                })->where('menu_id', $addition->id)
+                    ->count();
+
+                $all_additions_count += $addition->addition_count;
+            }
         }
 
-        $all_additions_count = 0;
-        $additions = Menu::where(['type' => 'addition'])->with('menu_details')
-            ->whereHas('addition_menus.order', function ($query) use ($user_ids) {
-                $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
-            })
-            ->get();
-
-        foreach ($additions as $addition) {
-            $addition->addition_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
-                $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
-            })->where('menu_id', $addition->id)
-                ->count();
-
-            $all_additions_count += $addition->addition_count;
-        }
-
-        return view('Admin.School.parts.profile',compact('school','meals','additions','all_meals_count','all_additions_count'));
+        return view('Admin.School.parts.profile',compact('school','meals','additions','all_meals_count','all_additions_count')
+        ,['created_from'=>$request->created_from,'created_to'=>$request->created_to]);
     }
 
     //================================================================************************

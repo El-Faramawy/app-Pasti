@@ -19,10 +19,14 @@ class AuthController extends Controller
     use PhotoTrait;
 
     public function user_login($data){
-        $credentials = ['phone_code'=>$data['phone_code'] , 'phone'=>$data['phone']];
-        $user = User::with('school')->where($credentials)->first(); // generate token
-        if ($user){
-            $user->token = user_api()->login($user); // generate token
+//        $credentials = ['phone_code'=>$data['phone_code'] , 'phone'=>$data['phone']];
+        $credentials = ['user_name'=>$data['user_name'] , 'password'=>$data['password']];
+//        $user = User::with('school')->where($credentials)->first(); // generate token
+        $token = user_api()->attempt($credentials);
+        if ($token){
+            $user = user_api()->user();
+            $user->school = user_api()->user()->school;
+            $user->token = $token;
             PhoneToken::updateOrCreate([
                 'user_id'=>$user->id ,
                 'phone_token'=>$data['fcm_token'],
@@ -35,10 +39,14 @@ class AuthController extends Controller
     }
 
     public function school_login($data){
-        $credentials = ['phone_code'=>$data['phone_code'] , 'phone'=>$data['phone']];
-        $user = School::where($credentials)->first(); // generate token
-        if ($user){
-            $user->token = school_api()->login($user); // generate token
+//        $credentials = ['phone_code'=>$data['phone_code'] , 'phone'=>$data['phone']];
+        $credentials = ['user_name'=>$data['user_name'] , 'password'=>$data['password']];
+        $token = school_api()->attempt($credentials);
+//        $user = School::where($credentials)->first(); // generate token
+        if ($token){
+//            $user->token = school_api()->login($user); // generate token
+            $user = school_api()->user();
+            $user->token = $token;
             PhoneToken::updateOrCreate([
                 'school_id'=>$user->id ,
                 'phone_token'=>$data['fcm_token'],
@@ -54,18 +62,23 @@ class AuthController extends Controller
         try {
             // validation
             $validator = Validator::make($request->all(),[
-                'phone'=>'required',
+//                'phone'=>'required',
+                'user_name'=>'required',
+                'password'=>'required',
             ]);
             if ($validator->fails()){
                 return apiResponse(null,$validator->errors(),'422');
             }
 
-            $data = $request->only('phone','phone_code','fcm_token');
+//            $data = $request->only('phone','phone_code','fcm_token');
+            $data = $request->only('user_name','password','fcm_token');
 //            $data['phone_code'] = $request['phone_code'] ?? '0041';
             $data['phone_code'] =  '+41';
 
-           $user = User::where('phone',$request->phone)->count();
-           $school = School::where('phone',$request->phone)->count();
+//           $user = User::where('phone',$request->phone)->count();
+//           $school = School::where('phone',$request->phone)->count();
+           $user = User::where('user_name',$request->user_name)->count();
+           $school = School::where('user_name',$request->user_name)->count();
 
             if ($user > 0){
                 return $this->user_login($data);

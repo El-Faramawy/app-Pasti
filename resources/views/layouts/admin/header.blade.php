@@ -4,7 +4,7 @@
 <div class="app-header header">
     <div class="container-fluid">
         <div class="d-flex">
-            <a class="header-brand d-md-none" href="{{url('admin')}}/index">
+            <a class="header-brand d-md-none" href="{{route('home')}}">
                 <img src="{{get_file($setting->logo)}}" class="header-brand-img mobile-icon" alt="logo">
                 <img src="{{get_file($setting->logo)}}" class="header-brand-img desktop-logo mobile-logo" alt="logo">
             </a>
@@ -30,15 +30,15 @@
                 </div><!-- FULL-SCREEN -->
 
                 <div class="dropdown profile-1">
-                    <a href="#" data-toggle="dropdown" class="nav-link pl-2 pr-2  leading-none d-flex">
+                    <a href="#" data-toggle="dropdown" class="nav-link pr-2 pl-2  leading-none d-flex">
 									<span>
-										<img src="{{get_file($setting->logo)}}" alt="profile-user" class="avatar  ml-xl-3 profile-user brround cover-image" style="background-color: white!important;">
+										<img src="{{get_file($setting->logo)}}" alt="profile-user" class="avatar  mr-xl-3 profile-user brround cover-image" style="background-color: white!important;">
 									</span>
-                        <div class="text-center mt-1 d-none d-xl-block">
+                        <div class="text-center mt-1 d-none d-xr-block">
                             <h6 class="text-dark mb-0 fs-13 font-weight-semibold">{{admin()->user()->name}}</h6>
                         </div>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <a class="dropdown-item" href="{{route('profile')}}">
                             <i class="dropdown-icon zmdi zmdi-edit"></i> profilo
                         </a>

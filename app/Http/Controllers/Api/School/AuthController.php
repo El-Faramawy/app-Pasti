@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\School;
 use App\Http\Controllers\Controller;
 use App\Models\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use \Illuminate\Support\Facades\Auth;
@@ -21,8 +22,10 @@ class AuthController extends Controller
         try {
             // validation
             $validator = Validator::make($request->all(),[
-                'phone'=>'required|unique:users,phone|unique:schools,phone',
-                'address'=>'required',
+//                'phone'=>'required|unique:users,phone|unique:schools,phone',
+                'user_name'=>'required|unique:users,user_name|unique:schools,user_name',
+                'password'=>'required',
+//                'address'=>'required',
                 'name'=>'required',
             ]);
             if ($validator->fails()){
@@ -34,6 +37,7 @@ class AuthController extends Controller
             if ($request->image && $request->image != null)
                 $data['image']    = 'uploads/school/'.$this->saveImage($request->image,'uploads/school');
             $data['code'] = $this->generateRandomString(6);
+            $data['password'] = Hash::make($request->password);
             $user = School::create($data);
 
             $token = school_api()->login($user); // generate token

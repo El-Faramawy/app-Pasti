@@ -19,9 +19,11 @@ use App\Models\OrderDetails;
 use App\Models\Governorate;
 use App\Models\Setting;
 use App\Models\Target;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+
     public function index(Request $request){
 
         $created_from = $request->created_from ? date('Y-m-d',strtotime($request->created_from)):date('2022-1-1');
@@ -60,10 +62,26 @@ class HomeController extends Controller
         $ended_order_count = Order::whereBetween('created_at',[$created_from,$created_to])->where('status','ended')->count();
         $canceled_order_count = Order::whereBetween('created_at',[$created_from,$created_to])->where('status','canceled')->count();
 
+//        //*************** School Orders ******************
+
+        $schools = School::all();
+        foreach ($schools as $school) {
+            $school->orders = Order::with('user.school')
+                ->whereHas('user', function ($query) use ($school) {
+                    $query->where('school_id', $school->id);
+                })
+                ->groupBy('status')
+                ->select('*', DB::raw('count(*) as order_count'))
+                ->where('date',date('Y-m-d'))
+                ->get();
+        }
+        $school_orders = $schools->pluck('orders')->flatten()->toArray();
+
         return view('Admin.index',['created_from'=>$created_from,'created_to'=>$created_to],
             compact('chart_day_array','chart_order_array','chart_order_count','schools_array',
                 'school_count','menu_count', 'order_count','user_count','admin_count','contact_count'
-                ,'new_order_count','on_going_order_count','ended_order_count','canceled_order_count'));
+                ,'new_order_count','on_going_order_count','ended_order_count','canceled_order_count'
+                ,'school_orders'));
 //        return view('Admin.index');
     }
 

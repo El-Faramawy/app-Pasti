@@ -54,6 +54,7 @@
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
                                 <th class="text-white">Il nome</th>
+                                <th class="text-white">nome utente</th>
                                 <th class="text-white">Numero di telefono</th>
                                 <th class="text-white">La scuola </th>
                                 <th class="text-white">l'aula </th>
@@ -81,6 +82,7 @@
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
+            {data: 'user_name', name: 'user_name'},
             {data: 'phone', name: 'phone'},
             {data: 'school', name: 'school'},
             {data: 'class_name', name: 'class_name'},

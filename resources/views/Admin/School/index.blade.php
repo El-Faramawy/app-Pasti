@@ -32,6 +32,7 @@
                                 <th class="text-white">#</th>
                                 <th class="text-white">Immagine</th>
                                 <th class="text-white">Il nome</th>
+                                <th class="text-white">nome utente</th>
                                 <th class="text-white">Numero di telefono</th>
                                 <th class="text-white">Codice</th>
                                 <th class="text-white">l'indirizzo</th>
@@ -107,6 +108,7 @@
             {data: 'id', name: 'id'},
             {data: 'image', name: 'image'},
             {data: 'name', name: 'name'},
+            {data: 'user_name', name: 'user_name'},
             {data: 'phone', name: 'phone'},
             {data: 'code', name: 'code'},
             {data: 'address', name: 'address'},

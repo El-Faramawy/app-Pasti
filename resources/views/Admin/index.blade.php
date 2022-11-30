@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 </div>
-            </div><!-- COL END -->
+        </div><!-- ROW END -->
 
         <div class="row">
             <a href="{{in_array(1,admin()->user()->permission_ids) ? route('admins.index') : '#'}}" class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
@@ -189,109 +189,108 @@
         </div>
 {{--        </div>--}}
 {{--        <!-- ROW-2 END -->--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-lg-6 col-md-12 col-sm-12 col-xl-6">--}}
-{{--                <div class="card">--}}
-{{--                    <div class="card-header">--}}
-{{--                        <h3 class="card-title">المنتجات الاكثر مبيعا</h3>--}}
-{{--                    </div>--}}
-{{--                    <div class="card-body">--}}
-{{--                        <div class="table-responsive">--}}
-{{--                            <table class="table card-table border table-vcenter text-nowrap align-items-center">--}}
-{{--                                <thead class="">--}}
-{{--                                <tr>--}}
-{{--                                    <th>اسم المنتج</th>--}}
-{{--                                    <th>عدد مرات البيع</th>--}}
-{{--                                    <th>اجمالى المبيع</th>--}}
-{{--                                    <th>اجمالى الربح</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-{{--                                    @foreach($most_sell_products as $product)--}}
-{{--                                        <tr>--}}
-{{--                                            <td>--}}
-{{--                                                <img src="{{$product->image}}" alt="img" class="h-7 w-7">--}}
-{{--                                                <p class="d-inline-block align-middle mb-0 mr-1">--}}
-{{--                                                    <a href="" class="d-inline-block align-middle mb-0 product-name text-dark font-weight-semibold">{{$product->name}}</a>--}}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Applicazioni scolastiche oggi</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table card-table border table-vcenter text-nowrap align-items-center">
+                                <thead class="">
+                                <tr>
+                                    <th >La scuola</th>
+                                    <th >numero di ordini</th>
+                                    <th >la condizione</th>
+                                    <th >i dettagli</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($school_orders as $order)
+                                        <tr>
+                                            <td>
+                                                <img src="{{$order['user']['school']['image']}}" alt="img" class="h-7 w-7 mr-2 br-5 ">
+                                                <p class="d-inline-block align-middle mb-0 mr-1">
+                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>
 {{--                                                    <br>--}}
-{{--                                                    <span class="text-muted fs-13">{{$product->brand->name??''}}</span>--}}
-{{--                                                </p>--}}
-{{--                                            </td>--}}
-{{--                                            <td>{{$product->count}}</td>--}}
-{{--                                            <td class="font-weight-semibold fs-15">{{$product->total_income}}</td>--}}
-{{--                                            <td class="font-weight-semibold fs-15">{{$product->total_profit}}</td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="col-lg-6 col-md-12 col-sm-12 col-xl-6">--}}
-{{--                <div class="card">--}}
-{{--                    <div class="card-header">--}}
-{{--                        <h3 class="card-title">العملاء الاكثر مبيعا</h3>--}}
-{{--                    </div>--}}
-{{--                    <div class="card-body">--}}
-{{--                        <div class="table-responsive">--}}
-{{--                            <table class="table card-table border table-vcenter text-nowrap align-items-center">--}}
-{{--                                <thead class="">--}}
-{{--                                <tr>--}}
-{{--                                    <th>اسم العميل</th>--}}
-{{--                                    <th>رقم الهاتف</th>--}}
-{{--                                    <th>عدد مرات الشراء</th>--}}
-{{--                                    <th>اجمالى المشتريات </th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-{{--                                @foreach($most_purchase_clients as $client)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$client->name}}</td>--}}
-{{--                                        <td>{{$client->phone}}</td>--}}
-{{--                                        <td class="font-weight-semibold fs-15">{{$client->purchase_num}}</td>--}}
-{{--                                        <td class="font-weight-semibold fs-15">{{$client->total_purchases}}</td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-lg-6 col-md-12 col-sm-12 col-xl-6">--}}
-{{--                <div class="card">--}}
-{{--                    <div class="card-header">--}}
-{{--                        <h3 class="card-title">عملاء وصلو للاهداف</h3>--}}
-{{--                    </div>--}}
-{{--                    <div class="card-body">--}}
-{{--                        <div class="table-responsive">--}}
-{{--                            <table class="table card-table border table-vcenter text-nowrap align-items-center">--}}
-{{--                                <thead class="">--}}
-{{--                                <tr>--}}
-{{--                                    <th>اسم العميل</th>--}}
-{{--                                    <th>اجمالى المشتريات </th>--}}
-{{--                                    <th>الهدف</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-{{--                                @foreach($most_target_clients as $client)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$client->name}}</td>--}}
-{{--                                        <td class="font-weight-semibold fs-15">{{$client->total_purchases}}</td>--}}
-{{--                                        <td class="font-weight-semibold fs-15">{{$client->target->gifts_for}}</td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+{{--                                                    <span class="text-muted fs-13">--}}
+{{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="text-bold cursor-pointer" >{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
+{{--                                                    </span>--}}
+                                                </p>
+                                            </td>
+                                            <td>{{$order['order_count']}}</td>
+                                            <td class="font-weight-semibold fs-15">
+                                                <div class="card-header pt-0  pb-0 border-bottom-0">
+                                                    @if ($order['status'] == 'on_going')
+                                                        <a class="badge badge-primary text-white ">Preparazione</a>
 
-{{--        </div>--}}
+                                                    @elseif ($order['status'] === 'ended')
+                                                        <a class="badge badge-success text-white ">Finito</a>
+
+                                                    @elseif ($order['status'] === 'canceled')
+                                                        <a class="badge badge-warning text-white ">annullato</a>
+
+                                                    @else
+                                                        <a class="badge badge-info text-white ">nuovo</a>
+
+                                                    @endif
+                                                    <div class="card-options pr-0 ml-1">
+                                                        <a class="btn btn-sm {{in_array(53, admin()->user()->permission_ids)?'statusBtn':''}}"
+                                                           style="background-color: #0ea5b9;color: white"
+                                                           href="{{url("admin/change_school_order_status",$order["id"])}}"><i
+                                                                class="fa fa-pencil mb-0"></i></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="font-weight-semibold fs-15">
+                                                <div class="card-options pr-2">
+                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="Modal" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered modal-lg mw-650px">
+                <!--begin::Modal content-->
+                <div class="modal-content" id="modalContent" >
+                    <!--begin::Modal header-->
+                    <div class="modal-header">
+                        <!--begin::Modal title-->
+                        <h2>  Ordini  </h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                      fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-3" id="form-load">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     @endif
 @endsection
 @push('admin_js')
@@ -478,6 +477,76 @@
         $(document).ready(function() {
             $('.card-options-collapse').click();
         })
+    </script>
+
+
+    {{--    ########################### start status btn ############################--}}
+
+    <script>
+
+        $(document).on('click', '.statusBtn', function (e) {
+            e.preventDefault()
+            // $('#form-load').html(loader)
+            $('#Modal').modal('show')
+            var url = $(this).attr('href')
+            $('#form-load').load(url)
+        });
+
+        $(document).on('click',".status_submit",function (e) {
+            e.preventDefault();
+            var id = $('#order_id').val()
+            var status = $(this).attr('status')
+
+            var url = "{{route('update_school_order_status')}}?id="+id+"&status="+status;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                beforeSend: function () {
+                    $('#global-loader').show()
+                },
+                success: function (data) {
+                    $('#global-loader').hide()
+                    if (data.success === 'true') {
+                        // alert(1)
+                        $('#Modal').modal('hide')
+                        my_toaster(data.message)
+                        window.setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                },
+                error: function (data) {
+                    $('#global-loader').hide()
+                    console.log(data)
+                    if (data.status === 500) {
+                        my_toaster('هناك خطأ ما','error')
+                    }
+
+                    if (data.status === 422) {
+                        var errors = $.parseJSON(data.responseText);
+
+                        $.each(errors, function (key, value) {
+                            if ($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {
+                                    my_toaster(value,'error')
+                                });
+
+                            } else {
+
+                            }
+                        });
+                    }
+                    if (data.status == 421){
+                        my_toaster(data.message,'error')
+                    }
+
+                },//end error method
+
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
     </script>
 
 @endpush

@@ -48,7 +48,7 @@ if (!function_exists('get_file')) {
         if (!is_null($file))
             return asset($file);
         else
-            return asset('admin/imgs/default.jpg');
+            return asset('Admin/imgs/default.jpg');
 
     }
 }

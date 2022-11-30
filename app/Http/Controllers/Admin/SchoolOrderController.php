@@ -51,6 +51,7 @@ class SchoolOrderController extends Controller
                     ->groupBy('date', 'status')
                     ->orderBy('date', 'DESC')
                     ->select('*', DB::raw('count(*) as order_count'))
+                    ->where('date','<=',date('Y-m-d'))
                     ->get();
             }
             $orders = $schools->pluck('orders')->flatten()->toArray();
@@ -75,8 +76,10 @@ class SchoolOrderController extends Controller
                            </div>';
                 })
                 ->addColumn('school', function ($order) {
-                    return $order['user']['school']['name'] ?? 'مدرسة محذوفة';
+//                    return $order['user']['school']['name'] ?? 'مدرسة محذوفة';
+                    return '<a href="'.url("admin/school_profile",$order['user']['school_id']).'" class="text-bold cursor-pointer" >'.$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " .'</a>';
                 })
+
                 ->escapeColumns([])
                 ->make(true);
         }
