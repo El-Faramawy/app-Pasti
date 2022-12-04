@@ -62,14 +62,19 @@ class HomeController extends Controller
         $ended_order_count = Order::whereBetween('created_at',[$created_from,$created_to])->where('status','ended')->count();
         $canceled_order_count = Order::whereBetween('created_at',[$created_from,$created_to])->where('status','canceled')->count();
 
-//        //*************** School Orders ******************
+//        //*************** School today Orders ******************
 
         $schools = School::all();
         foreach ($schools as $school) {
-            $school->orders = Order::with('user.school')
-                ->whereHas('user', function ($query) use ($school) {
-                    $query->where('school_id', $school->id);
+            $school->orders = Order::with('user.school','school')
+                ->where(function($q) use ($school) {
+                    $q->whereHas('user', function ($query) use ($school) {
+                        $query->where('school_id', $school->id);
+                    })->orwhere('school_id', $school->id);
                 })
+//                ->whereHas('user', function ($query) use ($school) {
+//                    $query->where('school_id', $school->id);
+//                })->orwhere('school_id', $school->id)
                 ->groupBy('status')
                 ->select('*', DB::raw('count(*) as order_count'))
                 ->where('date',date('Y-m-d'))
@@ -77,11 +82,28 @@ class HomeController extends Controller
         }
         $school_orders = $schools->pluck('orders')->flatten()->toArray();
 
+//        //*************** School tomorrow Orders ******************
+
+        $schools = School::all();
+        foreach ($schools as $school) {
+            $school->orders = Order::with('user.school','school')
+                ->where(function($q) use ($school) {
+                    $q->whereHas('user', function ($query) use ($school) {
+                        $query->where('school_id', $school->id);
+                    })->orwhere('school_id', $school->id);
+                })
+                ->groupBy('status')
+                ->select('*', DB::raw('count(*) as order_count'))
+                ->where('date',date('Y-m-d',strtotime('+1 day')))
+                ->get();
+        }
+        $school_tomorrow_orders = $schools->pluck('orders')->flatten()->toArray();
+
         return view('Admin.index',['created_from'=>$created_from,'created_to'=>$created_to],
             compact('chart_day_array','chart_order_array','chart_order_count','schools_array',
                 'school_count','menu_count', 'order_count','user_count','admin_count','contact_count'
                 ,'new_order_count','on_going_order_count','ended_order_count','canceled_order_count'
-                ,'school_orders'));
+                ,'school_orders','school_tomorrow_orders'));
 //        return view('Admin.index');
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\PhotoTrait;
+use App\Http\Traits\NotificationTrait;
 use App\Models\Menu;
 use App\Models\MenuDetails;
 use App\Models\School;
@@ -14,7 +15,7 @@ use Yajra\DataTables\DataTables;
 
 class MenuController extends Controller
 {
-    use PhotoTrait;
+    use PhotoTrait,NotificationTrait;
 
     public function index(Request $request)
     {
@@ -38,6 +39,9 @@ class MenuController extends Controller
                 })
                 ->editColumn('image',function ($menu){
                     return '<img alt="image" class="img list-thumbnail border-0" style="width:100px" onclick="window.open(this.src)" src="'.$menu->image.'">';
+                })
+                ->editColumn('date', function ($menu) {
+                    return date('d-m-Y', strtotime($menu->date)) ;
                 })
                 ->editColumn('type',function ($menu){
                     return $menu->type == 'menu' ? 'un pasto' : 'aggiunta';
@@ -64,18 +68,20 @@ class MenuController extends Controller
 //        return count($request->brands) > 0;
         $valedator = Validator::make($request->all(), [
             'name' => 'required',
-            'image' => 'required',
+            'price' => 'required',
+//            'image' => 'required',
         ],
             [
                 'name.required' => 'Il nome è obbligatorio',
-                'image.required' => ' La foto è richiesta',
+                'price.required' => 'Prezzo è obbligatorio',
+//                'image.required' => ' La foto è richiesta',
             ]
         );
         if ($valedator->fails())
             return response()->json(['messages' => $valedator->errors()->getMessages(), 'success' => 'false']);
 
-        $data = $request->except('schools','meal_name');
-        $data['image']    = 'uploads/menu/'.$this->saveImage($request->image,'uploads/menu');
+        $data = $request->except('schools'/*,'meal_name'*/);
+//        $data['image']    = 'uploads/menu/'.$this->saveImage($request->image,'uploads/menu');
         $menu = Menu::create($data);
 
         if ($request->schools){
@@ -84,18 +90,21 @@ class MenuController extends Controller
                     'menu_id'   => $menu->id,
                     'school_id'      => $school
                 ]) ;
-
             }
         }
+        $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
+        $day = date('D' ,strtotime($menu['date'] ) );
+        $this->sendNotification($request['schools'], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
+        $this->sendFCMNotification($request['schools'], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
 
-        if ($request->meal_name){
-            foreach ($request['meal_name'] as $meal_name){
-                MenuDetails::create([
-                    'menu_id'   => $menu->id,
-                    'name'      => $meal_name
-                ]) ;
-            }
-        }
+//        if ($request->meal_name){
+//            foreach ($request['meal_name'] as $meal_name){
+//                MenuDetails::create([
+//                    'menu_id'   => $menu->id,
+//                    'name'      => $meal_name
+//                ]) ;
+//            }
+//        }
 
         return response()->json(
             [
@@ -120,27 +129,32 @@ class MenuController extends Controller
     {
         $valedator = Validator::make($request->all(), [
             'name' => 'required',
+            'price' => 'required',
 //            'image' => 'required',
         ],
             [
                 'name.required' => 'Il nome è obbligatorio',
+                'price.required' => 'Prezzo è obbligatorio',
 //                'image.required' => ' La foto è richiesta',
             ]
         );
         if ($valedator->fails())
             return response()->json(['messages' => $valedator->errors()->getMessages(), 'success' => 'false']);
 
-        $data = $request->except('schools','meal_name');
+        $data = $request->except('schools'/*,'meal_name'*/);
 
-        if ( $request->image && $request->image != null ){
-            if (file_exists($menu->getAttributes()['image'])) {
-                unlink($menu->getAttributes()['image']);
-            }
-            $data['image']    = 'uploads/menu/'.$this->saveImage($request->image,'uploads/menu');
-
-        }
+//        if ( $request->image && $request->image != null ){
+//            if (file_exists($menu->getAttributes()['image'])) {
+//                unlink($menu->getAttributes()['image']);
+//            }
+//            $data['image']    = 'uploads/menu/'.$this->saveImage($request->image,'uploads/menu');
+//
+//        }
         $menu->update($data);
 
+        $old_school = SchoolMenu::where('menu_id', $menu->id)->pluck('school_id')->toArray();
+        $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
+        $day = date('D' ,strtotime($menu['date'] ) );
         SchoolMenu::where('menu_id', $menu->id)->delete();
         if ($request->schools){
             foreach ($request['schools'] as $school){
@@ -148,21 +162,24 @@ class MenuController extends Controller
                     'menu_id'   => $menu->id,
                     'school_id'      => $school
                 ]) ;
-
-            }
-        }
-
-        MenuDetails::where('menu_id', $menu->id)->delete();
-        if ($request->meal_name){
-            foreach ($request['meal_name'] as $meal_name){
-                if ($meal_name != null){
-                    MenuDetails::create([
-                        'menu_id'   => $menu->id,
-                        'name'      => $meal_name
-                    ]) ;
+                if (!in_array($school,$old_school)){
+                    $this->sendNotification([$school], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
+                    $this->sendFCMNotification([$school], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
                 }
             }
         }
+
+//        MenuDetails::where('menu_id', $menu->id)->delete();
+//        if ($request->meal_name){
+//            foreach ($request['meal_name'] as $meal_name){
+//                if ($meal_name != null){
+//                    MenuDetails::create([
+//                        'menu_id'   => $menu->id,
+//                        'name'      => $meal_name
+//                    ]) ;
+//                }
+//            }
+//        }
         return response()->json(
             [
                 'success' => 'true',

@@ -20,8 +20,6 @@ Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
         Route::get('get_school_meals', 'OrderController@get_school_meals');
         Route::post('store_order', 'OrderController@store_order');
         Route::get('current_orders', 'OrderController@current_orders');
-        Route::get('order_details', 'OrderController@order_details');
-        Route::post('cancel_order', 'OrderController@cancel_order');
 
 
     });

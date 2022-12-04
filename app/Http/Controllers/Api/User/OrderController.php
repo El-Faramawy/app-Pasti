@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\SchoolMenu;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,34 +20,53 @@ class OrderController extends Controller
         $user = User::where('id',user_api()->user()->id)->with('school.meals.meal.menu_details','school.additions.addition.menu_details')->first();
         $meals_array = $additions_array = [];
         $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
-        $meals = $user->school->meals->toArray();
-        $additions = $user->school->additions->toArray();
+//        $meals = $user->school->meals->toArray();
+        $menu_ids = SchoolMenu::where(['school_id'=>$user->school_id , 'is_active' => 'yes'])->pluck('menu_id')->toArray();
+        $meals = Menu::where('type','menu')->whereIn('id',$menu_ids)->groupBy('date')->get()->toArray();
+//        return $meals;
+//        $additions = $user->school->additions->toArray();
 
+//        usort($meals, function ($item1, $item2) {
+//            return $item1['meal']['date'] <=> $item2['meal']['date'];
+//        });
+//        foreach ($meals as $meal){
+//            if (date('Y-m-d') <= $meal['meal']['date']){
+//                $order_day = date('D' ,strtotime($meal['meal']['date'] ) ) ;
+//                $meal['meal']['meal_today'] =  date('Y-m-d' ,strtotime($meal['meal']['date'] ) ) == date('Y-m-d') ? 'yes':'no';
+//                $meal['meal']['meal_day'] = $days[$order_day];
+//                $meals_array[] = $meal;
+//            }
+//        }
         usort($meals, function ($item1, $item2) {
-            return $item1['meal']['date'] <=> $item2['meal']['date'];
+            return $item1['date'] <=> $item2['date'];
         });
+//        return $meals;
         foreach ($meals as $meal){
-            if (date('Y-m-d') <= $meal['meal']['date']){
-                $order_day = date('D' ,strtotime($meal['meal']['date'] ) ) ;
-                $meal['meal']['meal_today'] =  date('Y-m-d' ,strtotime($meal['meal']['date'] ) ) == date('Y-m-d') ? 'yes':'no';
-                $meal['meal']['meal_day'] = $days[$order_day];
-                $meals_array[] = $meal;
+            if (date('Y-m-d') </*=*/ $meal['date']){
+                $new_meal = [];
+                $new_meal['date'] = $meal['date'] ;
+                $order_day = date('D' ,strtotime($meal['date'] ) ) ;
+                $new_meal['meal_today'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d') ? 'yes':'no';
+                $new_meal['meal_tomorrow'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d' ,strtotime('+1 day')) ? 'yes':'no';
+                $new_meal['meal_day'] = $days[$order_day];
+                $new_meal['meal_menus'] = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get();
+                $meals_array[] = $new_meal;
             }
         }
 
-        usort($additions, function ($item1, $item2) {
-            return $item1['addition']['date'] <=> $item2['addition']['date'];
-        });
-        foreach ($additions as $addition){
-            if (date('Y-m-d') <= $addition['addition']['date']){
-                $order_day = date('D' ,strtotime($addition['addition']['date'] ) ) ;
-                $addition['addition']['addition_today'] =  date('Y-m-d' ,strtotime($addition['addition']['date'] ) ) == date('Y-m-d') ? 'yes':'no';
-                $addition['addition']['addition_day'] = $days[$order_day];
-                $additions_array[] = $addition;
-            }
-        }
+//        usort($additions, function ($item1, $item2) {
+//            return $item1['addition']['date'] <=> $item2['addition']['date'];
+//        });
+//        foreach ($additions as $addition){
+//            if (date('Y-m-d') <= $addition['addition']['date']){
+//                $order_day = date('D' ,strtotime($addition['addition']['date'] ) ) ;
+//                $addition['addition']['addition_today'] =  date('Y-m-d' ,strtotime($addition['addition']['date'] ) ) == date('Y-m-d') ? 'yes':'no';
+//                $addition['addition']['addition_day'] = $days[$order_day];
+//                $additions_array[] = $addition;
+//            }
+//        }
 
-        return apiResponse(['meals'=>$meals_array,'additions'=>$additions_array]);
+        return apiResponse(['meals'=>$meals_array/*,'additions'=>$additions_array*/]);
 //        return apiResponse(['meals'=>$user->school->meals,'additions'=>$user->school->additions]);
     }
     /*================================================*/
@@ -92,7 +112,7 @@ class OrderController extends Controller
         }
 
 
-        $order = Order::where('id',$order->id)->with('order_meals.meal','order_additions.addition')->first();
+        $order = Order::where('id',$order->id)->with('order_meals.meal'/*,'order_additions.addition'*/)->first();
         return apiResponse($order);
     }
     /*================================================*/
@@ -136,6 +156,31 @@ class OrderController extends Controller
         if ($order->status == 'canceled')
         {
             return apiResponse(null,'already canceled',406);
+        }
+
+        $order->update($data);
+
+        return apiResponse($order);
+    }
+
+    /*================================================*/
+    public function end_order(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id'                    =>'required|exists:orders,id',
+        ]);
+        if ($validator->fails()){
+            return apiResponse(null,$validator->errors(),'422');
+        }
+
+        $data = $request->only('id');
+        $data['status'] = 'ended';
+        $order = Order::where('id',$request->id)
+            ->with('order_meals.meal','order_additions.addition')
+            ->first();
+
+        if ($order->status == 'ended')
+        {
+            return apiResponse(null,'already ended',406);
         }
 
         $order->update($data);

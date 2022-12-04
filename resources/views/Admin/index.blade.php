@@ -49,7 +49,7 @@
                         <div class="d-flex">
                             <div class="text-white">
                                 <h2 class="mb-0 number-font">{{$admin_count}}</h2>
-                                <p class="text-white mb-0">Supervisori </p>
+                                <p class="text-white mb-0">Amministrativi</p>
                             </div>
                             <div class="ml-auto"> <i class="fa fa-user text-white fs-30 mr-2 mt-2"></i> </div>
                         </div>
@@ -62,7 +62,7 @@
                         <div class="d-flex">
                             <div class="text-white">
                                 <h2 class="mb-0 number-font">{{$user_count}}</h2>
-                                <p class="text-white mb-0">Gli studenti </p>
+                                <p class="text-white mb-0">Collaboratori</p>
                             </div>
                             <div class="ml-auto"> <i class="fa fa-user text-white fs-30 mr-2 mt-2"></i> </div>
                         </div>
@@ -76,7 +76,7 @@
                         <div class="d-flex">
                             <div class="text-white">
                                 <h2 class="mb-0 number-font">{{$school_count}}</h2>
-                                <p class="text-white mb-0"> scuole</p>
+                                <p class="text-white mb-0"> Aziende</p>
                             </div>
                             <div class="ml-auto"> <i class="fa  fa-building text-white fs-30 mr-2 mt-2"></i> </div>
                         </div>
@@ -117,7 +117,7 @@
                         <div class="d-flex">
                             <div class="text-white">
                                 <h2 class="mb-0 number-font">{{$menu_count}}</h2>
-                                <p class="text-white mb-0">Pasti ed extra</p>
+                                <p class="text-white mb-0">Menù</p>
                             </div>
                             <div class="ml-auto"> <i class="fa fa-shopping-basket text-white fs-30 mr-2 mt-2"></i> </div>
                         </div>
@@ -134,7 +134,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                 <div class="card overflow-hidden" {{--style="height: 95%;"--}}>
                     <div class="card-header">
-                        <h3 class="card-title">Ordini scaduti </h3>
+                        <h3 class="card-title">Ordini Completati </h3>
                     </div>
                     <div class="card-body pb-0">
                         <div class="">
@@ -162,17 +162,17 @@
             <div class="col-lg-6 col-md-12 col-sm-12 col-xl-6">
                 <div class="card " style="height: 95%!important;">
                     <div class="card-header">
-                        <h3 class="card-title">Richieste per caso </h3>
+                        <h3 class="card-title">Classifica delle richieste</h3>
                     </div>
                     <div class="card-body">
                         <div class="">
                             <canvas id="canvasDoughnut" class="chartsh"></canvas>
                         </div>
                         <div class="mt-5 fs-12">
-                            <div class="float-right mr-3"><span class="dot-label bg-canvas1  mr-1"></span><span class="">nuovo</span></div>
+                            <div class="float-right mr-3"><span class="dot-label bg-canvas1  mr-1"></span><span class="">nuovo ordine</span></div>
                             <div class="float-right mr-3"><span class="dot-label bg-primary secondary mr-1"></span><span class="">Preparazione</span></div>
-                            <div class="float-right mr-3"><span class="dot-label bg-secondary1 mr-1"></span><span class="">Finito</span></div>
-                            <div class="float-right"><span class="dot-label bg-canvas2 mr-1"></span><span class="">annullato</span></div>
+                            <div class="float-right mr-3"><span class="dot-label bg-secondary1 mr-1"></span><span class="">Completato</span></div>
+                            <div class="float-right mr-3"><span class="dot-label bg-canvas2 mr-1"></span><span class="">annullato  </span></div>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
 {{--            <div class="col-lg-6 col-md-12 col-sm-12 col-xl-6 ">--}}
             <div class="col-lg-6 col-md-12 col-sm-12 col-xl-6 ">
                 <div class="card">
-                    <div class="card-header text-center"><h2 class="card-title">alunni </h2></div>
+                    <div class="card-header text-center"><h2 class="card-title">Le aziende</h2></div>
                     <div class="card-body">
                         <div id="main6" style="height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" _echarts_instance_="ec_1662227484439"><div style="position: relative; width: 462px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="462" height="400" style="position: absolute; left: 0px; top: 0px; width: 462px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0s, transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(289px, 100px, 0px); border-color: rgb(84, 112, 198); pointer-events: none; visibility: hidden; opacity: 0;"><div style="margin: 0px 0 0;line-height:1;"><div style="font-size:14px;color:#666;font-weight:400;line-height:1;">عدد العملاء</div><div style="margin: 10px 0 0;line-height:1;"><div style="margin: 0px 0 0;line-height:1;"><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#5470c6;"></span><span style="font-size:14px;color:#666;font-weight:400;margin-left:2px">مصر</span><span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">191</span><div style="clear:both"></div></div><div style="clear:both"></div></div><div style="clear:both"></div></div></div></div>
                     </div>
@@ -193,14 +193,14 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Applicazioni scolastiche oggi</h3>
+                        <h3 class="card-title">Ordini Oggi</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table card-table border table-vcenter text-nowrap align-items-center">
                                 <thead class="">
                                 <tr>
-                                    <th >La scuola</th>
+                                    <th >L'azienda</th>
                                     <th >numero di ordini</th>
                                     <th >la condizione</th>
                                     <th >i dettagli</th>
@@ -210,13 +210,91 @@
                                     @foreach($school_orders as $order)
                                         <tr>
                                             <td>
-                                                <img src="{{$order['user']['school']['image']}}" alt="img" class="h-7 w-7 mr-2 br-5 ">
+                                                <img src="{{ $order['user'] ? $order['user']['school']['image'] : $order['school']['image']}}" alt="img" class="h-7 w-7 mr-2 br-5 ">
                                                 <p class="d-inline-block align-middle mb-0 mr-1">
-                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>
-{{--                                                    <br>--}}
-{{--                                                    <span class="text-muted fs-13">--}}
-{{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="text-bold cursor-pointer" >{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
-{{--                                                    </span>--}}
+                                                    @if ( $order['school'])
+                                                        <a href="{{url("admin/school_profile",$order['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['school']['name'] }}</a>
+                                                    @elseif ( $order['user'])
+                                                        <a href="{{url("admin/school_profile",$order['user']['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] }}</a>
+                                                    @else
+                                                        <a href="{{url("admin/school_profile",1)}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold"> deleted school</a>
+                                                    @endif
+{{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
+
+                                                </p>
+                                            </td>
+                                            <td>{{$order['order_count']}}</td>
+                                            <td class="font-weight-semibold fs-15">
+                                                <div class="card-header pt-0  pb-0 border-bottom-0">
+                                                    @if ($order['status'] == 'on_going')
+                                                        <a class="badge badge-primary text-white ">Preparazione</a>
+
+                                                    @elseif ($order['status'] === 'ended')
+                                                        <a class="badge badge-success text-white ">Finito</a>
+
+                                                    @elseif ($order['status'] === 'canceled')
+                                                        <a class="badge badge-warning text-white ">annullato</a>
+
+                                                    @else
+                                                        <a class="badge badge-info text-white ">nuovo</a>
+
+                                                    @endif
+                                                    <div class="card-options pr-0 ml-1">
+                                                        <a class="btn btn-sm {{in_array(53, admin()->user()->permission_ids)?'statusBtn':''}}"
+                                                           style="background-color: #0ea5b9;color: white"
+                                                           href="{{url("admin/change_school_order_status",$order["id"])}}"><i
+                                                                class="fa fa-pencil mb-0"></i></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="font-weight-semibold fs-15">
+                                                <div class="card-options pr-2">
+                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{{--        <!-- ROW-3 END -->--}}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Ordini Domani</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table card-table border table-vcenter text-nowrap align-items-center">
+                                <thead class="">
+                                <tr>
+                                    <th >L'azienda</th>
+                                    <th >numero di ordini</th>
+                                    <th >la condizione</th>
+                                    <th >i dettagli</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($school_tomorrow_orders as $order)
+                                        <tr>
+                                            <td>
+                                                <img src="{{ $order['user'] ? $order['user']['school']['image'] : $order['school']['image']}}" alt="img" class="h-7 w-7 mr-2 br-5 ">
+                                                <p class="d-inline-block align-middle mb-0 mr-1">
+                                                    @if ( $order['school'])
+                                                        <a href="{{url("admin/school_profile",$order['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['school']['name'] }}</a>
+                                                    @elseif ( $order['user'])
+                                                        <a href="{{url("admin/school_profile",$order['user']['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] }}</a>
+                                                    @else
+                                                        <a href="{{url("admin/school_profile",1)}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold"> deleted school</a>
+                                                    @endif
+                                                    {{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
+
                                                 </p>
                                             </td>
                                             <td>{{$order['order_count']}}</td>
@@ -473,11 +551,11 @@
     {{--    ########################### end governorate chart ############################--}}
 
 {{--    </script>--}}
-    <script>
-        $(document).ready(function() {
-            $('.card-options-collapse').click();
-        })
-    </script>
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            $('.card-options-collapse').click();--}}
+{{--        })--}}
+{{--    </script>--}}
 
 
     {{--    ########################### start status btn ############################--}}

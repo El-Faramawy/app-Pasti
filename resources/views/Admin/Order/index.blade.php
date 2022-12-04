@@ -96,10 +96,13 @@
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
-                                <th class="text-white">Gli studenti</th>
-                                <th class="text-white">La data di Ordini</th>
-                                <th class="text-white w-15">la condizione</th>
-                                <th class="text-white">i dettagli</th>
+                                <th class="text-white">Collaboratore</th>
+                                <th class="text-white">Cognome</th>
+                                <th class="text-white">aziende</th>
+                                <th class="text-white">Data del Ordine</th>
+                                <th class="text-white w-15">prezzo</th>
+                                <th class="text-white w-15">Lo stato</th>
+                                <th class="text-white">Dettagli</th>
                                 <th class="text-white">Elimina</th>
                             </tr>
                             </thead>
@@ -170,7 +173,10 @@
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
             {data: 'id', name: 'id'},
             {data: 'user', name: 'user'},
+            {data: 'last_name', name: 'last_name'},
+            {data: 'school', name: 'school'},
             {data: 'date', name: 'date'},
+            {data: 'price', name: 'price'},
             {data: 'status', name: 'status'},
             {data: 'details', name: 'details'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

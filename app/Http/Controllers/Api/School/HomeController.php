@@ -17,6 +17,8 @@ class HomeController extends Controller
     {
         $school = School::where('id', school_api()->user()->id)->first();
         $user_count = User::where(['school_id' => $school->id, 'is_active' => 'yes', 'block' => 'no'])->count();
+        $new_menus_count = SchoolMenu::where(['school_id' => school_api()->user()->id, 'is_active' => 'pending'])->count();
+        $new_students_count = User::where(['school_id' => school_api()->user()->id, 'is_active' => 'pending'])->count();
         $user_ids = User::where('school_id', $school->id)->pluck('id')->toArray();
 //        return $user_ids;
 
@@ -30,7 +32,8 @@ class HomeController extends Controller
         })->whereHas('addition')
             ->count();
 
-        return apiResponse(['school' => $school, 'meal_count' => $meal_count, 'addition_count' => $addition_count, 'user_count' => $user_count]);
+        return apiResponse(['school' => $school, 'meal_count' => $meal_count, 'addition_count' => $addition_count,
+            'user_count' => $user_count, 'new_menus_count' => $new_menus_count, 'new_students_count' => $new_students_count]);
     }
 
     /*================================================*/

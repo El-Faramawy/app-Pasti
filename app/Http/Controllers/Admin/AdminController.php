@@ -119,7 +119,7 @@ class AdminController extends Controller
 
         $data = $request->except('permissions');
 
-        if ($request->password != null)
+        if (isset($request->password) && $request->password != null)
             $data['password'] = Hash::make($request->password);
 
         $admin->update($data);

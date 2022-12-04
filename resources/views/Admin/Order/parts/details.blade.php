@@ -17,12 +17,14 @@
                                                 {{$detail->menu->name ?? ''}}
                                             </strong>
                                         </h5>
-                                        <small class="text-muted">{{$detail->menu->type == 'menu' ? 'un pasto':'aggiunta'}}</small>
+{{--                                        <small class="text-muted">{{$detail->menu->type == 'menu' ? 'un pasto':'aggiunta'}}</small>--}}
+                                        <small class="text-muted">{{$detail->menu->description}}</small>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="float-right">
-                                        <span class="avatar avatar-md brround cover-image task-icon1" data-image-src="{{$detail->menu->image}}" style="background: url({{$detail->menu->image}}) center center;"></span>
+                                        <small class="text-muted">{{$detail->menu->price}}</small>
+{{--                                        <span class="avatar avatar-md brround cover-image task-icon1" data-image-src="{{$detail->menu->image}}" style="background: url({{$detail->menu->image}}) center center;"></span>--}}
                                     </div>
                                 </div>
                             </div>

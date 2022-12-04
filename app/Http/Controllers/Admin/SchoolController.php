@@ -55,6 +55,17 @@ class SchoolController extends Controller
                     $url = in_array(15,admin()->user()->permission_ids) ? url("admin/change_school_active", $school->id) :"";
                     return '<a href="' . $url . '" class="badge ' . $color . ' change_active" >' . $status . '</a>';
                 })
+                ->addColumn('orders', function ($school) {
+                    $order_data = '<a  class="btn btn-icon btn-bg-light btn-info btn-sm me-1 "
+                            href="'.route("orders.index","school_id=".$school->id).'" >
+                            <span class="svg-icon svg-icon-3">
+                                <span class="svg-icon svg-icon-3">
+                                    <i class="fa fa-shopping-basket "></i>
+                                </span>
+                            </span>
+                            </button>';
+                    return in_array(39,admin()->user()->permission_ids) ?$order_data :'';
+                })
                 ->editColumn('name',function ($school){
                     return '<a href="'.url("admin/school_profile",$school->id).'" class="text-bold cursor-pointer" >'.$school->name ?? $school->id . " مدرسة رقم  " .'</a>';
                 })

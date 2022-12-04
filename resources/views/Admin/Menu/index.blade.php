@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
-@section('page_title') Pasti ed extra @endsection
+@section('page_title') Menù @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Pasti ed extra</h3>
+                    <h3 class="card-title">Menù</h3>
                     <div class="ml-auto pageheader-btn">
                         @if(in_array(26,admin()->user()->permission_ids))
                             <a href="#"  id="addBtn" class="btn btn-primary btn-icon text-white">
@@ -29,12 +29,12 @@
                             <thead class="bg-primary text-white">
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
-                                <th class="text-white">#</th>
-                                <th class="text-white">Il nome</th>
-                                <th class="text-white">Immagine</th>
+                                <th class="text-white">Numero del ordine</th>
+                                <th class="text-white">Nome del menù</th>
+                                <th class="text-white">Descrizione</th>
                                 <th class="text-white">Data</th>
-                                <th class="text-white">Tipo</th>
-                                <th class="text-white">controllo</th>
+                                <th class="text-white">Prezzo</th>
+                                <th class="text-white">Modificare</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,7 +57,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2>Pasti ed extra</h2>
+                    <h2>Menù</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" style="cursor: pointer" data-dismiss="modal" aria-label="Close">
@@ -103,9 +103,11 @@
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
-            {data: 'image', name: 'image'},
+            {data: 'description', name: 'description'},
+            // {data: 'image', name: 'image'},
             {data: 'date', name: 'date'},
-            {data: 'type', name: 'type'},
+            {data: 'price', name: 'price'},
+            // {data: 'type', name: 'type'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ];
         //======================== addBtn =============================

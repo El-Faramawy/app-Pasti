@@ -27,14 +27,23 @@ class UserController extends Controller
 
             return Datatables::of($users)
                 ->addColumn('action', function ($user) {
-
                     if(in_array(7,admin()->user()->permission_ids)) {
                         return '
                              <a class="btn btn-default btn-danger btn-sm mb-2 mb-xl-0 delete"
                              data-id="' . $user->id . '" ><i class="fa fa-trash-o text-white"></i></a>
                        ';
                     }
-
+                })
+                ->addColumn('orders', function ($user) {
+                    $order_data = '<a  class="btn btn-icon btn-bg-light btn-info btn-sm me-1 "
+                            href="'.route("orders.index","user_id=".$user->id).'" >
+                            <span class="svg-icon svg-icon-3">
+                                <span class="svg-icon svg-icon-3">
+                                    <i class="fa fa-shopping-basket "></i>
+                                </span>
+                            </span>
+                            </button>';
+                    return in_array(39,admin()->user()->permission_ids) ?$order_data :'';
                 })
                 ->editColumn('block',function ($user){
                     $color = $user->block == "yes" ? "danger" :"dark";

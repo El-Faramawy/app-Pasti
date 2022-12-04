@@ -44,15 +44,18 @@ class SchoolOrderController extends Controller
 
             $schools = School::all();
             foreach ($schools as $school) {
-                $school->orders = Order::with('user.school')
-                    ->whereHas('user', function ($query) use ($school) {
-                        $query->where('school_id', $school->id);
+                $school->orders = Order::with('user.school','school')
+                    ->where(function($q) use ($school) {
+                        $q->whereHas('user', function ($query) use ($school) {
+                            $query->where('school_id', $school->id);
+                        })->orwhere('school_id', $school->id);
                     })
                     ->groupBy('date', 'status')
                     ->orderBy('date', 'DESC')
                     ->select('*', DB::raw('count(*) as order_count'))
                     ->where('date','<=',date('Y-m-d'))
                     ->get();
+//                return $school->orders;
             }
             $orders = $schools->pluck('orders')->flatten()->toArray();
 
@@ -70,14 +73,28 @@ class SchoolOrderController extends Controller
                             </div>
 							';
                 })
+                ->editColumn('date', function ($order) {
+                    return date('d-m-Y', strtotime($order['date'])) ;
+                })
                 ->addColumn('details', function ($order) {
                     return '<div class="card-options pr-2">
                                     <a class="btn btn-sm btn-primary text-white statusBtn"  href="'.url("admin/school_order_details",$order["id"]).'"><i class="fa fa-book mb-0"></i></a>
                            </div>';
                 })
                 ->addColumn('school', function ($order) {
+                    if ( $order['school']){
+                        $school_name = $order['school']['name'] ;
+                        $school_id = $order['school']['id'] ;
+                    }
+                    elseif ( $order['user'])
+                    {
+                        $school_name = $order['user']['school']['name'] ;
+                        $school_id =$order['user']['school']['id'] ;
+                    }
+                    else $school_name = $school_id ='';
 //                    return $order['user']['school']['name'] ?? 'مدرسة محذوفة';
-                    return '<a href="'.url("admin/school_profile",$order['user']['school_id']).'" class="text-bold cursor-pointer" >'.$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " .'</a>';
+//                    return '<a href="'.url("admin/school_profile",$order['school']?$order['school']['id']:$order['user']['school_id']).'" class="text-bold cursor-pointer" >'.$order['school']?$order['school']['name']: $order['user']['school']['name'] .'</a>';
+                    return '<a href="'.url("admin/school_profile",$school_id ).'" class="text-bold cursor-pointer" >'.$school_name .'</a>';
                 })
 
                 ->escapeColumns([])
@@ -162,23 +179,23 @@ class SchoolOrderController extends Controller
             $all_meals_count += $meal->meal_count;
         }
         //******************************* additions ********************************
-        $all_additions_count = 0;
-        $additions = Menu::where('type' , 'addition')->with('menu_details')
-            ->whereHas('addition_menus.order', function ($query) use ($user_ids , $order_date , $order_status) {
-                $query->where(['date'=> $order_date , 'status' => $order_status])->whereIn('user_id', $user_ids);
-            })
-            ->get();
-
-        foreach ($additions as $addition) {
-            $addition->addition_count = OrderDetails::whereHas('order', function ($query) use ($user_ids , $order_date , $order_status) {
-                $query->where(['date'=> $order_date , 'status' => $order_status])->whereIn('user_id', $user_ids);
-            })->where('menu_id', $addition->id)
-                ->count();
-
-            $all_additions_count += $addition->addition_count;
-        }
+//        $all_additions_count = 0;
+//        $additions = Menu::where('type' , 'addition')->with('menu_details')
+//            ->whereHas('addition_menus.order', function ($query) use ($user_ids , $order_date , $order_status) {
+//                $query->where(['date'=> $order_date , 'status' => $order_status])->whereIn('user_id', $user_ids);
+//            })
+//            ->get();
+//
+//        foreach ($additions as $addition) {
+//            $addition->addition_count = OrderDetails::whereHas('order', function ($query) use ($user_ids , $order_date , $order_status) {
+//                $query->where(['date'=> $order_date , 'status' => $order_status])->whereIn('user_id', $user_ids);
+//            })->where('menu_id', $addition->id)
+//                ->count();
+//
+//            $all_additions_count += $addition->addition_count;
+//        }
         return view('Admin.SchoolOrder.parts.details',
-            compact('order' , 'meals','all_meals_count' , 'additions' , 'all_additions_count'))
+            compact('order' , 'meals','all_meals_count' /*, 'additions' , 'all_additions_count'*/))
             ->render();
     }
 }

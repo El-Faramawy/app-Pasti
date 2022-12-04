@@ -90,12 +90,12 @@
                             <tr>
 {{--                                <th class="text-white"><input type="checkbox" id="master"></th>--}}
 {{--                                <th class="text-white">#</th>--}}
-                                <th class="text-white">La scuola</th>
-                                <th class="text-white">La data di Ordini</th>
-                                <th class="text-white w-15">numero di ordini</th>
-                                <th class="text-white w-15">la condizione</th>
+                                <th class="text-white">La azienda</th>
+                                <th class="text-white">Data del Ordine</th>
+                                <th class="text-white w-15">quantità</th>
+                                <th class="text-white w-15">Lo stato</th>
                                 <th class="text-white">i dettagli</th>
-{{--                                <th class="text-white">حذف</th>--}}
+{{--                                <th class="text-white">Eliminare</th>--}}
                             </tr>
                             </thead>
                             <tbody>

@@ -4,7 +4,7 @@
     <div class="col-md-12 col-xl-12">
         <div class="card">
             <div class="card-header border-bottom">
-                <h6 class="card-title">pasti ( {{$all_meals_count}} )</h6>
+                <h6 class="card-title">Menù ( {{$all_meals_count}} )</h6>
             </div>
             @if(count($meals) > 0)
                 <div class="card-body">
@@ -17,48 +17,50 @@
                                             {{$meal->name ?? ''}}
                                         </strong>
                                     </h5>
-                                    <small class="text-muted">{{$meal->meal_count}}</small>
+{{--                                    <small class="text-muted">{{$meal->meal_count}}</small>--}}
+                                    <small class="text-muted">{{$meal->description}}</small>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="float-right">
-                                        <span class="avatar avatar-md brround cover-image task-icon1"
-                                              data-image-src="{{$meal->image}}"
-                                              style="background: url({{$meal->image}}) center center;"></span>
+{{--                                        <span class="avatar avatar-md brround cover-image task-icon1"--}}
+{{--                                              data-image-src="{{$meal->image}}"--}}
+{{--                                              style="background: url({{$meal->image}}) center center;"></span>--}}
+                                    <small class="text-danger font-weight-bolder fs-1">{{$meal->price}}</small>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
             @endif
-            <div class="card-header border-bottom border-top">
-                <h6 class="card-title">Aggiunte ( {{$all_additions_count}} )</h6>
-            </div>
-            @if(count($additions) > 0)
-                <div class="card-body">
-                    @foreach($additions as $addition)
-                        <div class="clearfix row mb-4">
-                            <div class="col">
-                                <div class="float-left">
-                                    <h5 class="mb-0">
-                                        <strong>
-                                            {{$addition->name ?? ''}}
-                                        </strong>
-                                    </h5>
-                                    <small class="text-muted">{{$addition->addition_count}}</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="float-right">
-                                        <span class="avatar avatar-md brround cover-image task-icon1"
-                                              data-image-src="{{$addition->image}}"
-                                              style="background: url({{$addition->image}}) center center;"></span>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
+{{--            <div class="card-header border-bottom border-top">--}}
+{{--                <h6 class="card-title">Aggiunte ( {{$all_additions_count}} )</h6>--}}
+{{--            </div>--}}
+{{--            @if(count($additions) > 0)--}}
+{{--                <div class="card-body">--}}
+{{--                    @foreach($additions as $addition)--}}
+{{--                        <div class="clearfix row mb-4">--}}
+{{--                            <div class="col">--}}
+{{--                                <div class="float-left">--}}
+{{--                                    <h5 class="mb-0">--}}
+{{--                                        <strong>--}}
+{{--                                            {{$addition->name ?? ''}}--}}
+{{--                                        </strong>--}}
+{{--                                    </h5>--}}
+{{--                                    <small class="text-muted">{{$addition->addition_count}}</small>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col">--}}
+{{--                                <div class="float-right">--}}
+{{--                                        <span class="avatar avatar-md brround cover-image task-icon1"--}}
+{{--                                              data-image-src="{{$addition->image}}"--}}
+{{--                                              style="background: url({{$addition->image}}) center center;"></span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            @endif--}}
         </div>
     </div>
 

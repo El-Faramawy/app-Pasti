@@ -36,8 +36,9 @@ class OrderController extends Controller
     }
 
 //#################################################################
-    public function index(Request $request)
+    public function index(Request $request )
     {
+//        return $request->id;
         if ($request->ajax()) {
 //            $order_from = $request->order_from ? date('Y-m-d', strtotime($request->order_from)) : date('Y-m-d');
 //            $order_to = $request->order_to ? date('Y-m-d', strtotime($request->order_to)) : date('Y-m-d');
@@ -55,12 +56,20 @@ class OrderController extends Controller
 //            $status = $request->status != null ? [$request->status] : ['waiting', 'new', 'on_going', 'delivery', 'ended', 'canceled'];
 //            $status = $request->status == 'all' ? ['waiting', 'new', 'on_going', 'delivery', 'ended', 'canceled'] : $status;
 //            return $status;
-            $orders = Order::with('user')
+            if ($request->user_id){
+                $orders = Order::with('user','order_meals.meal')->where('user_id',$request->user_id)
+                    ->orderBy('date', 'desc')->get();
+            }elseif ($request->school_id){
+                $orders = Order::with('user','order_meals.meal')->where('school_id',$request->school_id)
+                    ->orderBy('date', 'desc')->get();
+            }else{
+                $orders = Order::with('user','order_meals.meal')
 //                ->whereIn('status', $status)
 //                ->whereBetween('created_at', [$created_from, $created_to])
 //                ->whereBetween('delivery_date', [$delivery_from, $delivery_to])
-                ->orderBy('date', 'desc')->get();
-
+                    ->orderBy('date', 'desc')->get();
+            }
+//            return $orders;
             return Datatables::of($orders)
                 ->addColumn('action', function ($order) {
                     if (in_array(40, admin()->user()->permission_ids)) {
@@ -93,8 +102,27 @@ class OrderController extends Controller
                                     <a class="btn btn-sm btn-primary text-white statusBtn"  href="' . route("order_details", $order->id) . '"><i class="fa fa-book mb-0"></i></a>
                            </div>';
                 })
+                ->editColumn('date', function ($order) {
+                    return date('d-m-Y', strtotime($order->date)) ;
+                })
+                ->addColumn('price', function ($order) {
+                    $price = 0;
+                    foreach ($order->order_meals as $meal){
+                        $price += $meal->meal->price;
+                    }
+                    return $price ;
+                })
                 ->addColumn('user', function ($order) {
-                    return $order->user->name ?? 'مستخدم محذوف';
+                    return $order->user->name ?? '';
+                })
+                ->addColumn('school', function ($order) {
+                    if ( $order->school) $school_name = $order->school->name ;
+                    elseif ( $order->user) $school_name = $order->user->school->name ;
+                    else $school_name ='';
+                    return $school_name;
+                })
+                ->addColumn('last_name', function ($order) {
+                    return $order->user->last_name ?? '';
                 })->addColumn('checkbox', function ($order) {
                     return '<input type="checkbox" class="sub_chk" data-id="' . $order->id . '">';
                 })

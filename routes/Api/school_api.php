@@ -20,11 +20,19 @@ Route::group(['prefix' => 'school', 'namespace' => 'School'], function () {
         Route::get('new_students_count', 'StudentController@new_students_count');
         Route::get('new_students', 'StudentController@new_students');
         Route::post('accept_refuse_student', 'StudentController@accept_refuse_student');
+        /* ---------------------- new menus -------------------*/
+        Route::get('new_menus_count', 'MenuController@new_menus_count');
+        Route::get('new_menus', 'MenuController@new_menus');
+        Route::post('accept_refuse_menu', 'MenuController@accept_refuse_menu');
 
         /* ---------------------- notifications -------------------*/
         Route::get('notifications', 'NotificationController@notifications');
         Route::get('getNotificationsCount', 'NotificationController@getNotificationsCount');
 
+        /* ---------------------- orders -------------------*/
+        Route::get('get_school_meals', 'OrderController@get_school_meals');
+        Route::post('store_order', 'OrderController@store_order');
+        Route::get('current_orders', 'OrderController@current_orders');
 
 
     });

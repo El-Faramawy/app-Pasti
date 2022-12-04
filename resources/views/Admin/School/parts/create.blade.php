@@ -47,15 +47,15 @@
         </div>
         <!--end::Input group-->
         <!--begin::Input group-->
-        <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">
-            <!--begin::Label-->
-            <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required">Numero di telefono </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Numero di telefono"></i>
-            </label>
-            <!--end::Label-->
-            <input type="text" class="form-control form-control-solid numbersOnly" placeholder="Numero di telefono" name="phone" value=""/>
-        </div>
+{{--        <div class="d-flex flex-column mb-2 fv-row col-sm-12 mt-0">--}}
+{{--            <!--begin::Label-->--}}
+{{--            <label class="d-flex align-items-center fs-6 fw-bold form-label ">--}}
+{{--                <span class="required">Numero di telefono </span>--}}
+{{--                <i class="fa fa-exclamation-circle ms-2 fs-7 text-primary " title="Numero di telefono"></i>--}}
+{{--            </label>--}}
+{{--            <!--end::Label-->--}}
+{{--            <input type="text" class="form-control form-control-solid numbersOnly" placeholder="Numero di telefono" name="phone" value=""/>--}}
+{{--        </div>--}}
         <!--end::Input group-->
 
         <!--begin::Input group-->

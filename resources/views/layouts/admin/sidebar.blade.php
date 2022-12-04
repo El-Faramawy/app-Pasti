@@ -26,7 +26,7 @@
                 <li class="slide">
                     <a class="side-menu__item" href="{{route('admins.index')}}">
                         <i class="fe fe-users  side-menu__icon"></i>
-                        <span class="side-menu__label">Supervisori</span>
+                        <span class="side-menu__label">Amministrativi</span>
                     </a>
                 </li>
             @endif
@@ -34,7 +34,7 @@
                 <li class="slide">
                     <a class="side-menu__item" href="{{route('users.index')}}">
                         <i class="fe fe-user-check side-menu__icon"></i>
-                        <span class="side-menu__label">Gli studenti</span>
+                        <span class="side-menu__label">Collaboratori</span>
                     </a>
                 </li>
             @endif
@@ -49,7 +49,7 @@
                         <path
                             d="M16.66 1.69L11 7.34 16.66 13l5.66-5.66-5.66-5.65zm-2.83 5.65l2.83-2.83 2.83 2.83-2.83 2.83-2.83-2.83zM3 3v8h8V3H3zm6 6H5V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm8-2v8h8v-8h-8zm6 6h-4v-4h4v4z"/>
                     </svg>
-                    <span class="side-menu__label">scuole</span>
+                    <span class="side-menu__label">Aziende</span>
                 </a>
             </li>
         @endif
@@ -65,7 +65,7 @@
                         <path
                             d="M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zm-1 6H5v-4h14v4zm-12-.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-1 6H5V5h14v4zM7 8.5c.83 0 1.5-.67 1.5-1.5S7.83 5.5 7 5.5 5.5 6.17 5.5 7 6.17 8.5 7 8.5z"/>
                     </svg>
-                    <span class="side-menu__label">Pasti ed extra</span>
+                    <span class="side-menu__label">Menù</span>
                 </a>
             </li>
         @endif
@@ -93,7 +93,7 @@
                         <path
                             d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
                     </svg>
-                    <span class="side-menu__label">Richieste scolastiche</span>
+                    <span class="side-menu__label">ordini aziendali</span>
                 </a>
             </li>
         @endif
@@ -102,6 +102,14 @@
                 <a class="side-menu__item" href="{{route('notifications.index')}}">
                     <i class="fe fe-bell side-menu__icon "></i>
                     <span class="side-menu__label">notifiche</span>
+                </a>
+            </li>
+        @endif
+        @if(in_array(54,admin()->user()->permission_ids))
+            <li class="slide">
+                <a class="side-menu__item" href="{{route('schedule_notifications.index')}}">
+                    <i class="fe fe-bell side-menu__icon "></i>
+                    <span class="side-menu__label">Notifiche automatiche</span>
                 </a>
             </li>
         @endif

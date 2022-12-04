@@ -28,6 +28,8 @@ class AuthController extends Controller
                 'school_code'=>'required|exists:schools,code',
                 'name'=>'required',
                 'class_name'=>'required',
+                'last_name'=>'required',
+                'personal_id'=>'required',
             ]);
             if ($validator->fails()){
                 return apiResponse(null,$validator->errors(),'422');

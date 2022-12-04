@@ -1,12 +1,12 @@
 @extends('layouts.admin.app')
-@section('page_title') Gli studenti @endsection
-<link href="{{url('admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
+@section('page_title') Collaboratori @endsection
+<link href="{{url('Admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
 @section('content')
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title" >Gli studenti</h3>
+                    <h3 class="card-title" >Collaboratori</h3>
                     <div class="ml-auto pageheader-btn">
                         @if(in_array(7,admin()->user()->permission_ids))
                             <a href="#" id="multiDeleteBtn" class="btn btn-danger btn-icon text-white">
@@ -22,14 +22,14 @@
                         <div class="card ">
                             <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                             <div class="card-header">
-                                <div class="card-title">La scuola</div>
+                                <div class="card-title">L'azienda</div>
                                 <div class="card-options">
                                     <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
                                     <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <p class="mg-b-20 mg-sm-b-40">Scegli una scuola .</p>
+                                <p class="mg-b-20 mg-sm-b-40">Scegli l'azienda</p>
                                 <div class="wd-200 mg-b-30">
                                     <div class="input-group">
                                         <select class="form-control select2 custom-select filter" id="school" data-placeholder="Scegli una scuola ... ">
@@ -52,15 +52,16 @@
                             <thead class="bg-primary text-white">
                             <tr>
                                 <th class="text-white"><input type="checkbox" id="master"></th>
-                                <th class="text-white">#</th>
-                                <th class="text-white">Il nome</th>
-                                <th class="text-white">nome utente</th>
-                                <th class="text-white">Numero di telefono</th>
-                                <th class="text-white">La scuola </th>
+                                <th class="text-white">Cognome</th>
+                                <th class="text-white">Nome</th>
+                                <th class="text-white">Nome utente</th>
+                                <th class="text-white">N. personale</th>
+                                <th class="text-white">aziende</th>
                                 <th class="text-white">l'aula </th>
-                                <th class="text-white">la condizione</th>
-                                <th class="text-white">bandire</th>
-                                <th class="text-white">controllo</th>
+                                <th class="text-white">Ordini</th>
+                                <th class="text-white">Lo stato</th>
+                                <th class="text-white">Bloccare</th>
+                                <th class="text-white">Modificare</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,12 +81,13 @@
     <script>
         var  columns =[
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-            {data: 'id', name: 'id'},
+            {data: 'last_name', name: 'last_name'},
             {data: 'name', name: 'name'},
             {data: 'user_name', name: 'user_name'},
-            {data: 'phone', name: 'phone'},
+            {data: 'personal_id', name: 'personal_id'},
             {data: 'school', name: 'school'},
             {data: 'class_name', name: 'class_name'},
+            {data: 'orders', name: 'orders'},
             {data: 'is_active', name: 'is_active'},
             {data: 'block', name: 'block'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -136,8 +138,8 @@
     </script>
 
 
-    <script src="{{url('admin')}}/assets/js/select2.js"></script>
-    <script src="{{url('admin')}}/assets/plugins/select2/select2.full.min.js"></script>
+    <script src="{{url('Admin')}}/assets/js/select2.js"></script>
+    <script src="{{url('Admin')}}/assets/plugins/select2/select2.full.min.js"></script>
 
     <script>
         $(document).ready(function() {

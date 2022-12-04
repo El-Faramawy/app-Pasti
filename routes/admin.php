@@ -74,8 +74,15 @@ Route::group(['prefix' => 'admin'], function () {
         ################################### notifications ##########################################
         Route::resource('notifications','NotificationController');
 
+        ################################### menus ##########################################
+        Route::resource('schedule_notifications','ScheduleNotificationController');
+        Route::post('multi_delete_schedule_notifications','ScheduleNotification@multiDelete')->name('schedule_notifications.multiDelete');
+
 
     });//end Middleware Admin
+
+    Route::get('send_schedule_notification','ScheduleNotificationController@send_schedule_notification');
+
 
 //    Route::fallback(function () {
 //        return redirect('admin/home');

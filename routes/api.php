@@ -35,6 +35,11 @@ Route::group(['middleware'=>'all_guards'],function(){
     Route::post('insert_token','AuthController@insert_token');
     Route::get('get_token_type','AuthController@get_token_type');
 
+    /* ---------------------- orders -------------------*/
+    Route::get('user/order_details', 'Api/User/OrderController@order_details');
+    Route::post('user/cancel_order', 'Api/User/OrderController@cancel_order');
+    Route::post('user/end_order', 'Api/User/OrderController@end_order');
+
 });
 
 
