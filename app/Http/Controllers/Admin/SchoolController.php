@@ -57,7 +57,7 @@ class SchoolController extends Controller
                 })
                 ->addColumn('orders', function ($school) {
                     $order_data = '<a  class="btn btn-icon btn-bg-light btn-info btn-sm me-1 "
-                            href="'.route("orders.index","school_id=".$school->id).'" >
+                            href="'.route("school_single_orders","school_id=".$school->id).'" >
                             <span class="svg-icon svg-icon-3">
                                 <span class="svg-icon svg-icon-3">
                                     <i class="fa fa-shopping-basket "></i>

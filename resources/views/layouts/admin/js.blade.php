@@ -1,6 +1,5 @@
 <!-- JQUERY JS -->
 <script src="{{url('Admin')}}/assets/js/jquery-3.4.1.min.js"></script>
-
 <!-- BOOTSTRAP JS -->
 <script src="{{url('Admin')}}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="{{url('Admin')}}/assets/plugins/bootstrap/js/popper.min.js"></script>
@@ -63,6 +62,9 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.js"></script>
+<script >
+    var footer_sum = null;
+</script>
 @stack('admin_js')
 
 {{--//===========================    data table  =========================--}}

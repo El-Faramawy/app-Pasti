@@ -36,9 +36,11 @@ Route::group(['middleware'=>'all_guards'],function(){
     Route::get('get_token_type','AuthController@get_token_type');
 
     /* ---------------------- orders -------------------*/
-    Route::get('user/order_details', 'Api/User/OrderController@order_details');
-    Route::post('user/cancel_order', 'Api/User/OrderController@cancel_order');
-    Route::post('user/end_order', 'Api/User/OrderController@end_order');
+    Route::get('user/order_details', 'User\OrderController@order_details');
+    Route::get('user/get_order_meals', 'User\OrderController@get_order_meals');
+    Route::post('user/update_order', 'User\OrderController@update_order');
+    Route::post('user/cancel_order', 'User\OrderController@cancel_order');
+    Route::post('user/end_order', 'User\OrderController@end_order');
 
 });
 

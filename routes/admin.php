@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         ################################### orders ##########################################
         Route::resource('orders','OrderController');
+        Route::get('school_single_orders','OrderController@school_single_orders')->name('school_single_orders');
         Route::get('change_order_status/{id}','OrderController@change_order_status')->name('change_order_status');
         Route::post('update_order_status','OrderController@update_order_status')->name('update_order_status');
         Route::get('order_details/{id}','OrderController@order_details')->name('order_details');

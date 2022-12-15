@@ -38,35 +38,24 @@ class OrderController extends Controller
 //#################################################################
     public function index(Request $request )
     {
-//        return $request->id;
         if ($request->ajax()) {
-//            $order_from = $request->order_from ? date('Y-m-d', strtotime($request->order_from)) : date('Y-m-d');
-//            $order_to = $request->order_to ? date('Y-m-d', strtotime($request->order_to)) : date('Y-m-d');
-//            $status = $request->status != null ? [$request->status] : ['new', 'on_going', 'ended', 'canceled'];
-//            $status = $request->status == 'all' ? [ 'new', 'on_going', 'ended', 'canceled'] : $status;
-//            $orders = Order::with('user')
-//                ->whereIn('status', $status)
-//                ->whereBetween('date', [$order_from, $order_to])
-//                ->latest()->get();
+            $order_from = $request->order_from ? date('Y-m-d', strtotime($request->order_from)) : date('1970-1-1');
+            $order_to = $request->order_to ? date('Y-m-d', strtotime($request->order_to)) : date('Y-m-d', strtotime('+1 year'));
+            $status = $request->status != null ? [$request->status] : [ 'new', 'on_going', 'ended', 'canceled'];
+            $status = $request->status == 'all' ? [ 'new', 'on_going', 'ended', 'canceled'] : $status;
 
-//            $created_from = $request->created_from ? date('Y-m-d', strtotime($request->created_from)) : date('1970-1-1');
-//            $created_to = $request->created_to ? date('Y-m-d', strtotime($request->created_to)) : date('Y-m-d', strtotime('+1 week'));
-//            $delivery_from = $request->delivery_from ? date('Y-m-d', strtotime($request->delivery_from)) : date('1970-1-1');
-//            $delivery_to = $request->delivery_to ? date('Y-m-d', strtotime($request->delivery_to)) : date('Y-m-d', strtotime('+1 week'));
-//            $status = $request->status != null ? [$request->status] : ['waiting', 'new', 'on_going', 'delivery', 'ended', 'canceled'];
-//            $status = $request->status == 'all' ? ['waiting', 'new', 'on_going', 'delivery', 'ended', 'canceled'] : $status;
-//            return $status;
             if ($request->user_id){
                 $orders = Order::with('user','order_meals.meal')->where('user_id',$request->user_id)
+                    ->whereIn('status', $status)
+                    ->whereBetween('date', [$order_from, $order_to])
                     ->orderBy('date', 'desc')->get();
-            }elseif ($request->school_id){
-                $orders = Order::with('user','order_meals.meal')->where('school_id',$request->school_id)
-                    ->orderBy('date', 'desc')->get();
+//            }elseif ($request->school_id){
+//                $orders = Order::with('user','order_meals.meal')->where('school_id',$request->school_id)
+//                    ->orderBy('date', 'desc')->get();
             }else{
-                $orders = Order::with('user','order_meals.meal')
-//                ->whereIn('status', $status)
-//                ->whereBetween('created_at', [$created_from, $created_to])
-//                ->whereBetween('delivery_date', [$delivery_from, $delivery_to])
+                $orders = Order::with('user','order_meals.meal')->whereHas('user')
+                    ->whereIn('status', $status)
+                    ->whereBetween('date', [$order_from, $order_to])
                     ->orderBy('date', 'desc')->get();
             }
 //            return $orders;
@@ -130,7 +119,82 @@ class OrderController extends Controller
                 ->make(true);
         }
 
-        return view('Admin.Order.index');
+        return view('Admin.Order.index',['type'=>'user' , 'id'=>$request->user_id ?? null]);
+    }
+
+//#################################################################
+    public function school_single_orders(Request $request )
+    {
+        if ($request->ajax()) {
+            $order_from = $request->order_from ? date('Y-m-d', strtotime($request->order_from)) : date('1970-1-1');
+            $order_to = $request->order_to ? date('Y-m-d', strtotime($request->order_to)) : date('Y-m-d', strtotime('+1 year'));
+            $status = $request->status != null ? [$request->status] : [ 'new', 'on_going', 'ended', 'canceled'];
+            $status = $request->status == 'all' ? [ 'new', 'on_going', 'ended', 'canceled'] : $status;
+
+            if ($request->school_id){
+                $orders = Order::with('user','order_meals.meal')->where('school_id',$request->school_id)
+                    ->whereIn('status', $status)
+                    ->whereBetween('date', [$order_from, $order_to])
+                    ->orderBy('date', 'desc')->get();
+            }else{
+                $orders = Order::with('user','order_meals.meal')->whereHas('school')
+                    ->whereIn('status', $status)
+                    ->whereBetween('date', [$order_from, $order_to])
+                    ->orderBy('date', 'desc')->get();
+            }
+//            return $orders;
+            return Datatables::of($orders)
+                ->addColumn('action', function ($order) {
+                    if (in_array(40, admin()->user()->permission_ids)) {
+                        return '
+                            <button class="btn btn-default btn-danger btn-sm mb-2 mb-xl-0 delete"
+                                 data-id="' . $order->id . '" ><i class="fa fa-trash-o text-white"></i>
+                            </button>
+                       ';
+                    }
+
+                })
+                ->editColumn('status', function ($order) {
+                    $order_status = $this->orderStatus($order->status);
+                    $statusBtn = in_array(41, admin()->user()->permission_ids) ? "statusBtn" : " ";
+                    $button = '<div class="card-options pr-0">
+                                    <a class="btn btn-sm ' . $statusBtn . '" style="background-color: #0ea5b9;color: white" href="' . route("change_order_status", $order->id) . '"><i class="fa fa-pencil mb-0"></i></a>
+                                </div>';
+                    return '
+                            <div class="card-header pt-0  pb-0 border-bottom-0">
+                            <a  class="badge badge-' . $order_status['color'] . ' text-white ">' . $order_status['status'] . '</a>
+                                ' . $button . '
+                            </div>
+							';
+                })
+                ->addColumn('details', function ($order) {
+                    return '<div class="card-options pr-2">
+                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="' . route("order_details", $order->id) . '"><i class="fa fa-book mb-0"></i></a>
+                           </div>';
+                })
+                ->editColumn('date', function ($order) {
+                    return date('d-m-Y', strtotime($order->date)) ;
+                })
+                ->addColumn('price', function ($order) {
+                    $price = 0;
+                    foreach ($order->order_meals as $meal){
+                        $price += $meal->meal->price;
+                    }
+                    return $price ;
+                })
+                ->addColumn('school', function ($order) {
+                    if ( $order->school) $school_name = $order->school->name ;
+                    elseif ( $order->user) $school_name = $order->user->school->name ;
+                    else $school_name ='';
+                    return $school_name;
+                })->addColumn('checkbox', function ($order) {
+                    return '<input type="checkbox" class="sub_chk" data-id="' . $order->id . '">';
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+
+        return view('Admin.Order.index',['type'=>'school' , 'id'=>$request->school_id ?? null]);
     }
 
     ################ multiple Delete  #################

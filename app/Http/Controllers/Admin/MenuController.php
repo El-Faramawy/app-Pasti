@@ -94,8 +94,8 @@ class MenuController extends Controller
         }
         $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
         $day = date('D' ,strtotime($menu['date'] ) );
-        $this->sendNotification($request['schools'], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
-        $this->sendFCMNotification($request['schools'], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
+        $this->sendNotification($request['schools'], 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
+        $this->sendFCMNotification($request['schools'], 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
 
 //        if ($request->meal_name){
 //            foreach ($request['meal_name'] as $meal_name){
@@ -163,8 +163,8 @@ class MenuController extends Controller
                     'school_id'      => $school
                 ]) ;
                 if (!in_array($school,$old_school)){
-                    $this->sendNotification([$school], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
-                    $this->sendFCMNotification([$school], 'Nuovo Menù dispiace ', 'Nuovo Menù dispiace per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
+                    $this->sendNotification([$school], 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
+                    $this->sendFCMNotification([$school], 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])),'school');
                 }
             }
         }

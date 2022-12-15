@@ -12,7 +12,7 @@ class NotificationController extends Controller
 {
     public function notifications(){
         Notification::where('user_id',user_api()->user()->id)->update(['is_read'=>true]);
-        $notifications = Notification::where('user_id',user_api()->user()->id)->get();
+        $notifications = Notification::where('user_id',user_api()->user()->id)->latest()->get();
         return apiResponse($notifications);
     }//end fun
     /**

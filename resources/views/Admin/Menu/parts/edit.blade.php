@@ -122,11 +122,11 @@
         <div class="d-flex flex-column mb-2 fv-row col-sm-12">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold form-label ">
-                <span class="required"> scuole </span>
-                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="scuole"></i>
+                <span class="required"> Azienda </span>
+                <i class="fa fa-exclamation-circle ms-2 fs-7  text-primary" title="azienda"></i>
             </label>
             <!--end::Label-->
-            <select class="form-control select2" name="schools[]" data-placeholder="Scegli le scuole " multiple>
+            <select class="form-control select2" name="schools[]" data-placeholder="scegli l'azienda " multiple>
                 @foreach($schools as $school)
                     <option value="{{$school->id}}" {{in_array($school->id,$school_ids)?'selected':''}}> {{$school->name}} </option>
                 @endforeach

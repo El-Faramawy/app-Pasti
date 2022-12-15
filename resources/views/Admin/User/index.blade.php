@@ -57,7 +57,7 @@
                                 <th class="text-white">Nome utente</th>
                                 <th class="text-white">N. personale</th>
                                 <th class="text-white">aziende</th>
-                                <th class="text-white">l'aula </th>
+                                <th class="text-white">Sede </th>
                                 <th class="text-white">Ordini</th>
                                 <th class="text-white">Lo stato</th>
                                 <th class="text-white">Bloccare</th>

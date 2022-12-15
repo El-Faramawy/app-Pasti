@@ -202,8 +202,9 @@
                                 <tr>
                                     <th >L'azienda</th>
                                     <th >numero di ordini</th>
-                                    <th >la condizione</th>
+                                    <th >Il numero dei pasti</th>
                                     <th >i dettagli</th>
+                                    <th >la condizione</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -224,6 +225,20 @@
                                                 </p>
                                             </td>
                                             <td>{{$order['order_count']}}</td>
+                                            <td class="font-weight-semibold fs-15">{{$order['menus']['all_meals_count']}}</td>
+                                            <td class="font-weight-semibold fs-15">
+                                                {{--                                                <div class="card-options pr-2">--}}
+                                                {{--                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>--}}
+                                                {{--                                                </div>--}}
+                                                <ul class="list-group">
+                                                    @foreach($order['menus']['meals'] as $menu)
+                                                        <li class="list-group-item" style="padding: 4px 20px;">
+                                                            {{$menu['name']}}
+                                                            <span class="badgetext badge badge-default badge-pill">{{$menu['meal_count']}}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
                                             <td class="font-weight-semibold fs-15">
                                                 <div class="card-header pt-0  pb-0 border-bottom-0">
                                                     @if ($order['status'] == 'on_going')
@@ -247,11 +262,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="font-weight-semibold fs-15">
-                                                <div class="card-options pr-2">
-                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>
-                                                </div>
-                                            </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -277,6 +288,7 @@
                                     <th >L'azienda</th>
                                     <th >numero di ordini</th>
                                     <th >la condizione</th>
+                                    <th >Il numero dei pasti</th>
                                     <th >i dettagli</th>
                                 </tr>
                                 </thead>
@@ -298,6 +310,21 @@
                                                 </p>
                                             </td>
                                             <td>{{$order['order_count']}}</td>
+                                            <td class="font-weight-semibold fs-15">{{$order['menus']['all_meals_count']}}</td>
+                                            <td class="font-weight-semibold fs-15">
+                                                {{--                                                <div class="card-options pr-2">--}}
+                                                {{--                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>--}}
+                                                {{--                                                </div>--}}
+                                                <ul class="list-group">
+                                                    @foreach($order['menus']['meals'] as $menu)
+                                                        <li class="list-group-item" style="padding: 4px 20px;">
+                                                            {{$menu['name']}}
+                                                            <span class="badgetext badge badge-default badge-pill">{{$menu['meal_count']}}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+
+                                            </td>
                                             <td class="font-weight-semibold fs-15">
                                                 <div class="card-header pt-0  pb-0 border-bottom-0">
                                                     @if ($order['status'] == 'on_going')
@@ -319,11 +346,6 @@
                                                            href="{{url("admin/change_school_order_status",$order["id"])}}"><i
                                                                 class="fa fa-pencil mb-0"></i></a>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="font-weight-semibold fs-15">
-                                                <div class="card-options pr-2">
-                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

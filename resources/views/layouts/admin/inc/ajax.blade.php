@@ -52,7 +52,7 @@
             lengthChange: true,
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],     // page length options
             pageLength: 10,
-
+            footerCallback : footer_sum,
         });
 
         table.buttons().container().appendTo( '#exportexample_wrapper .col-md-6:eq(0)' );

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\SchoolMenu;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
@@ -113,6 +114,62 @@ class OrderController extends Controller
 
 
         $order = Order::where('id',$order->id)->with('order_meals.meal'/*,'order_additions.addition'*/)->first();
+        return apiResponse($order);
+    }
+
+    /*================================================*/
+    public function get_order_meals(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id'                 =>'required|exists:orders,id',
+        ]);
+        if ($validator->fails()){
+            return apiResponse(null,$validator->errors(),'422');
+        }
+        $order = Order::where('id',$request->id)->with('order_meals.meal')->first();
+
+        $user = User::where('id',user_api()->user()->id)->with('school.meals.meal.menu_details','school.additions.addition.menu_details')->first();
+        $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
+        $menu_ids = SchoolMenu::where(['school_id'=>$user->school_id , 'is_active' => 'yes'])->pluck('menu_id')->toArray();
+        $meal = Menu::where(['type' => 'menu' , 'date' => $order->date ])->whereIn('id',$menu_ids)->first();
+        $selected_meals = $order->order_meals->pluck('menu_id')->toArray();
+
+            $new_meal = [];
+            $new_meal['date'] = $meal['date'] ;
+            $order_day = date('D' ,strtotime($meal['date'] ) ) ;
+            $new_meal['meal_today'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d') ? 'yes':'no';
+            $new_meal['meal_tomorrow'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d' ,strtotime('+1 day')) ? 'yes':'no';
+            $new_meal['meal_day'] = $days[$order_day];
+            $meal_menus = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get()->toArray();
+            $new_meal['meal_menus'] = [];
+            foreach ($meal_menus as $one_meal){
+                $one_meal['is_selected'] =  in_array($one_meal['id'] , $selected_meals) ? 'yes':'no';
+                $new_meal['meal_menus'][] = $one_meal;
+            }
+
+        return apiResponse(['meals'=>$new_meal,'order'=>$order]);
+    }
+    /*================================================*/
+    public function update_order(Request $request){
+        //####################  start validation ###########################
+        $validator = Validator::make($request->all(),[
+            'id'                 =>'required|exists:orders,id',
+            "details.*.menu_id"     => "required",
+        ]);
+        if ($validator->fails()){
+            return apiResponse(null,$validator->errors(),'422');
+        }
+
+        $order = Order::where('id',$request->id)->with('order_meals.meal')->first();
+
+        OrderDetails::where('order_id',$order->id)->delete();
+
+        foreach ($request->details as $detail){
+            $new_detail = new OrderDetails;
+            $new_detail->order_id       = $order->id;
+            $new_detail->menu_id        = $detail['menu_id'];
+            $new_detail->save();
+        }
+
         return apiResponse($order);
     }
     /*================================================*/

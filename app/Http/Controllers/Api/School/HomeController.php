@@ -63,13 +63,20 @@ class HomeController extends Controller
         } else {
             $meals = Menu::where(['type' => 'menu'])->with('menu_details')
                 ->whereHas('meal_menus.order', function ($query) use ($user_ids) {
-                    $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+                    $query->where('date', date('Y-m-d'))
+                        ->where(function ($q) use ($user_ids){
+                            $q->whereIn('user_id', $user_ids)->orwhere('school_id', school_api()->user()->id);
+                        });
                 })
                 ->get();
-
+//            return $user_ids;
             foreach ($meals as $meal) {
                 $meal->meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
-                    $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+                    $query->where('date', date('Y-m-d'))/*->whereIn('user_id', $user_ids)*/
+                    ->where(function ($q) use ($user_ids){
+                        $q->whereIn('user_id', $user_ids)->orwhere('school_id', school_api()->user()->id);
+                    });
+
                 })->where('menu_id', $meal->id)
                     ->count();
 
