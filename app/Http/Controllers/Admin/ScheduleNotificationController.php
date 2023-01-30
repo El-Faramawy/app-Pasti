@@ -136,7 +136,8 @@ class ScheduleNotificationController extends Controller
         foreach ($notifications as $notification){
             $time_per10_minute = round(date('i' ,strtotime($notification->time)),-1) ;
 //            if (date('H' ,strtotime('+2hours') ) == date('H' ,strtotime($notification->time))){
-            if (date('H' ,strtotime('+2hours') ) == date('H' ,strtotime($notification->time)) && date('i') == $time_per10_minute ){
+            if (date('H' ,strtotime('+1hours') ) == date('H' ,strtotime($notification->time)) && date('i') == $time_per10_minute ){
+
                 if ($notification->is_order == 'yes'){
                     $user_ids = User::whereHas('orders',function($query){
                         $query->where('date',date('Y-m-d'));

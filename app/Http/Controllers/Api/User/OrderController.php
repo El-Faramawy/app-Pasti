@@ -24,7 +24,8 @@ class OrderController extends Controller
 //        $meals = $user->school->meals->toArray();
         $menu_ids = SchoolMenu::where(['school_id'=>$user->school_id , 'is_active' => 'yes'])->pluck('menu_id')->toArray();
         $meals = Menu::where('type','menu')->whereIn('id',$menu_ids)->groupBy('date')->get()->toArray();
-//        return $meals;
+
+
 //        $additions = $user->school->additions->toArray();
 
 //        usort($meals, function ($item1, $item2) {
@@ -50,7 +51,27 @@ class OrderController extends Controller
                 $new_meal['meal_today'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d') ? 'yes':'no';
                 $new_meal['meal_tomorrow'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d' ,strtotime('+1 day')) ? 'yes':'no';
                 $new_meal['meal_day'] = $days[$order_day];
-                $new_meal['meal_menus'] = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get();
+                $meal_menus = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get();
+
+//                $meal_date = $meal['date'];
+//                $meal_ids = OrderDetails::whereHas('order',function ($q) use($meal_date) {
+//                    $q->where(['date'=>$meal_date , 'user_id' => user_api()->user()->id]);
+//                })->pluck('menu_id')->toArray();
+////                return $meal_ids;
+//                $meal = Menu::where(['type' => 'menu' , 'date' => $meal_date ])->whereIn('id',$menu_ids)->first();
+                $order = Order::where(['date'=>$meal['date'] , 'user_id' => user_api()->user()->id , ['status' , '!=' , 'canceled'] ])->first();
+                if ($order){
+                $selected_meals = $order->order_meals->pluck('menu_id')->toArray();
+                } else{
+                    $selected_meals = [];
+                }
+
+                $meal_date_menus = [];
+                foreach ($meal_menus as $one_meal){
+                    $one_meal['is_selected'] =  in_array($one_meal['id'] , $selected_meals) ? 'yes':'no';
+                    $meal_date_menus[] = $one_meal;
+                }
+                $new_meal['meal_menus'] = $meal_date_menus;
                 $meals_array[] = $new_meal;
             }
         }
@@ -102,7 +123,10 @@ class OrderController extends Controller
         foreach ($request->details as $detail){
             $menu  = Menu::where('id',$detail['menu_id'])->first();
             $order = Order::where(['date'=>$menu->date,'status'=>'new' , 'user_id'=>user_api()->user()->id])->first();
-            if (!$order){
+            if ($order){
+            OrderDetails::where('order_id',$order->id)->delete();
+            }
+            else {
                 $data['date'] = $menu->date;
                 $order = Order::create($data);
             }
@@ -125,11 +149,13 @@ class OrderController extends Controller
         if ($validator->fails()){
             return apiResponse(null,$validator->errors(),'422');
         }
-        $order = Order::where('id',$request->id)->with('order_meals.meal')->first();
+        $order = Order::where('id',$request->id)->with('order_meals.meal','user','school')->first();
+        $school_id = $order->user ? $order->user->school_id : $order->school_id ;
 
-        $user = User::where('id',user_api()->user()->id)->with('school.meals.meal.menu_details','school.additions.addition.menu_details')->first();
+//        $user = User::where('id',user_api()->user()->id)->with('school.meals.meal.menu_details','school.additions.addition.menu_details')->first();
+//        $user = $order->user;
         $days = ["Sat" => "Sabato", "Sun" => "Domenica", "Mon" => "Lunedì", "Tue" => "Martedì", "Wed" => "Mercoledì", "Thu" => "Giovedì", "Fri" => "Venerdì"];
-        $menu_ids = SchoolMenu::where(['school_id'=>$user->school_id , 'is_active' => 'yes'])->pluck('menu_id')->toArray();
+        $menu_ids = SchoolMenu::where(['school_id'=>$school_id , 'is_active' => 'yes'])->pluck('menu_id')->toArray();
         $meal = Menu::where(['type' => 'menu' , 'date' => $order->date ])->whereIn('id',$menu_ids)->first();
         $selected_meals = $order->order_meals->pluck('menu_id')->toArray();
 
@@ -174,9 +200,32 @@ class OrderController extends Controller
     }
     /*================================================*/
     public function current_orders(Request $request){
-        $order = Order::where('user_id',user_api()->user()->id)
-            ->with('order_meals.meal','order_additions.addition')
-            ->orderBy('date','desc')->get();
+//        if ($request->month && $request->month!=null){
+//            $year = $request->month <= date('m') ? date('Y'):date('Y',strtotime('-1year'));
+//            $order = Order::where('user_id',user_api()->user()->id)
+//                ->with('order_meals.meal','order_additions.addition')
+//                ->orderBy('date','desc')
+//                ->whereBetween('date',[date($year.'-'.$request->month.'-1'),date($year.'-'.$request->month.'-31')])
+//                ->get();
+//        }else{
+//            $order = Order::where('user_id',user_api()->user()->id)
+//                ->with('order_meals.meal','order_additions.addition')
+//                ->whereBetween('date',[date('Y-m-1'),date('Y-m-31')])
+//                ->orderBy('date','desc')->get();
+//        }
+        $from_date = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : date('Y-m-d');
+        $to_date = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : date('Y-m-d');
+
+        if ($request->from_date || $request->to_date) {
+            $order = Order::where('user_id',user_api()->user()->id)
+                ->with('order_meals.meal','order_additions.addition')
+                ->whereBetween('date',[$from_date, $to_date])
+                ->orderBy('date','desc')->get();
+        } else {
+            $order = Order::where('user_id',user_api()->user()->id)
+                ->with('order_meals.meal','order_additions.addition')
+                ->orderBy('date','desc')->get();
+        }
         return apiResponse($order);
     }
     /*================================================*/

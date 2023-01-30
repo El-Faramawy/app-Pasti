@@ -1,6 +1,9 @@
 @extends('layouts.admin.app')
 @section('page_title') Pagina iniziale @endsection
 <link href="{{url('Admin')}}/assets/plugins/select2/select2.min.css" rel="stylesheet"/>
+{{--<style>--}}
+{{--    #dt{text-indent: -500px;height:25px; width:200px;}--}}
+{{--</style>--}}
 @section('content')
     @if(in_array(51,admin()->user()->permission_ids))
 
@@ -19,13 +22,17 @@
                     <div class="card-body">
                         <p class="mg-b-20 mg-sm-b-40">Scegli la data di inizio e di fine</p>
                         <form class="wd-200 mg-b-30 row" action="{{route('home')}}">
-                            <div class="input-group col-5">
+                            <div class="input-group col-5" >
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input class="form-control fc-datepicker order_filter" name="created_from" value="{{$created_from}}" placeholder="data di inizio " type="text">
+                                <input class="form-control fc-datepicker order_filter"  data-date-format="DD/MM/YYYY" name="created_from" value="{{$created_from}}"  placeholder="data di inizio " type="text">
+{{--                                <input class="form-control order_filter" name="created_from" value="{{$created_from}}"  placeholder="data di inizio " type="date">--}}
+{{--                                <input type="date" id="dt" onchange="mydate1();" />--}}
+{{--                                <input type="text" id="ndt"  onclick="mydate();" hidden />--}}
+{{--                                <input type="button" Value="Date" onclick="mydate();" />--}}
                             </div>
                             <div class="input-group col-5">
                                 <div class="input-group-prepend">
@@ -33,7 +40,8 @@
                                         <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input class="form-control fc-datepicker order_filter" name="created_to" value="{{$created_to}}" placeholder="data di fine " type="text">
+{{--                                <input class="form-control fc-datepicker order_filter" name="created_to" value="{{$created_to}}" placeholder="data di fine " type="text">--}}
+                                <input class="form-control fc-datepicker order_filter" dateFormat="DD-MM-YYYY"  name="created_to" value="{{$created_to}}" placeholder="data di fine " type="text">
                             </div>
                             <input type="submit" class="btn btn-success-light col-2" value="Ricerca">
                         </form>
@@ -201,70 +209,87 @@
                                 <thead class="">
                                 <tr>
                                     <th >L'azienda</th>
-                                    <th >numero di ordini</th>
+                                    <th >SEDE</th>
+{{--                                    <th >numero di ordini</th>--}}
                                     <th >Il numero dei pasti</th>
                                     <th >i dettagli</th>
                                     <th >la condizione</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($school_orders as $order)
-                                        <tr>
-                                            <td>
-                                                <img src="{{ $order['user'] ? $order['user']['school']['image'] : $order['school']['image']}}" alt="img" class="h-7 w-7 mr-2 br-5 ">
-                                                <p class="d-inline-block align-middle mb-0 mr-1">
-                                                    @if ( $order['school'])
-                                                        <a href="{{url("admin/school_profile",$order['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['school']['name'] }}</a>
-                                                    @elseif ( $order['user'])
-                                                        <a href="{{url("admin/school_profile",$order['user']['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] }}</a>
-                                                    @else
-                                                        <a href="{{url("admin/school_profile",1)}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold"> deleted school</a>
-                                                    @endif
-{{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
+                                @foreach($school_orders as $school)
+                                    @foreach($school['classes'] as $class)
+                                        @if($class['orders'])
+                                            @foreach($class['orders'] as $order)
 
-                                                </p>
-                                            </td>
-                                            <td>{{$order['order_count']}}</td>
-                                            <td class="font-weight-semibold fs-15">{{$order['menus']['all_meals_count']}}</td>
-                                            <td class="font-weight-semibold fs-15">
-                                                {{--                                                <div class="card-options pr-2">--}}
-                                                {{--                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>--}}
-                                                {{--                                                </div>--}}
-                                                <ul class="list-group">
-                                                    @foreach($order['menus']['meals'] as $menu)
-                                                        <li class="list-group-item" style="padding: 4px 20px;">
-                                                            {{$menu['name']}}
-                                                            <span class="badgetext badge badge-default badge-pill">{{$menu['meal_count']}}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </td>
-                                            <td class="font-weight-semibold fs-15">
-                                                <div class="card-header pt-0  pb-0 border-bottom-0">
-                                                    @if ($order['status'] == 'on_going')
-                                                        <a class="badge badge-primary text-white ">Preparazione</a>
+                                                <tr>
+                                                    <td>
+                                                        <img
+                                                            src="{{ $order['user'] ? $order['user']['school']['image'] : $order['school']['image']}}"
+                                                            alt="img" class="h-7 w-7 mr-2 br-5 ">
+                                                        <p class="d-inline-block align-middle mb-0 mr-1">
+                                                            @if ( $order['school'])
+                                                                <a href="{{url("admin/school_profile",$order['school']['id'])}}"
+                                                                   class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['school']['name'] }}</a>
+                                                            @elseif ( $order['user'])
+                                                                <a href="{{url("admin/school_profile",$order['user']['school']['id'])}}"
+                                                                   class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] }}</a>
+                                                            @else
+                                                                <a href="{{url("admin/school_profile",1)}}"
+                                                                   class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">
+                                                                    deleted school</a>
+                                                            @endif
+                                                            {{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
 
-                                                    @elseif ($order['status'] === 'ended')
-                                                        <a class="badge badge-success text-white ">Finito</a>
+                                                        </p>
+                                                    </td>
+                                                    <td class="font-weight-semibold fs-15">{{$class['name'] }}</td>
+                                                    {{--                                            <td>{{$order['order_count']}}</td>--}}
+                                                    <td class="font-weight-semibold fs-15">{{$order['menus']['all_meals_count']}}</td>
+                                                    <td class="font-weight-semibold fs-15">
+                                                        {{--                                                <div class="card-options pr-2">--}}
+                                                        {{--                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>--}}
+                                                        {{--                                                </div>--}}
+                                                        <ul class="list-group">
+                                                            @foreach($order['menus']['meals'] as $menu)
+                                                                <li class="list-group-item"
+                                                                    style="padding: 4px 20px;">
+                                                                    {{$menu['name']}}
+                                                                    <span
+                                                                        class="badgetext badge badge-default badge-pill">{{$menu['meal_count']}}</span>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
 
-                                                    @elseif ($order['status'] === 'canceled')
-                                                        <a class="badge badge-warning text-white ">annullato</a>
+                                                    </td>
+                                                    <td class="font-weight-semibold fs-15">
+                                                        <div class="card-header pt-0  pb-0 border-bottom-0">
+                                                            @if ($order['status'] == 'on_going')
+                                                                <a class="badge badge-primary text-white ">Preparazione</a>
 
-                                                    @else
-                                                        <a class="badge badge-info text-white ">nuovo</a>
+                                                            @elseif ($order['status'] === 'ended')
+                                                                <a class="badge badge-success text-white ">Finito</a>
 
-                                                    @endif
-                                                    <div class="card-options pr-0 ml-1">
-                                                        <a class="btn btn-sm {{in_array(53, admin()->user()->permission_ids)?'statusBtn':''}}"
-                                                           style="background-color: #0ea5b9;color: white"
-                                                           href="{{url("admin/change_school_order_status",$order["id"])}}"><i
-                                                                class="fa fa-pencil mb-0"></i></a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                                            @elseif ($order['status'] === 'canceled')
+                                                                <a class="badge badge-warning text-white ">annullato</a>
 
-                                        </tr>
+                                                            @else
+                                                                <a class="badge badge-info text-white ">nuovo</a>
+
+                                                            @endif
+                                                            <div class="card-options pr-0 ml-1">
+                                                                <a class="btn btn-sm {{in_array(53, admin()->user()->permission_ids)?'statusBtn':''}}"
+                                                                   style="background-color: #0ea5b9;color: white"
+                                                                   href="{{url("admin/change_school_order_status",$order["id"])}}"><i
+                                                                        class="fa fa-pencil mb-0"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     @endforeach
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -286,70 +311,87 @@
                                 <thead class="">
                                 <tr>
                                     <th >L'azienda</th>
-                                    <th >numero di ordini</th>
-                                    <th >la condizione</th>
+                                    <th >SEDE</th>
+{{--                                    <th >numero di ordini</th>--}}
                                     <th >Il numero dei pasti</th>
                                     <th >i dettagli</th>
+                                    <th >la condizione</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($school_tomorrow_orders as $order)
-                                        <tr>
-                                            <td>
-                                                <img src="{{ $order['user'] ? $order['user']['school']['image'] : $order['school']['image']}}" alt="img" class="h-7 w-7 mr-2 br-5 ">
-                                                <p class="d-inline-block align-middle mb-0 mr-1">
-                                                    @if ( $order['school'])
-                                                        <a href="{{url("admin/school_profile",$order['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['school']['name'] }}</a>
-                                                    @elseif ( $order['user'])
-                                                        <a href="{{url("admin/school_profile",$order['user']['school']['id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] }}</a>
-                                                    @else
-                                                        <a href="{{url("admin/school_profile",1)}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold"> deleted school</a>
-                                                    @endif
-                                                    {{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
+                                @foreach($school_tomorrow_orders as $school)
+                                    @foreach($school['classes'] as $class)
+                                        @if($class['orders'])
+                                            @foreach($class['orders'] as $order)
 
-                                                </p>
-                                            </td>
-                                            <td>{{$order['order_count']}}</td>
-                                            <td class="font-weight-semibold fs-15">{{$order['menus']['all_meals_count']}}</td>
-                                            <td class="font-weight-semibold fs-15">
-                                                {{--                                                <div class="card-options pr-2">--}}
-                                                {{--                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>--}}
-                                                {{--                                                </div>--}}
-                                                <ul class="list-group">
-                                                    @foreach($order['menus']['meals'] as $menu)
-                                                        <li class="list-group-item" style="padding: 4px 20px;">
-                                                            {{$menu['name']}}
-                                                            <span class="badgetext badge badge-default badge-pill">{{$menu['meal_count']}}</span>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                                                <tr>
+                                                    <td>
+                                                        <img
+                                                            src="{{ $order['user'] ? $order['user']['school']['image'] : $order['school']['image']}}"
+                                                            alt="img" class="h-7 w-7 mr-2 br-5 ">
+                                                        <p class="d-inline-block align-middle mb-0 mr-1">
+                                                            @if ( $order['school'])
+                                                                <a href="{{url("admin/school_profile",$order['school']['id'])}}"
+                                                                   class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['school']['name'] }}</a>
+                                                            @elseif ( $order['user'])
+                                                                <a href="{{url("admin/school_profile",$order['user']['school']['id'])}}"
+                                                                   class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] }}</a>
+                                                            @else
+                                                                <a href="{{url("admin/school_profile",1)}}"
+                                                                   class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">
+                                                                    deleted school</a>
+                                                            @endif
+                                                            {{--                                                    <a href="{{url("admin/school_profile",$order['user']['school_id'])}}" class="d-inline-block align-middle mb-0 product-name text-primary font-weight-semibold">{{$order['user']['school']['name'] ?? $order['user']['school_id'] . " مدرسة رقم  " }}</a>--}}
 
-                                            </td>
-                                            <td class="font-weight-semibold fs-15">
-                                                <div class="card-header pt-0  pb-0 border-bottom-0">
-                                                    @if ($order['status'] == 'on_going')
-                                                        <a class="badge badge-primary text-white ">Preparazione</a>
+                                                        </p>
+                                                    </td>
+                                                    <td class="font-weight-semibold fs-15">{{$class['name'] }}</td>
+                                                    {{--                                            <td>{{$order['order_count']}}</td>--}}
+                                                    <td class="font-weight-semibold fs-15">{{$order['menus']['all_meals_count']}}</td>
+                                                    <td class="font-weight-semibold fs-15">
+                                                        {{--                                                <div class="card-options pr-2">--}}
+                                                        {{--                                                    <a class="btn btn-sm btn-primary text-white statusBtn"  href="{{url("admin/school_order_details",$order["id"])}}"><i class="fa fa-book mb-0"></i></a>--}}
+                                                        {{--                                                </div>--}}
+                                                        <ul class="list-group">
+                                                            @foreach($order['menus']['meals'] as $menu)
+                                                                <li class="list-group-item"
+                                                                    style="padding: 4px 20px;">
+                                                                    {{$menu['name']}}
+                                                                    <span
+                                                                        class="badgetext badge badge-default badge-pill">{{$menu['meal_count']}}</span>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
 
-                                                    @elseif ($order['status'] === 'ended')
-                                                        <a class="badge badge-success text-white ">Finito</a>
+                                                    </td>
+                                                    <td class="font-weight-semibold fs-15">
+                                                        <div class="card-header pt-0  pb-0 border-bottom-0">
+                                                            @if ($order['status'] == 'on_going')
+                                                                <a class="badge badge-primary text-white ">Preparazione</a>
 
-                                                    @elseif ($order['status'] === 'canceled')
-                                                        <a class="badge badge-warning text-white ">annullato</a>
+                                                            @elseif ($order['status'] === 'ended')
+                                                                <a class="badge badge-success text-white ">Finito</a>
 
-                                                    @else
-                                                        <a class="badge badge-info text-white ">nuovo</a>
+                                                            @elseif ($order['status'] === 'canceled')
+                                                                <a class="badge badge-warning text-white ">annullato</a>
 
-                                                    @endif
-                                                    <div class="card-options pr-0 ml-1">
-                                                        <a class="btn btn-sm {{in_array(53, admin()->user()->permission_ids)?'statusBtn':''}}"
-                                                           style="background-color: #0ea5b9;color: white"
-                                                           href="{{url("admin/change_school_order_status",$order["id"])}}"><i
-                                                                class="fa fa-pencil mb-0"></i></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                            @else
+                                                                <a class="badge badge-info text-white ">nuovo</a>
+
+                                                            @endif
+                                                            <div class="card-options pr-0 ml-1">
+                                                                <a class="btn btn-sm {{in_array(53, admin()->user()->permission_ids)?'statusBtn':''}}"
+                                                                   style="background-color: #0ea5b9;color: white"
+                                                                   href="{{url("admin/change_school_order_status",$order["id"])}}"><i
+                                                                        class="fa fa-pencil mb-0"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     @endforeach
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -648,5 +690,40 @@
             });
         });
     </script>
-
+{{--    <script>--}}
+{{--        document.ready(function() {--}}
+{{--            $("input").setAttribute(--}}
+{{--                "data-date",--}}
+{{--                moment(this.value, "YYYY-MM-DD")--}}
+{{--                    .format( this.getAttribute("data-date-format") )--}}
+{{--            )--}}
+{{--        });--}}
+{{--        $("input").on("change", function() {--}}
+{{--            this.setAttribute(--}}
+{{--                "data-date",--}}
+{{--                moment(this.value, "YYYY-MM-DD")--}}
+{{--                    .format( this.getAttribute("data-date-format") )--}}
+{{--            )--}}
+{{--        }).trigger("change")--}}
+{{--    </script>--}}
+    <script>
+        // function mydate()
+        // {
+        //     //alert("");
+        //     document.getElementById("dt").hidden=false;
+        //     document.getElementById("ndt").hidden=true;
+        // }
+        // function mydate1()
+        // {
+        //     d=new Date(document.getElementById("dt").value);
+        //     dt=d.getDate();
+        //     mn=d.getMonth();
+        //     mn++;
+        //     yy=d.getFullYear();
+        //     document.getElementById("ndt").value=dt+"/"+mn+"/"+yy
+        //     document.getElementById("ndt").hidden=false;
+        //     document.getElementById("dt").hidden=true;
+        // }
+        var date = $('.fc-datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+    </script>
 @endpush

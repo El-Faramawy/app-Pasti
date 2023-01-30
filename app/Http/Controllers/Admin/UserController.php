@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         if ($request->ajax()){
             $school =  in_array($request->school ,['null','','all']) ? School::get()->pluck('id'):[$request->school];
-            $users =User::with('school')
+            $users =User::with('school','class')
                 ->where('is_active','!=','pending')
                 ->whereIn('school_id',$school)
                 ->orderBy('id','desc')->get();
@@ -62,6 +62,9 @@ class UserController extends Controller
                 })
                 ->addColumn('school',function ($user){
                     return $user->school->name ?? '';
+                })
+                ->addColumn('class',function ($user){
+                    return $user->class->name ?? '';
                 })
                ->addColumn('checkbox' , function ($user){
                     return '<input type="checkbox" class="sub_chk" data-id="'.$user->id.'">';

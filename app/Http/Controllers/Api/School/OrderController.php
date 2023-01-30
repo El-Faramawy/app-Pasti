@@ -24,6 +24,8 @@ class OrderController extends Controller
         usort($meals, function ($item1, $item2) {
             return $item1['date'] <=> $item2['date'];
         });
+//        return $menu_ids;
+
         foreach ($meals as $meal){
             if (date('Y-m-d') </*=*/ $meal['date']){
                 $new_meal = [];
@@ -32,7 +34,22 @@ class OrderController extends Controller
                 $new_meal['meal_today'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d') ? 'yes':'no';
                 $new_meal['meal_tomorrow'] =  date('Y-m-d' ,strtotime($meal['date'] ) ) == date('Y-m-d' ,strtotime('+1 day')) ? 'yes':'no';
                 $new_meal['meal_day'] = $days[$order_day];
-                $new_meal['meal_menus'] = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get();
+//                $new_meal['meal_menus'] = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get();
+                $meal_menus = Menu::where(['type'=>'menu','date'=>$meal['date']])->whereIn('id',$menu_ids)->get();
+
+                $order = Order::where(['date'=>$meal['date'] , 'school_id' => school_api()->user()->id , ['status' , '!=' , 'canceled']])->first();
+                if ($order){
+                    $selected_meals = $order->order_meals->pluck('menu_id')->toArray();
+                } else{
+                    $selected_meals = [];
+                }
+
+                $meal_date_menus = [];
+                foreach ($meal_menus as $one_meal){
+                    $one_meal['is_selected'] =  in_array($one_meal['id'] , $selected_meals) ? 'yes':'no';
+                    $meal_date_menus[] = $one_meal;
+                }
+                $new_meal['meal_menus'] = $meal_date_menus;
                 $meals_array[] = $new_meal;
             }
         }
@@ -53,7 +70,10 @@ class OrderController extends Controller
         foreach ($request->details as $detail){
             $menu  = Menu::where('id',$detail['menu_id'])->first();
             $order = Order::where(['date'=>$menu->date,'status'=>'new' , 'school_id'=>school_api()->user()->id])->first();
-            if (!$order){
+            if ($order){
+                OrderDetails::where('order_id',$order->id)->delete();
+            }
+            else{
                 $data['date'] = $menu->date;
                 $order = Order::create($data);
             }

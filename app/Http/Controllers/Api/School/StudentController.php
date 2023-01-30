@@ -13,10 +13,12 @@ class StudentController extends Controller
     public function students(Request $request)
     {
         if ($request->name) {
-            $users = User::where(['school_id' => school_api()->user()->id, 'is_active' => 'yes', 'block' => 'no', ['name', 'like', '%' . $request->name . '%']])->get();
+            $users = User::with('class')->
+            where(['school_id' => school_api()->user()->id, 'is_active' => 'yes', 'block' => 'no', ['name', 'like', '%' . $request->name . '%']])->get();
             $student_count = User::where(['school_id' => school_api()->user()->id, 'is_active' => 'yes', 'block' => 'no', ['name', 'like', '%' . $request->name . '%']])->count();
         } else {
-            $users = User::where(['school_id' => school_api()->user()->id, 'is_active' => 'yes', 'block' => 'no'])->get();
+            $users = User::with('class')->
+            where(['school_id' => school_api()->user()->id, 'is_active' => 'yes', 'block' => 'no'])->get();
             $student_count = User::where(['school_id' => school_api()->user()->id, 'is_active' => 'yes', 'block' => 'no'])->count();
         }
 
@@ -34,7 +36,7 @@ class StudentController extends Controller
     /*================================================*/
     public function new_students(Request $request)
     {
-        $users = User::where(['school_id' => school_api()->user()->id, 'is_active' => 'pending'])->get();
+        $users = User::with('class')->where(['school_id' => school_api()->user()->id, 'is_active' => 'pending'])->get();
         return apiResponse($users);
     }
 

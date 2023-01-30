@@ -131,15 +131,19 @@ class AuthController extends Controller
             'token' => 'required',
         ]);
         if ($validator->fails()) {
-//            return apiResponse(null,$validator->errors(),'422');
-        }
-        if (!\auth()->check())
-        {
-            return apiResponse(null,'done');
+            return apiResponse(null,$validator->errors(),'422');
         }
 
-        PhoneToken::where(['user_id' => user_api()->user()->id, 'phone_token' => $request->token])->delete();
-        PhoneToken::where(['school_id' => school_api()->user()->id, 'phone_token' => $request->token])->delete();
+//        if (!\auth()->check())
+//        {
+//            return apiResponse(null,'logout once or token is not valid');
+//        }
+
+//        $data =  PhoneToken::where(['user_id' => user_api()->user()->id, 'phone_token' => $request->token])->get();
+        PhoneToken::where(['user_id' => $request->user_id , 'phone_token' => $request->token])->delete();
+//        return apiResponse($data);
+//        PhoneToken::where(['school_id' => school_api()->user()->id, 'phone_token' => $request->token])->delete();
+        PhoneToken::where(['school_id' => $request->school_id , 'phone_token' => $request->token])->delete();
 
         $token = getToken();
         if ($token != null){

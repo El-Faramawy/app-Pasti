@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classes;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,8 @@ class AuthController extends Controller
                 'password'=>'required',
                 'school_code'=>'required|exists:schools,code',
                 'name'=>'required',
-                'class_name'=>'required',
+//                'class_name'=>'required',
+                'class_id'=>'required',
                 'last_name'=>'required',
                 'personal_id'=>'required',
             ]);
@@ -63,8 +65,21 @@ class AuthController extends Controller
     }
 
     //===========================================
+    public function get_school_classes(Request $request){
+        $validator = Validator::make($request->all(),[
+            'school_code'=>'required|exists:schools,code',
+        ]);
+        if ($validator->fails()){
+            return apiResponse(null,$validator->errors(),'422');
+        }
+        $school_id = School::where('code',$request ->school_code)->first()->id ;
+        $classes = Classes::where('school_id',$school_id)->get();
+        return apiResponse($classes);
+    }
+
+    //===========================================
     public function profile(Request $request){
-        $user = User::where('id',user_api()->user()->id)->with('school')->first();
+        $user = User::where('id',user_api()->user()->id)->with('school','class')->first();
         $user->token = getToken();
         return apiResponse($user);
     }

@@ -13,11 +13,11 @@
                                     class="mb-4">{{$user->name}}</h4>
                                 <h6 class="text-muted mb-1">
                                     nome utente : {{$user->user_name}}</h6>
-                                <h6 class="text-muted mb-4">
-                                    Numero di telefono : {{$user->phone_code.$user->phone}}</h6>
-                                <a href="tel:{{$user->phone_code.$user->phone}}"
-                                   class="btn btn-primary mt-2 mb-1"><i
-                                        class="fa fa-phone"></i> Contatto </a>
+{{--                                <h6 class="text-muted mb-4">--}}
+{{--                                    Numero di telefono : {{$user->phone_code.$user->phone}}</h6>--}}
+{{--                                <a href="tel:{{$user->phone_code.$user->phone}}"--}}
+{{--                                   class="btn btn-primary mt-2 mb-1"><i--}}
+{{--                                        class="fa fa-phone"></i> Contatto </a>--}}
                                 <span href="" class="btn btn-secondary mt-2 mb-1"><i
                                         class="fa fa-thumbs-{{$user->is_active == 'yes'?'up':'down'}}"></i> {{$user->is_active == 'yes'?'attiva':'non attivo'}} </span>
                             </div>
@@ -35,7 +35,7 @@
                     <div class="media mb-5 mt-0">
                         <div class="d-flex mr-3"><span class="user-contact-icon bg-primary"><i
                                     class="fa fa-building-o text-white"></i></span></div>
-                        <div class="media-body"><a href="#" class="text-dark">La scuola</a>
+                        <div class="media-body"><a href="#" class="text-dark">aziende</a>
                             <div class="text-muted fs-14">{{$user->school->name ?? ''}}</div>
                         </div>
                     </div>

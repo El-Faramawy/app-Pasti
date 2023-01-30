@@ -64,48 +64,56 @@ class HomeController extends Controller
 
 //        //*************** School today Orders ******************
 
-        $schools = School::all();
-        foreach ($schools as $school) {
-            $school->orders = Order::with('user.school','school')
-                ->where(function($q) use ($school) {
-                    $q->whereHas('user', function ($query) use ($school) {
-                        $query->where('school_id', $school->id);
-                    })->orwhere('school_id', $school->id);
-                })
-//                ->whereHas('user', function ($query) use ($school) {
-//                    $query->where('school_id', $school->id);
-//                })->orwhere('school_id', $school->id)
-                ->groupBy('status')
-                ->select('*', DB::raw('count(*) as order_count'))
-                ->where('date',date('Y-m-d'))
-                ->get();
-            foreach ($school->orders as $one_order) {
-                $one_order->menus = $this->getOrderDetails($one_order['id']);
-            }
-        }
-        $school_orders = $schools->pluck('orders')->flatten()->toArray();
+        $school_orders = School::whereHas('classes')->with('classes')->get();
+//        $school_orders = [];
+        foreach ($school_orders as $school) {
+            foreach ($school->classes as $class) {
+                $class->orders = Order::with('user.school','user.class','school')
+                    ->where(function($q) use ($class /*, $school*/) {
+                        $q->whereHas('user', function ($query) use ($class) {
+                            $query->where('class_id', $class->id);
+                        })/*->orwhere('school_id', $school->id)*/;
+                    })
+    //                ->whereHas('user', function ($query) use ($school) {
+    //                    $query->where('school_id', $school->id);
+    //                })->orwhere('school_id', $school->id)
+                    ->groupBy('status')
+                    ->select('*', DB::raw('count(*) as order_count'))
+                    ->where('date',date('Y-m-d'))
+                    ->where('status','!=','canceled')
+                    ->get();
+                foreach ($class->orders as $one_order) {
+                    $one_order->menus = $this->getOrderDetails($one_order['id']);
+                }
+//                array_push($school_orders,$class->orders);
 
+            }
+
+//            $school_orders[] = $school['classes']->pluck('orders')->flatten()->toArray();
+        }
 //        //*************** School tomorrow Orders ******************
 
-        $schools = School::all();
-        foreach ($schools as $school) {
-            $school->orders = Order::with('user.school','school')
-                ->where(function($q) use ($school) {
-                    $q->whereHas('user', function ($query) use ($school) {
-                        $query->where('school_id', $school->id);
-                    })->orwhere('school_id', $school->id);
-                })
-                ->groupBy('status')
-                ->select('*', DB::raw('count(*) as order_count'))
-                ->where('date',date('Y-m-d',strtotime('+1 day')))
-                ->get();
-
-            foreach ($school->orders as $one_order) {
-                $one_order->menus = $this->getOrderDetails($one_order['id']);
+        $school_tomorrow_orders = School::whereHas('classes')->with('classes')->get();
+        foreach ($school_tomorrow_orders as $school) {
+            foreach ($school->classes as $class) {
+                $class->orders = Order::with('user.school','user.class','school')
+                    ->where(function($q) use ($class ) {
+                        $q->whereHas('user', function ($query) use ($class) {
+                            $query->where('class_id', $class->id);
+                        });
+                    })
+                    ->groupBy('status')
+                    ->select('*', DB::raw('count(*) as order_count'))
+                    ->where('status','!=','canceled')
+                    ->where('date',date('Y-m-d' , strtotime('+1 day')))
+                    ->get();
+                foreach ($class->orders as $one_order) {
+                    $one_order->menus = $this->getOrderDetails($one_order['id']);
+                }
             }
         }
-        $school_tomorrow_orders = $schools->pluck('orders')->flatten()->toArray();
-//        return $school_tomorrow_orders;
+//        $school_tomorrow_orders = $schools->pluck('orders')->flatten()->toArray();
+//        return $school_orders;
 
         return view('Admin.index',['created_from'=>$created_from,'created_to'=>$created_to],
             compact('chart_day_array','chart_order_array','chart_order_count','schools_array',
@@ -121,9 +129,11 @@ class HomeController extends Controller
         $data = [];
         $order = Order::with('order_details')->where('id', $id)->first();
         if ($order->user)
-            $user_ids = User::where('school_id', $order->user->school_id)->pluck('id')->toArray();
-        else
-            $user_ids = School::where('id', $order->school_id)->pluck('id')->toArray();
+            $user_ids = User::where('school_id', $order->user->school_id)
+                ->where('class_id',$order->user->class_id)
+                ->pluck('id')->toArray();
+//        else
+//            $user_ids = School::where('id', $order->school_id)->pluck('id')->toArray();
 
         $order_date = $order->date;
         $order_status = $order->status;
@@ -135,8 +145,9 @@ class HomeController extends Controller
                     ->where(function ($q) use ($user_ids){
                         $q->whereHas('user' ,function ($q2) use ($user_ids){
                             $q2->whereIn('user_id', $user_ids);
-                        })->orWhereHas('school',function ($q3) use ($user_ids){
-                            $q3->whereIn('school_id', $user_ids);
+//                        })
+//                            ->orWhereHas('school',function ($q3) use ($user_ids){
+//                            $q3->whereIn('school_id', $user_ids);
                         });
                     });
             })
@@ -148,8 +159,8 @@ class HomeController extends Controller
                     ->where(function ($q) use ($user_ids){
                         $q->whereHas('user' ,function ($q2) use ($user_ids){
                             $q2->whereIn('user_id', $user_ids);
-                        })->orWhereHas('school',function ($q3) use ($user_ids){
-                            $q3->whereIn('school_id', $user_ids);
+//                        })->orWhereHas('school',function ($q3) use ($user_ids){
+//                            $q3->whereIn('school_id', $user_ids);
                         });
                     });
             })->where('menu_id', $meal->id)

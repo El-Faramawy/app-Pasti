@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
 
+    Route::get('get_school_classes', 'AuthController@get_school_classes');
     Route::post('register', 'AuthController@register');
-
 
     Route::post('logout', 'AuthController@logout');
 

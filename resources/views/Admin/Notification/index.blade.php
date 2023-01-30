@@ -100,7 +100,7 @@
                         $('#global-loader').hide()
                         if (data.success == 'true') {
                             $('#Form')[0].reset();
-                            my_toaster(data.messages)
+                            my_toaster(data.message)
                         }
                         if (data.success === 'false') {
                             var messages = Object.values(data.messages);

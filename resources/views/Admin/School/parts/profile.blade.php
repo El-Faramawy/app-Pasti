@@ -51,11 +51,11 @@
                                         class="mb-4">{{$school->name}}</h4>
                                     <h6 class="text-muted mb-1">
                                         nome utente : {{$school->user_name}}</h6>
-                                    <h6 class="text-muted mb-4">
-                                        Numero di telefono : {{$school->phone_code.$school->phone}}</h6>
-                                <a href="tel:{{$school->phone_code.$school->phone}}"
-                                   class="btn btn-primary mt-2 mb-1"><i
-                                        class="fa fa-phone"></i> Contatto </a>
+{{--                                    <h6 class="text-muted mb-4">--}}
+{{--                                        Numero di telefono : {{$school->phone_code.$school->phone}}</h6>--}}
+{{--                                <a href="tel:{{$school->phone_code.$school->phone}}"--}}
+{{--                                   class="btn btn-primary mt-2 mb-1"><i--}}
+{{--                                        class="fa fa-phone"></i> Contatto </a>--}}
                                 <span href="" class="btn btn-secondary mt-2 mb-1"><i
                                         class="fa fa-thumbs-{{$school->is_active == 'yes'?'up':'down'}}"></i> {{$school->is_active == 'yes'?'attiva':'non attivo'}} </span>
                             </div>
@@ -100,10 +100,10 @@
                                         <span class="badgetext badge badge-danger badge-pill">{{$all_meals_count}}</span>
                                     </a>
                                 </li>
-                                <li><a href="#tab-61" data-toggle="tab" class="">Richieste di aggiunta oggi <i class="fa fa-water mr-1"></i>
-                                        <span class="badgetext badge badge-danger badge-pill">{{$all_additions_count}}</span>
-                                    </a>
-                                </li>
+{{--                                <li><a href="#tab-61" data-toggle="tab" class="">Richieste di aggiunta oggi <i class="fa fa-water mr-1"></i>--}}
+{{--                                        <span class="badgetext badge badge-danger badge-pill">{{$all_additions_count}}</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                             </ul>
                         </div>
                     </div>
@@ -125,22 +125,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="tab-61">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="example">
-                                <ul class="list-group">
-                                    @foreach($additions as $addition)
-                                        <li class="list-group-item justify-content-between">{{$addition->name}} <span
-                                                class="badgetext badge badge-info badge-pill">{{$addition->addition_count}}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+{{--                <div class="tab-pane" id="tab-61">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="example">--}}
+{{--                                <ul class="list-group">--}}
+{{--                                    @foreach($additions as $addition)--}}
+{{--                                        <li class="list-group-item justify-content-between">{{$addition->name}} <span--}}
+{{--                                                class="badgetext badge badge-info badge-pill">{{$addition->addition_count}}</span>--}}
+{{--                                        </li>--}}
+{{--                                    @endforeach--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                </div>
+{{--                </div>--}}
 
             </div>
         </div><!-- COL-END -->

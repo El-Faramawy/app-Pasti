@@ -33,6 +33,8 @@ class School extends Authenticatable implements JWTSubject
     public function additions(){
         return $this->hasMany(SchoolMenu::class,'school_id')->whereHas('addition');
     }
-
+    public function classes(){
+        return $this->hasMany(Classes::class,'school_id');
+    }
 
 }

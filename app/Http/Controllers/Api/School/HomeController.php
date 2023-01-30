@@ -53,10 +53,18 @@ class HomeController extends Controller
                 ->get();
 
             foreach ($meals as $meal) {
-                $meal->meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids, $from_date, $to_date) {
+                $meal_data = OrderDetails::whereHas('order', function ($query) use ($user_ids, $from_date, $to_date) {
                     $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
-                })->where('menu_id', $meal->id)
-                    ->count();
+                })->where('menu_id', $meal->id);
+
+                $meal->meal_count = $meal_data->count();
+                $order_details = $meal_data->get();
+
+                $users = [];
+                foreach ($order_details as $order_detail){
+                    $users[] = $order_detail->order->user;
+                }
+                $meal->users = $users;
 
                 $all_meals_count += $meal->meal_count;
             }
@@ -65,20 +73,26 @@ class HomeController extends Controller
                 ->whereHas('meal_menus.order', function ($query) use ($user_ids) {
                     $query->where('date', date('Y-m-d'))
                         ->where(function ($q) use ($user_ids){
-                            $q->whereIn('user_id', $user_ids)->orwhere('school_id', school_api()->user()->id);
+                            $q->whereIn('user_id', $user_ids)/*->orwhere('school_id', school_api()->user()->id)*/;
                         });
                 })
                 ->get();
 //            return $user_ids;
             foreach ($meals as $meal) {
-                $meal->meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
+                $meal_data = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
                     $query->where('date', date('Y-m-d'))/*->whereIn('user_id', $user_ids)*/
                     ->where(function ($q) use ($user_ids){
-                        $q->whereIn('user_id', $user_ids)->orwhere('school_id', school_api()->user()->id);
+                        $q->whereIn('user_id', $user_ids)/*->orwhere('school_id', school_api()->user()->id)*/;
                     });
 
-                })->where('menu_id', $meal->id)
-                    ->count();
+                })->where('menu_id', $meal->id);
+                $meal->meal_count = $meal_data->count();
+                $order_details = $meal_data->get();
+                $users = [];
+                foreach ($order_details as $order_detail){
+                    $users[] = $order_detail->order->user;
+                }
+                $meal->users = $users;
 
                 $all_meals_count += $meal->meal_count;
             }

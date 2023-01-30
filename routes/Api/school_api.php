@@ -34,6 +34,11 @@ Route::group(['prefix' => 'school', 'namespace' => 'School'], function () {
         Route::post('store_order', 'OrderController@store_order');
         Route::post('update_order', 'OrderController@update_order');
         Route::get('current_orders', 'OrderController@current_orders');
+        /* ---------------------- Classes -------------------*/
+        Route::get('get_school_classes', 'ClassesController@get_school_classes');
+        Route::post('add_class', 'ClassesController@add_class');
+        Route::post('edit_class', 'ClassesController@edit_class');
+        Route::post('delete_class', 'ClassesController@delete_class');
 
 
     });
