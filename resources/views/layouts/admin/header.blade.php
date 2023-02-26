@@ -1,4 +1,8 @@
-<?php $setting =  App\Models\Setting::first(); ?>
+<?php
+$setting =  App\Models\Setting::first();
+$admin_notifications = \App\Models\AdminNotification::latest()->paginate(20);
+$admin_un_read_notifications = \App\Models\AdminNotification::where('is_read',false)->count();
+?>
 
 <!-- Header -->
 <div class="app-header header">
@@ -28,6 +32,35 @@
                             <path d="M7 12c0 2.76 2.24 5 5 5s5-2.24 5-5-2.24-5-5-5-5 2.24-5 5zm8 0c0 1.65-1.35 3-3 3s-3-1.35-3-3 1.35-3 3-3 3 1.35 3 3zM3 19c0 1.1.9 2 2 2h4v-2H5v-4H3v4zM3 5v4h2V5h4V3H5c-1.1 0-2 .9-2 2zm18 0c0-1.1-.9-2-2-2h-4v2h4v4h2V5zm-2 14h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4z" /></svg>
                     </a>
                 </div><!-- FULL-SCREEN -->
+                <div class="dropdown d-md-flex notifications">
+                    <a class="nav-link icon notifications_reset" data-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M12 6.5c-2.49 0-4 2.02-4 4.5v6h8v-6c0-2.48-1.51-4.5-4-4.5z" opacity=".3" />
+                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" /></svg>
+                        @if($admin_un_read_notifications > 0)
+                            <span class="nav-unread badge badge-danger badge-pill pulse not_count">{{$admin_un_read_notifications}}</span>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        <div class="notifications-menu">
+                            @foreach($admin_notifications as $notification)
+                            <a class="dropdown-item d-flex pb-4" href="#">
+                                <div>
+                                    <span class="font-weight-bold"> {{$notification->message}} </span>
+                                    <div class="small text-muted d-flex">
+                                       {{$notification->diff_date}}
+                                    </div>
+                                </div>
+                            </a>
+                            @endforeach
+
+                        </div>
+{{--                        <div class="dropdown-divider"></div>--}}
+{{--                        <a href="#" class="dropdown-item text-center">View all Notification</a>--}}
+                    </div>
+                </div><!-- NOTIFICATIONS -->
+
 
                 <div class="dropdown profile-1">
                     <a href="#" data-toggle="dropdown" class="nav-link pr-2 pl-2  leading-none d-flex">
@@ -51,4 +84,5 @@
         </div>
     </div>
 </div>
+
 

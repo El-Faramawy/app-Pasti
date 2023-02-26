@@ -168,6 +168,24 @@
     });
 </script>
 
+<script>
+    $(document).on('click','.notifications_reset',function(){
+        var url = '{{route('reset_notification_count')}}';
+        // alert(url)
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function (data) {
+                if (data.success === 'true') {
+                    $('.not_count').text(0);
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+</script>
 
 
 

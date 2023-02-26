@@ -98,8 +98,8 @@
                                 <th class="text-white"><input type="checkbox" id="master"></th>
                                 <th class="text-white">#</th>
                                 @if($type == 'user')
-                                <th class="text-white">Collaboratore</th>
-                                <th class="text-white">Cognome</th>
+                                    <th class="text-white">Cognome</th>
+                                    <th class="text-white">Collaboratore</th>
                                 @else
                                 <th class="text-white">aziende</th>
                                 @endif
@@ -185,8 +185,8 @@
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
             {data: 'id', name: 'id'},
             @if($type == 'user')
-            {data: 'user', name: 'user'},
             {data: 'last_name', name: 'last_name'},
+            {data: 'user', name: 'user'},
             @else
             {data: 'school', name: 'school'},
             @endif

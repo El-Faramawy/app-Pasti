@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\NotificationTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use App\Models\Order;
@@ -253,12 +254,11 @@ class OrderController extends Controller
             ]);
     }
 
-    ##############################################
-
     ################ order_details #################
     public function order_details($id)
     {
         $order = Order::with('order_details')->where('id', $id)->first();
         return view('Admin.Order.parts.details', compact('order'))->render();
     }
+
 }

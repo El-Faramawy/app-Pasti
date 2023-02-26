@@ -79,4 +79,9 @@ if (!function_exists('getToken')) {
         return $token;
     }
 }
-
+//===================  AdminNotifications ===========================
+if (!function_exists('adminNotification')) {
+    function adminNotification($message = '') {
+        \App\Models\AdminNotification::create(['message' => $message]);
+    }
+}

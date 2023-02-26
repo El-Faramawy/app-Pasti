@@ -120,6 +120,16 @@ class OrderController extends Controller
 //        $order_array = ['date'=>'','menu'=>''];
 //        return $order_array;
 //        return apiResponse($order_array);
+        if ($request->deleted_orders){
+            foreach ($request->deleted_orders as $deleted_order){
+                $order_id = OrderDetails::where('menu_id',$deleted_order)
+                    ->whereHas('order',function ($q){
+                        $q->where('user_id' , user_api()->user()->id);
+                    })->first()->order_id;
+                Order::where('id',$order_id)->delete();
+            }
+        }
+
         foreach ($request->details as $detail){
             $menu  = Menu::where('id',$detail['menu_id'])->first();
             $order = Order::where(['date'=>$menu->date,'status'=>'new' , 'user_id'=>user_api()->user()->id])->first();
@@ -135,6 +145,8 @@ class OrderController extends Controller
             $new_detail->menu_id        = $detail['menu_id'];
             $new_detail->save();
         }
+
+
 
 
         $order = Order::where('id',$order->id)->with('order_meals.meal'/*,'order_additions.addition'*/)->first();

@@ -74,10 +74,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         ################################### notifications ##########################################
         Route::resource('notifications','NotificationController');
+        Route::post('reset_notification_count','NotificationController@reset_notification_count')->name('reset_notification_count');
 
         ################################### menus ##########################################
         Route::resource('schedule_notifications','ScheduleNotificationController');
         Route::post('multi_delete_schedule_notifications','ScheduleNotification@multiDelete')->name('schedule_notifications.multiDelete');
+
 
 
     });//end Middleware Admin

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\NotificationTrait;
+use App\Models\AdminNotification;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -55,6 +56,12 @@ class NotificationController extends Controller
             ]);
     }
     ###############################################
-
+    public function reset_notification_count(){
+        AdminNotification::where('is_read',false)->update(['is_read' =>true]);
+        return response()->json(
+            [
+                'success' => 'true',
+            ]);
+    }
 
 }
