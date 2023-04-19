@@ -67,16 +67,18 @@ class OrderController extends Controller
         }
         $data = [];
         $data['school_id'] = school_api()->user()->id ;
-        foreach ($request->deleted_orders as $deleted_order){
-            $order_id = OrderDetails::where('menu_id',$deleted_order)
-                ->whereHas('order',function ($q){
-                    $q->where('school_id' , school_api()->user()->id);
-                })->first()->order_id;
-            Order::where('id',$order_id)->delete();
+        if ($request->deleted_orders) {
+            foreach ($request->deleted_orders as $deleted_order) {
+                $order_id = OrderDetails::where('menu_id', $deleted_order)
+                    ->whereHas('order', function ($q) {
+                        $q->where('school_id', school_api()->user()->id);
+                    })->first()->order_id;
+                Order::where('id', $order_id)->delete();
+            }
         }
         foreach ($request->details as $detail){
             $menu  = Menu::where('id',$detail['menu_id'])->first();
-            $order = Order::where(['date'=>$menu->date,'status'=>'new' , 'school_id'=>school_api()->user()->id])->first();
+            $order = Order::where(['date'=>$menu->date,/*'status'=>'new' ,*/ 'school_id'=>school_api()->user()->id])->first();
             if ($order){
                 OrderDetails::where('order_id',$order->id)->delete();
             }

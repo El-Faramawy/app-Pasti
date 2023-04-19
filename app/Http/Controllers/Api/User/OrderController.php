@@ -132,7 +132,7 @@ class OrderController extends Controller
 
         foreach ($request->details as $detail){
             $menu  = Menu::where('id',$detail['menu_id'])->first();
-            $order = Order::where(['date'=>$menu->date,'status'=>'new' , 'user_id'=>user_api()->user()->id])->first();
+            $order = Order::where(['date'=>$menu->date,/*'status'=>'new' ,*/ 'user_id'=>user_api()->user()->id])->first();
             if ($order){
             OrderDetails::where('order_id',$order->id)->delete();
             }

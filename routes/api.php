@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login','AuthController@login');
+Route::post('delete_users','DeleteUsersController@delete_users');
 
 /* ---------------------- contact -------------------*/
 Route::post('contact_us','ContactController@contact_us');

@@ -99,7 +99,7 @@
                                 <th class="text-white">#</th>
                                 @if($type == 'user')
                                     <th class="text-white">Cognome</th>
-                                    <th class="text-white">Collaboratore</th>
+                                    <th class="text-white">Nome</th>
                                 @else
                                 <th class="text-white">aziende</th>
                                 @endif
@@ -111,6 +111,7 @@
                             </tr>
                             </thead>
                             <tbody>
+
 
                             </tbody>
                             <tfoot>

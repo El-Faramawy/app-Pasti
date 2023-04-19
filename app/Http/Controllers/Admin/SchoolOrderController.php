@@ -115,11 +115,17 @@ class SchoolOrderController extends Controller
     public function update_school_order_status(Request $request)
     {
         $order = Order::where('id', $request->id)->first();
-        $school_id = $order->user->school_id;
-        $orders = Order::where(['date'=>$order->date , 'status'=>$order->status])
-            ->whereHas('user', function ($query) use ($school_id) {
-                $query->where('school_id', $school_id);
-            });
+        if ($order->user){
+            $school_id = $order->user->school_id;
+            $orders = Order::where(['date'=>$order->date , 'status'=>$order->status])
+                ->whereHas('user', function ($query) use ($school_id) {
+                    $query->where('school_id', $school_id);
+                });
+        }
+        else{
+            $school_id = $order->school_id;
+            $orders = Order::where('id', $request->id);
+        }
         $user_ids = $orders->pluck('user_id')->toArray();
         $orders->update(['status' => $request->status]);
 

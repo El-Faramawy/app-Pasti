@@ -23,7 +23,11 @@ class HomeController extends Controller
 //        return $user_ids;
 
         $meal_count = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
-            $query->where('date', date('Y-m-d'))->whereIn('user_id', $user_ids);
+            $query->where('date', date('Y-m-d'))/*->whereIn('user_id', $user_ids)*/
+                ->where(function ($query2) use ($user_ids) {
+                    $query2->whereIn('user_id', $user_ids)
+                    ->orwhere('school_id', school_api()->user()->id);
+                });
         })->whereHas('meal')
             ->count();
 
@@ -48,13 +52,19 @@ class HomeController extends Controller
         if ($request->from_date || $request->to_date) {
             $meals = Menu::where(['type' => 'menu'])->with('menu_details')
                 ->whereHas('meal_menus.order', function ($query) use ($user_ids, $from_date, $to_date) {
-                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+//                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+                    $query->whereBetween('date', [$from_date, $to_date])
+                        ->whereIn('user_id', $user_ids)
+                        ->orWhere('school_id' , school_api()->user()->id);
                 })
                 ->get();
 
             foreach ($meals as $meal) {
                 $meal_data = OrderDetails::whereHas('order', function ($query) use ($user_ids, $from_date, $to_date) {
-                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+//                    $query->whereBetween('date', [$from_date, $to_date])->whereIn('user_id', $user_ids);
+                    $query->whereBetween('date', [$from_date, $to_date])
+                        ->whereIn('user_id', $user_ids)
+                        ->orWhere('school_id' , school_api()->user()->id);
                 })->where('menu_id', $meal->id);
 
                 $meal->meal_count = $meal_data->count();
@@ -64,6 +74,7 @@ class HomeController extends Controller
                 foreach ($order_details as $order_detail){
                     $users[] = $order_detail->order->user;
                 }
+                $users[0]==null ? $users = []  : '';
                 $meal->users = $users;
 
                 $all_meals_count += $meal->meal_count;
@@ -73,7 +84,7 @@ class HomeController extends Controller
                 ->whereHas('meal_menus.order', function ($query) use ($user_ids) {
                     $query->where('date', date('Y-m-d'))
                         ->where(function ($q) use ($user_ids){
-                            $q->whereIn('user_id', $user_ids)/*->orwhere('school_id', school_api()->user()->id)*/;
+                            $q->whereIn('user_id', $user_ids)->orwhere('school_id', school_api()->user()->id);
                         });
                 })
                 ->get();
@@ -82,7 +93,7 @@ class HomeController extends Controller
                 $meal_data = OrderDetails::whereHas('order', function ($query) use ($user_ids) {
                     $query->where('date', date('Y-m-d'))/*->whereIn('user_id', $user_ids)*/
                     ->where(function ($q) use ($user_ids){
-                        $q->whereIn('user_id', $user_ids)/*->orwhere('school_id', school_api()->user()->id)*/;
+                        $q->whereIn('user_id', $user_ids)->orwhere('school_id', school_api()->user()->id);
                     });
 
                 })->where('menu_id', $meal->id);
@@ -92,6 +103,7 @@ class HomeController extends Controller
                 foreach ($order_details as $order_detail){
                     $users[] = $order_detail->order->user;
                 }
+                $users[0]==null ? $users = []  : '';
                 $meal->users = $users;
 
                 $all_meals_count += $meal->meal_count;

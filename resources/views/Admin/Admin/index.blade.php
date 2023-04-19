@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
-@section('page_title') amministrazione @endsection
+@section('page_title') Supervisori @endsection
 @section('content')
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">amministrativi</h3>
+                    <h3 class="card-title">Supervisori </h3>
                     <div class="ml-auto pageheader-btn">
                         @if(in_array(4,admin()->user()->permission_ids))
                             <a href="#" id="addBtn" class="btn btn-primary btn-icon text-white">
@@ -32,7 +32,7 @@
                                 <th class="text-white">#</th>
                                 <th class="text-white">Il nome</th>
                                 <th class="text-white">E-mail</th>
-                                <th class="text-white">Modificare</th>
+                                <th class="text-white">controllo</th>
                             </tr>
                             </thead>
                             <tbody>
