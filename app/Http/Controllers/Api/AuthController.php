@@ -34,7 +34,7 @@ class AuthController extends Controller
             ]);
             return apiResponse($user);
         }else{
-            return apiResponse(null,'invalid credentials register please ','409');
+            return apiResponse(null,'Username o password non sono validi. ','409');
         }
     }
 
@@ -54,7 +54,7 @@ class AuthController extends Controller
             ]);
             return apiResponse($user);
         }else{
-            return apiResponse(null,'invalid credentials register please ','409');
+            return apiResponse(null,'Username o password non sono validi. ','409');
         }
     }
 
@@ -85,7 +85,7 @@ class AuthController extends Controller
             }elseif ($school > 0){
                 return $this->school_login($data);
             }else{
-                return apiResponse(null,'invalid credentials register please ','409');
+                return apiResponse(null,'Username o password non sono validi. ','409');
             }
 //            if ($request->type == 'user')
 //                return $this->user_login($data);

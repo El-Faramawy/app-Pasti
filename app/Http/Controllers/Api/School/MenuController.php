@@ -49,8 +49,8 @@ class MenuController extends Controller
         $day = date('D' ,strtotime($menu['date'] ) );
         // notification to students of school
         if ($status == 'yes') {
-            $this->sendNotification($school_users, 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])) );
-            $this->sendFCMNotification($school_users, 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per il '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])) );
+            $this->sendNotification($school_users, 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per  '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])) );
+            $this->sendFCMNotification($school_users, 'Nuovo Menù disponibile ', 'Nuovo Menù disponibile per  '.$days[$day].'  '.date('d-m-Y', strtotime($menu["date"])) );
         }elseif ($status == 'no') {
             $message = 'Il menu è stato rifiutato '. $school_menu->menu->name .' della '.school_api()->user()->name.' School';
             adminNotification($message);
