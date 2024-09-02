@@ -57,7 +57,7 @@
 				<div class="">
 					<div class="col col-login mx-auto">
 						<div class="text-center">
-							<img src="{{get_file('Admin/imgs/logo.png')}}" class="header-brand-img" alt="">
+							
 						</div>
 					</div>
 									    <!-- CONTAINER OPEN -->
@@ -65,8 +65,38 @@
 						<div class="wrap-login100 p-6">
                             <form id="login_form" class="login100-form validate-form" action="{{route('post_login')}}" enctype="application/x-www-form-urlencoded" method="post">
                                 @csrf
-                                <span class="login100-form-title">
-									Accedere
+                                <span class="login100-form-title"></p>
+									<img src="{{get_file('Admin/imgs/apppasti.png')}}" class="header-brand-img" alt=""></p>
+										</centro>
+					<!DOCTYPE html>
+<html>
+<head>
+<style>
+.button {
+  background-color: #f0b508;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  
+}
+</style>
+</head>
+<body>
+
+									Scarica la nostra app per
+
+<a href="https://play.google.com/store/apps/details?id=apppasti.com&hl=en_US" class="button"><i class="fa fa-android"></i> Android</a>
+<a href="https://apps.apple.com/ch/app/app-pasti/id1671381785" class="button"><i class="fa fa-apple"></i> iphone</a></p>
+Pagina di accesso per admin
+</body>
+</html>
+<centro/>
 								</span>
 								<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 									<input class="input100" type="text" placeholder="E-mail" name="email">
@@ -84,7 +114,7 @@
 								</div>
 								<div class="container-login100-form-btn">
 									<button type="submit" href="#" class="login100-form-btn btn-primary">
-                                        Iscrizione
+                                        Login in
 									</button>
 								</div>
 

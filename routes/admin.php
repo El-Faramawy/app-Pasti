@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('change_user_active/{id}','UserController@change_active')->name('change_user_active');
         Route::get('user_profile/{id}','UserController@user_profile')->name('user_profile');
         Route::post('multi_delete_users','UserController@multiDelete')->name('users.multiDelete');
+        Route::get('get_school_classes','UserController@get_school_classes')->name('users.get_school_classes');
 
         ################################### schools ##########################################
         Route::resource('schools','SchoolController');

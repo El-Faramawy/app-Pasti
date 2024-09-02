@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\NotificationTrait;
+use App\Models\Category;
+use App\Models\Classes;
 use App\Models\School;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -27,8 +29,11 @@ class UserController extends Controller
 
             return Datatables::of($users)
                 ->addColumn('action', function ($user) {
-                    if(in_array(7,admin()->user()->permission_ids)) {
+                    if (in_array(7, admin()->user()->permission_ids)) {
                         return '
+                            <button  id="editBtn" class="btn btn-default btn-primary btn-sm mb-2  mb-xl-0 "
+                             data-id="' . $user->id . '" ><i class="fa fa-edit text-white"></i>
+                        </button>
                              <a class="btn btn-default btn-danger btn-sm mb-2 mb-xl-0 delete"
                              data-id="' . $user->id . '" ><i class="fa fa-trash-o text-white"></i></a>
                        ';
@@ -141,6 +146,53 @@ class UserController extends Controller
 
         return view('Admin.User.parts.profile',compact('user','new_order_count','ended_order_count',
         'on_going_order_count','canceled_order_count'));
+    }
+
+    ################ Edit item #################
+    public function edit(User $user)
+    {
+        $schools = School::all();
+        $classes = Classes::where('school_id',$user->school_id)->get();
+        return view('Admin.User.parts.edit', compact('user','classes','schools'));
+    }
+    ###############################################
+    ################ update item #################
+    public function update(Request $request, User $user)
+    {
+        $valedator = Validator::make($request->all(), [
+            'name' => 'required',
+            'last_name' => 'required',
+            'user_name' => 'required| unique:users,user_name,' . $user->id,
+            'personal_id' => 'required',
+            'school_id' => 'required',
+            'class_id' => 'required',
+        ]
+        );
+        if ($valedator->fails())
+            return response()->json(['messages' => $valedator->errors()->getMessages(), 'success' => 'false']);
+
+        $data = $request->except('password');
+        if ($request->password && $request->password != null)
+            $data['password'] = Hash::make($request->password);
+        $user->update($data);
+        return response()->json(
+            [
+                'success' => 'true',
+                'message' => 'Modificato con successo '
+            ]);
+    }
+    //=============================================
+    public function get_school_classes(Request $request){
+        $classes = Classes::where('school_id',$request->school_id)->get();
+        $out = '';
+        foreach ($classes as $class){
+            $out .= '<option value="'.$class->id.'"> '.$class->name.' </option>';
+        }
+        return response()->json(
+            [
+                'success' => 'true',
+                'data' =>  $out
+            ]);
     }
 
 }

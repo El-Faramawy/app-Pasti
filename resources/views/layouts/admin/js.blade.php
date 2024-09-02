@@ -61,7 +61,7 @@
 </script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.js"></script>
+<script src="https://cdn.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.js"></script>
 <script >
     var footer_sum = null;
 </script>
@@ -70,18 +70,18 @@
 {{--//===========================    data table  =========================--}}
 
 <!-- INTERNAL  DATA TABLE JS-->
-<script src="{{url('Admin')}}/assets/plugins/datatable/jquery.dataTables.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/datatable.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/dataTables.responsive.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/dataTables.buttons.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.bootstrap4.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/jszip.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/pdfmake.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/vfs_fonts.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.html5.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.print.min.js"></script>
-<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.colVis.min.js"></script>
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/jquery.dataTables.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/datatable.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/dataTables.responsive.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/dataTables.buttons.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.bootstrap4.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/jszip.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/pdfmake.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/vfs_fonts.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.html5.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.print.min.js"></script>--}}
+{{--<script src="{{url('Admin')}}/assets/plugins/datatable/fileexport/buttons.colVis.min.js"></script>--}}
 <!-- SIDEBAR JS -->
 
 {{--//===========================    delete element  =========================--}}
@@ -144,7 +144,7 @@
 </script>
 
 {{--=================== default toster ==============================--}}
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script type="text/javascript" src="https://fastly.jsdelivr.net/npm/toastify-js"></script>
 @include('layouts.admin.inc.toaster')
 
 {{--=================== close_model ==============================--}}
